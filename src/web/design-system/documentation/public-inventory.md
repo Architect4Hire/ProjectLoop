@@ -4,7 +4,7 @@ Traceability: PLDS-001.
 
 This checked-in snapshot maps every TypeScript leaf module reachable from
 `public-api.ts` through the category barrels to its implementation and the guide
-assigned by `catalog.json`. It contains 76 public modules. Regenerate the
+assigned by `catalog.json`. It contains 83 public modules. Regenerate the
 snapshot from those sources when a public barrel or catalog mapping changes;
 do not infer missing items from this table alone.
 
@@ -44,12 +44,17 @@ do not infer missing items from this table alone.
 | Primitives | Tooltip | [primitives/tooltip/tooltip.component](../primitives/tooltip/tooltip.component.ts) | [tooltip.md](tooltip.md) |
 | Primitives | Tooltip trigger | [primitives/tooltip/tooltip-trigger.directive](../primitives/tooltip/tooltip-trigger.directive.ts) | [tooltip.md](tooltip.md) |
 | Components | Alert banner | [components/alert-banner/alert-banner.component](../components/alert-banner/alert-banner.component.ts) | [alert-banner.md](alert-banner.md) |
+| Components | Application navigation | [components/app-navigation/app-navigation.component](../components/app-navigation/app-navigation.component.ts) | [app-navigation.md](app-navigation.md) |
+| Components | Breadcrumb | [components/breadcrumb/breadcrumb.component](../components/breadcrumb/breadcrumb.component.ts) | [breadcrumb.md](breadcrumb.md) |
 | Components | Citation chip | [components/citation-chip/citation-chip.component](../components/citation-chip/citation-chip.component.ts) | [citation-chip.md](citation-chip.md) |
 | Components | Data table | [components/data-table/data-table.component](../components/data-table/data-table.component.ts) | [data-table.md](data-table.md) |
 | Components | File picker | [components/file-picker/file-picker.component](../components/file-picker/file-picker.component.ts) | [file-picker.md](file-picker.md) |
 | Components | Notification service | [components/notification/notification.service](../components/notification/notification.service.ts) | [notifications.md](notifications.md) |
 | Components | Notification viewport | [components/notification/notification-viewport.component](../components/notification/notification-viewport.component.ts) | [notifications.md](notifications.md) |
+| Components | Pagination | [components/pagination/pagination.component](../components/pagination/pagination.component.ts) | [pagination.md](pagination.md) |
+| Components | Skip link | [components/skip-link/skip-link.component](../components/skip-link/skip-link.component.ts) | [skip-link.md](skip-link.md) |
 | Components | Stepper | [components/stepper/stepper.component](../components/stepper/stepper.component.ts) | [stepper.md](stepper.md) |
+| Components | User menu | [components/user-menu/user-menu.component](../components/user-menu/user-menu.component.ts) | [user-menu.md](user-menu.md) |
 | Patterns | Activity stream | [patterns/activity-stream/activity-stream.component](../patterns/activity-stream/activity-stream.component.ts) | [activity-stream.md](activity-stream.md) |
 | Patterns | Activity stream details | [patterns/activity-stream/activity-stream-details.directive](../patterns/activity-stream/activity-stream-details.directive.ts) | [activity-stream.md](activity-stream.md) |
 | Patterns | AI confidence | [patterns/ai-confidence/ai-confidence.component](../patterns/ai-confidence/ai-confidence.component.ts) | [ai-confidence.md](ai-confidence.md) |
@@ -61,6 +66,7 @@ do not infer missing items from this table alone.
 | Patterns | Form section | [patterns/form-section/form-section.component](../patterns/form-section/form-section.component.ts) | [form-section.md](form-section.md) |
 | Patterns | Master detail | [patterns/master-detail/master-detail.component](../patterns/master-detail/master-detail.component.ts) | [master-detail.md](master-detail.md) |
 | Patterns | Master detail trigger | [patterns/master-detail/master-detail-trigger.directive](../patterns/master-detail/master-detail-trigger.directive.ts) | [master-detail.md](master-detail.md) |
+| Patterns | Page header | [patterns/page-header/page-header.component](../patterns/page-header/page-header.component.ts) | [page-header.md](page-header.md) |
 | Patterns | Review approval | [patterns/review-approval/review-approval.component](../patterns/review-approval/review-approval.component.ts) | [review-approval.md](review-approval.md) |
 | Patterns | Search result details | [patterns/search-results/search-result-details.directive](../patterns/search-results/search-result-details.directive.ts) | [search-results.md](search-results.md) |
 | Patterns | Search results | [patterns/search-results/search-results.component](../patterns/search-results/search-results.component.ts) | [search-results.md](search-results.md) |
@@ -82,6 +88,7 @@ do not infer missing items from this table alone.
 | Recipes | Requirement row | [recipes/requirement-row/requirement-row.component](../recipes/requirement-row/requirement-row.component.ts) | [requirement-row.md](requirement-row.md) |
 | Recipes | Source citations | [recipes/source-citations/source-citations.component](../recipes/source-citations/source-citations.component.ts) | [source-citations.md](source-citations.md) |
 | Recipes | Workbench shell | [recipes/workbench-shell/workbench-shell.component](../recipes/workbench-shell/workbench-shell.component.ts) | [workbench-shell.md](workbench-shell.md) |
+| Layouts | Portal shell | [layouts/portal-shell/portal-shell.component](../layouts/portal-shell/portal-shell.component.ts) | [portal-shell.md](portal-shell.md) |
 | Layouts | Structured editor | [layouts/structured-editor/structured-editor.component](../layouts/structured-editor/structured-editor.component.ts) | [structured-editor.md](structured-editor.md) |
 | Layouts | Structured editor section | [layouts/structured-editor/structured-editor-section.directive](../layouts/structured-editor/structured-editor-section.directive.ts) | [structured-editor.md](structured-editor.md) |
 | Components | Icon | [icons/icon.component](../icons/icon.component.ts) | [icons.md](icons.md) |

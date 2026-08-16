@@ -1,0 +1,38 @@
+<header class="lsd-page-header">
+  @if (breadcrumbs().length) {
+    <lsd-breadcrumb [accessibleName]="breadcrumbLabel()" [items]="breadcrumbs()" />
+  }
+
+  <div class="lsd-page-header__primary">
+    <div class="lsd-page-header__copy">
+      @switch (headingLevel()) {
+        @case (1) { <h1 class="lsd-page-header__title">{{ title() }}</h1> }
+        @case (2) { <h2 class="lsd-page-header__title">{{ title() }}</h2> }
+        @case (3) { <h3 class="lsd-page-header__title">{{ title() }}</h3> }
+        @case (4) { <h4 class="lsd-page-header__title">{{ title() }}</h4> }
+        @case (5) { <h5 class="lsd-page-header__title">{{ title() }}</h5> }
+        @case (6) { <h6 class="lsd-page-header__title">{{ title() }}</h6> }
+      }
+      @if (description()) {
+        <p class="lsd-page-header__description text-text-muted">{{ description() }}</p>
+      }
+    </div>
+
+    <div class="lsd-page-header__actions" aria-label="Page actions">
+      <ng-content select="[lsdPageHeaderActions]" />
+    </div>
+  </div>
+
+  @if (metadata().length) {
+    <dl class="lsd-page-header__metadata">
+      @for (item of metadata(); track item.label) {
+        <div class="lsd-page-header__metadata-item">
+          <dt class="text-text-muted">{{ item.label }}</dt>
+          <dd class="text-text-primary">{{ item.value }}</dd>
+        </div>
+      }
+    </dl>
+  }
+
+  <lsd-separator [decorative]="true" spacing="none" />
+</header>

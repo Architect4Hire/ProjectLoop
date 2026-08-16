@@ -1,0 +1,25 @@
+<nav class="lsd-pagination" [attr.aria-label]="accessibleName()">
+  <lsd-button
+    impact="minimal"
+    size="small"
+    tone="neutral"
+    accessibleLabel="Previous page"
+    [disabled]="!hasPrevious()"
+    (activated)="requestPrevious()">
+    Previous
+  </lsd-button>
+
+  <span class="lsd-pagination__status text-sm text-text-primary" aria-current="page">
+    Page {{ currentPage() }} of {{ totalPages() }}
+  </span>
+
+  <lsd-button
+    impact="minimal"
+    size="small"
+    tone="neutral"
+    accessibleLabel="Next page"
+    [disabled]="!hasNext()"
+    (activated)="requestNext()">
+    Next
+  </lsd-button>
+</nav>

@@ -1,0 +1,29 @@
+<lsd-menu [id]="id()" [accessibleLabel]="triggerLabel()">
+  <span class="lsd-user-menu__trigger" lsdMenuTriggerContent aria-hidden="true">
+    <span class="lsd-user-menu__avatar">
+      @if (avatarUrl()) {
+        <img [src]="avatarUrl()" alt="" />
+      } @else {
+        <span class="lsd-user-menu__initials">{{ initials() }}</span>
+      }
+    </span>
+    <span class="lsd-user-menu__trigger-name">{{ displayName() }}</span>
+  </span>
+
+  <div class="lsd-user-menu__identity" role="presentation">
+    <strong class="lsd-user-menu__name">{{ displayName() }}</strong>
+    @if (identityDetail()) {
+      <span class="lsd-user-menu__detail">{{ identityDetail() }}</span>
+    }
+  </div>
+
+  @for (action of actions(); track action.id) {
+    <button
+      lsdMenuItem
+      type="button"
+      [disabled]="action.disabled"
+      (click)="requestAction(action)">
+      {{ action.label }}
+    </button>
+  }
+</lsd-menu>

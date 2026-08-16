@@ -1,0 +1,20 @@
+<nav class="lsd-breadcrumb" [attr.aria-label]="accessibleName()">
+  <ol class="lsd-breadcrumb__list">
+    @for (item of items(); track item.href; let last = $last) {
+      <li class="lsd-breadcrumb__item">
+        <a
+          class="lsd-breadcrumb__link"
+          lsdLink
+          impact="minimal"
+          size="small"
+          [href]="item.href"
+          [attr.aria-current]="last ? 'page' : null">
+          <span class="lsd-breadcrumb__label">{{ item.label }}</span>
+        </a>
+        @if (!last) {
+          <lsd-icon name="chevron-right" size="small" tone="muted" />
+        }
+      </li>
+    }
+  </ol>
+</nav>

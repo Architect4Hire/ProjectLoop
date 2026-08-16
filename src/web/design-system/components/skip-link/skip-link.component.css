@@ -1,0 +1,15 @@
+:host {
+  position: fixed;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 50;
+}
+
+.lsd-skip-link {
+  margin: 0.5rem;
+  transform: translateY(calc(-100% - 0.5rem));
+}
+
+.lsd-skip-link:focus-visible {
+  transform: translateY(0);
+}

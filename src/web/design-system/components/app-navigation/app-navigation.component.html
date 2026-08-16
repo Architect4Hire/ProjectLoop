@@ -1,0 +1,27 @@
+<nav
+  class="lsd-app-navigation"
+  [attr.aria-label]="accessibleName()"
+  [attr.data-compact]="compact()">
+  <ul class="lsd-app-navigation__list">
+    @for (link of links(); track link.href) {
+      <li>
+        <a
+          class="lsd-app-navigation__link"
+          lsdLink
+          impact="minimal"
+          size="small"
+          tone="neutral"
+          [href]="link.href"
+          [attr.aria-current]="link.active ? 'page' : null">
+          <lsd-icon [name]="link.icon" size="small" [tone]="link.active ? 'primary' : 'muted'" />
+          <span class="lsd-app-navigation__label" [class.lsd-sr-only]="compact()">{{ link.label }}</span>
+          @if (link.count !== undefined) {
+            <lsd-badge size="small" [accessibleLabel]="link.label + ': ' + link.count">
+              {{ link.count }}
+            </lsd-badge>
+          }
+        </a>
+      </li>
+    }
+  </ul>
+</nav>

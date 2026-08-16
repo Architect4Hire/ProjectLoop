@@ -9,6 +9,7 @@ export * from './filter-action-bar/filter-action-bar.component';
 export * from './form-section/form-section.component';
 export * from './master-detail/master-detail.component';
 export * from './master-detail/master-detail-trigger.directive';
+export * from './page-header/page-header.component';
 export * from './review-approval/review-approval.component';
 export * from './search-results/search-result-details.directive';
 export * from './search-results/search-results.component';

@@ -44,12 +44,17 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 ## Components
 
 - [Alert banner](alert-banner.md)
+- [Application navigation](app-navigation.md)
+- [Breadcrumb](breadcrumb.md)
 - [Citation chip](citation-chip.md)
 - [Data table](data-table.md)
 - [File picker](file-picker.md)
 - [Icon and icon-name contract](icons.md)
 - [Notification service and viewport](notifications.md)
+- [Pagination](pagination.md)
+- [Skip link](skip-link.md)
 - [Stepper](stepper.md)
+- [User menu](user-menu.md)
 
 ## Patterns
 
@@ -62,6 +67,7 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 - [Filter action bar](filter-action-bar.md)
 - [Form section](form-section.md)
 - [Master detail and trigger](master-detail.md)
+- [Page header](page-header.md)
 - [Review approval](review-approval.md)
 - [Search results and result details](search-results.md)
 - [Source preview](source-preview.md)
@@ -87,6 +93,7 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 
 ## Layouts
 
+- [Portal shell](portal-shell.md)
 - [Structured editor and section directive](structured-editor.md)
 
 ## Supporting policy

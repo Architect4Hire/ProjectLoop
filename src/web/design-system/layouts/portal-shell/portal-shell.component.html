@@ -1,0 +1,28 @@
+<lsd-skip-link />
+
+<div class="lsd-portal-shell bg-surface-page text-text-primary">
+  <header class="lsd-portal-shell__header">
+    <ng-content select="[lsdPortalHeader]" />
+  </header>
+
+  <div class="lsd-portal-shell__body">
+    <div class="lsd-portal-shell__navigation">
+      <lsd-app-navigation
+        [accessibleName]="navigationLabel()"
+        [compact]="navigationCompact()"
+        [links]="navigationLinks()" />
+    </div>
+
+    <main
+      class="lsd-portal-shell__main"
+      id="main-content"
+      tabindex="-1"
+      [attr.aria-label]="mainLabel()">
+      <ng-content select="[lsdPortalMain]" />
+    </main>
+  </div>
+
+  <div class="lsd-portal-shell__notifications">
+    <ng-content select="[lsdPortalNotifications]" />
+  </div>
+</div>

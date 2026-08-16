@@ -40,12 +40,17 @@
   { "category": "Primitives", "name": "Tooltip trigger", "publicModule": "primitives/tooltip/tooltip-trigger.directive", "doc": "tooltip.md" },
 
   { "category": "Components", "name": "Alert banner", "publicModule": "components/alert-banner/alert-banner.component", "doc": "alert-banner.md" },
+  { "category": "Components", "name": "Application navigation", "publicModule": "components/app-navigation/app-navigation.component", "doc": "app-navigation.md" },
+  { "category": "Components", "name": "Breadcrumb", "publicModule": "components/breadcrumb/breadcrumb.component", "doc": "breadcrumb.md" },
   { "category": "Components", "name": "Citation chip", "publicModule": "components/citation-chip/citation-chip.component", "doc": "citation-chip.md" },
   { "category": "Components", "name": "Data table", "publicModule": "components/data-table/data-table.component", "doc": "data-table.md" },
   { "category": "Components", "name": "File picker", "publicModule": "components/file-picker/file-picker.component", "doc": "file-picker.md" },
   { "category": "Components", "name": "Notification service", "publicModule": "components/notification/notification.service", "doc": "notifications.md" },
   { "category": "Components", "name": "Notification viewport", "publicModule": "components/notification/notification-viewport.component", "doc": "notifications.md" },
+  { "category": "Components", "name": "Pagination", "publicModule": "components/pagination/pagination.component", "doc": "pagination.md" },
+  { "category": "Components", "name": "Skip link", "publicModule": "components/skip-link/skip-link.component", "doc": "skip-link.md" },
   { "category": "Components", "name": "Stepper", "publicModule": "components/stepper/stepper.component", "doc": "stepper.md" },
+  { "category": "Components", "name": "User menu", "publicModule": "components/user-menu/user-menu.component", "doc": "user-menu.md" },
   { "category": "Components", "name": "Icon", "publicModule": "icons/icon.component", "doc": "icons.md" },
   { "category": "Components", "name": "Icon names", "publicModule": "icons/internal/icon-paths", "doc": "icons.md" },
 
@@ -60,6 +65,7 @@
   { "category": "Patterns", "name": "Form section", "publicModule": "patterns/form-section/form-section.component", "doc": "form-section.md" },
   { "category": "Patterns", "name": "Master detail", "publicModule": "patterns/master-detail/master-detail.component", "doc": "master-detail.md" },
   { "category": "Patterns", "name": "Master detail trigger", "publicModule": "patterns/master-detail/master-detail-trigger.directive", "doc": "master-detail.md" },
+  { "category": "Patterns", "name": "Page header", "publicModule": "patterns/page-header/page-header.component", "doc": "page-header.md" },
   { "category": "Patterns", "name": "Review approval", "publicModule": "patterns/review-approval/review-approval.component", "doc": "review-approval.md" },
   { "category": "Patterns", "name": "Search result details", "publicModule": "patterns/search-results/search-result-details.directive", "doc": "search-results.md" },
   { "category": "Patterns", "name": "Search results", "publicModule": "patterns/search-results/search-results.component", "doc": "search-results.md" },
@@ -83,6 +89,7 @@
   { "category": "Recipes", "name": "Source citations", "publicModule": "recipes/source-citations/source-citations.component", "doc": "source-citations.md" },
   { "category": "Recipes", "name": "Workbench shell", "publicModule": "recipes/workbench-shell/workbench-shell.component", "doc": "workbench-shell.md" },
 
+  { "category": "Layouts", "name": "Portal shell", "publicModule": "layouts/portal-shell/portal-shell.component", "doc": "portal-shell.md" },
   { "category": "Layouts", "name": "Structured editor", "publicModule": "layouts/structured-editor/structured-editor.component", "doc": "structured-editor.md" },
   { "category": "Layouts", "name": "Structured editor section", "publicModule": "layouts/structured-editor/structured-editor-section.directive", "doc": "structured-editor.md" }
 ]
