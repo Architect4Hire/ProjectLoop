@@ -1,0 +1,28 @@
+<lsd-surface tone="panel" padding="compact" radius="panel" border="default">
+  <section class="lsd-recent-decisions" [attr.aria-label]="label()">
+    @if (decisions().length === 0) {
+      <p class="lsd-recent-decisions__empty text-sm text-text-muted">{{ emptyMessage() }}</p>
+    } @else {
+      <ul class="lsd-recent-decisions__list">
+        @for (decision of decisions(); track decision.id) {
+          <li class="lsd-recent-decisions__item">
+            <a
+              lsdLink
+              class="lsd-recent-decisions__link"
+              impact="minimal"
+              size="small"
+              [href]="decision.navigation.href"
+              [attr.aria-label]="decision.navigation.accessibleLabel ?? null"
+            >{{ decision.label }}</a>
+
+            <lsd-badge size="small" [variant]="decision.status.variant">{{ decision.status.label }}</lsd-badge>
+
+            <time class="lsd-recent-decisions__date text-xs text-text-muted" [attr.datetime]="decision.date.dateTime ?? null">
+              {{ decision.date.label }}
+            </time>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</lsd-surface>

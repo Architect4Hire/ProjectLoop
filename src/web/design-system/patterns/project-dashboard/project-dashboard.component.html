@@ -1,0 +1,55 @@
+<div class="lsd-project-dashboard">
+  <section class="lsd-project-dashboard__region lsd-project-dashboard__region--health" [attr.aria-labelledby]="headingId('health')">
+    @if (headingLevel() === 2) {
+      <h2 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('health')">{{ healthHeading() }}</h2>
+    } @else {
+      <h3 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('health')">{{ healthHeading() }}</h3>
+    }
+    <div class="lsd-project-dashboard__content"><ng-content select="[lsdProjectDashboardHealth]" /></div>
+  </section>
+
+  <section class="lsd-project-dashboard__region lsd-project-dashboard__region--metrics" [attr.aria-labelledby]="headingId('metrics')">
+    @if (headingLevel() === 2) {
+      <h2 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('metrics')">{{ metricsHeading() }}</h2>
+    } @else {
+      <h3 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('metrics')">{{ metricsHeading() }}</h3>
+    }
+    <div class="lsd-project-dashboard__content"><ng-content select="[lsdProjectDashboardMetrics]" /></div>
+  </section>
+
+  <section class="lsd-project-dashboard__region lsd-project-dashboard__region--milestones" [attr.aria-labelledby]="headingId('milestones')">
+    @if (headingLevel() === 2) {
+      <h2 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('milestones')">{{ milestonesHeading() }}</h2>
+    } @else {
+      <h3 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('milestones')">{{ milestonesHeading() }}</h3>
+    }
+    <div class="lsd-project-dashboard__content"><ng-content select="[lsdProjectDashboardMilestones]" /></div>
+  </section>
+
+  <section class="lsd-project-dashboard__region lsd-project-dashboard__region--meetings" [attr.aria-labelledby]="headingId('meetings')">
+    @if (headingLevel() === 2) {
+      <h2 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('meetings')">{{ meetingsHeading() }}</h2>
+    } @else {
+      <h3 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('meetings')">{{ meetingsHeading() }}</h3>
+    }
+    <div class="lsd-project-dashboard__content"><ng-content select="[lsdProjectDashboardMeetings]" /></div>
+  </section>
+
+  <section class="lsd-project-dashboard__region lsd-project-dashboard__region--decisions" [attr.aria-labelledby]="headingId('decisions')">
+    @if (headingLevel() === 2) {
+      <h2 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('decisions')">{{ decisionsHeading() }}</h2>
+    } @else {
+      <h3 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('decisions')">{{ decisionsHeading() }}</h3>
+    }
+    <div class="lsd-project-dashboard__content"><ng-content select="[lsdProjectDashboardDecisions]" /></div>
+  </section>
+
+  <section class="lsd-project-dashboard__region lsd-project-dashboard__region--deliverables" [attr.aria-labelledby]="headingId('deliverables')">
+    @if (headingLevel() === 2) {
+      <h2 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('deliverables')">{{ deliverablesHeading() }}</h2>
+    } @else {
+      <h3 class="lsd-project-dashboard__heading text-lg font-semibold" [id]="headingId('deliverables')">{{ deliverablesHeading() }}</h3>
+    }
+    <div class="lsd-project-dashboard__content"><ng-content select="[lsdProjectDashboardDeliverables]" /></div>
+  </section>
+</div>

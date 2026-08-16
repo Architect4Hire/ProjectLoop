@@ -1,0 +1,35 @@
+<lsd-surface
+  tone="panel"
+  padding="default"
+  radius="panel"
+  border="default"
+  [accessibility]="{ role: 'region', label: label() }"
+>
+  <div class="lsd-project-health">
+    <header class="lsd-project-health__header">
+      <h3 class="text-lg font-semibold">{{ label() }}</h3>
+      <lsd-badge [variant]="statusPresentation().variant">{{ statusPresentation().label }}</lsd-badge>
+    </header>
+
+    <p class="lsd-project-health__description text-sm">{{ description() }}</p>
+
+    <p class="lsd-project-health__updated text-xs text-text-muted">
+      Last updated
+      <time [attr.datetime]="lastUpdated().dateTime ?? null">{{ lastUpdated().label }}</time>
+    </p>
+
+    @if (indicators().length > 0) {
+      <section class="lsd-project-health__indicators" aria-label="Contributing indicators">
+        @for (indicator of indicators(); track indicator.id) {
+          <lsd-progress
+            [id]="indicatorId(indicator)"
+            [label]="indicator.label"
+            [value]="indicator.value"
+            [max]="indicator.max ?? 100"
+            [valueText]="indicator.valueText"
+          />
+        }
+      </section>
+    }
+  </div>
+</lsd-surface>

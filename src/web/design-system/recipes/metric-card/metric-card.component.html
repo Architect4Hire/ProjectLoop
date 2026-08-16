@@ -1,0 +1,38 @@
+<lsd-surface tone="panel" padding="default" radius="panel" border="default">
+  <article class="lsd-metric-card" [attr.aria-busy]="loading() || null">
+    <p class="lsd-metric-card__label text-sm font-semibold text-text-muted">{{ label() }}</p>
+
+    @if (loading()) {
+      <div class="lsd-metric-card__loading" aria-label="Loading metric value">
+        <span class="sr-only">Loading metric value</span>
+        <lsd-skeleton [lines]="1" />
+      </div>
+    } @else {
+      <p class="lsd-metric-card__value font-semibold">{{ value() }}</p>
+
+      @if (trend(); as currentTrend) {
+        @if (trendPresentation(); as presentation) {
+          <lsd-badge size="small" [variant]="presentation.variant">
+            <lsd-icon [name]="presentation.icon" size="small" [accessibility]="{ mode: 'decorative' }" />
+            {{ currentTrend.label }}
+          </lsd-badge>
+        }
+      }
+
+      @if (context()) {
+        <p class="lsd-metric-card__context text-sm text-text-muted">{{ context() }}</p>
+      }
+
+      @if (action(); as currentAction) {
+        <a
+          lsdLink
+          class="lsd-metric-card__action"
+          impact="minimal"
+          size="small"
+          [href]="currentAction.href"
+          [attr.aria-label]="currentAction.accessibleLabel ?? null"
+        >{{ currentAction.label }}</a>
+      }
+    }
+  </article>
+</lsd-surface>

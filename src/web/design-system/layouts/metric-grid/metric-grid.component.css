@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+
+.lsd-metric-grid {
+  display: grid;
+  min-inline-size: 0;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 75rem) {
+  .lsd-metric-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  }
+}

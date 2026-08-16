@@ -67,6 +67,7 @@ do not infer missing items from this table alone.
 | Patterns | Master detail | [patterns/master-detail/master-detail.component](../patterns/master-detail/master-detail.component.ts) | [master-detail.md](master-detail.md) |
 | Patterns | Master detail trigger | [patterns/master-detail/master-detail-trigger.directive](../patterns/master-detail/master-detail-trigger.directive.ts) | [master-detail.md](master-detail.md) |
 | Patterns | Page header | [patterns/page-header/page-header.component](../patterns/page-header/page-header.component.ts) | [page-header.md](page-header.md) |
+| Patterns | Project dashboard | [patterns/project-dashboard/project-dashboard.component](../patterns/project-dashboard/project-dashboard.component.ts) | [project-dashboard.md](project-dashboard.md) |
 | Patterns | Review approval | [patterns/review-approval/review-approval.component](../patterns/review-approval/review-approval.component.ts) | [review-approval.md](review-approval.md) |
 | Patterns | Search result details | [patterns/search-results/search-result-details.directive](../patterns/search-results/search-result-details.directive.ts) | [search-results.md](search-results.md) |
 | Patterns | Search results | [patterns/search-results/search-results.component](../patterns/search-results/search-results.component.ts) | [search-results.md](search-results.md) |
@@ -83,11 +84,17 @@ do not infer missing items from this table alone.
 | Recipes | Document section editor | [recipes/document-section-editor/document-section-editor.component](../recipes/document-section-editor/document-section-editor.component.ts) | [document-section-editor.md](document-section-editor.md) |
 | Recipes | Engagement header | [recipes/engagement-header/engagement-header.component](../recipes/engagement-header/engagement-header.component.ts) | [engagement-header.md](engagement-header.md) |
 | Recipes | Knowledge result | [recipes/knowledge-result/knowledge-result.component](../recipes/knowledge-result/knowledge-result.component.ts) | [knowledge-result.md](knowledge-result.md) |
+| Recipes | Metric card | [recipes/metric-card/metric-card.component](../recipes/metric-card/metric-card.component.ts) | [metric-card.md](metric-card.md) |
+| Recipes | Milestone list | [recipes/milestone-list/milestone-list.component](../recipes/milestone-list/milestone-list.component.ts) | [milestone-list.md](milestone-list.md) |
 | Recipes | Phase navigation | [recipes/phase-navigation/phase-navigation.component](../recipes/phase-navigation/phase-navigation.component.ts) | [phase-navigation.md](phase-navigation.md) |
+| Recipes | Project health | [recipes/project-health/project-health.component](../recipes/project-health/project-health.component.ts) | [project-health.md](project-health.md) |
 | Recipes | RAID register | [recipes/raid-register/raid-register.component](../recipes/raid-register/raid-register.component.ts) | [raid-register.md](raid-register.md) |
+| Recipes | Recent decisions | [recipes/recent-decisions/recent-decisions.component](../recipes/recent-decisions/recent-decisions.component.ts) | [recent-decisions.md](recent-decisions.md) |
 | Recipes | Requirement row | [recipes/requirement-row/requirement-row.component](../recipes/requirement-row/requirement-row.component.ts) | [requirement-row.md](requirement-row.md) |
 | Recipes | Source citations | [recipes/source-citations/source-citations.component](../recipes/source-citations/source-citations.component.ts) | [source-citations.md](source-citations.md) |
+| Recipes | Upcoming meetings | [recipes/upcoming-meetings/upcoming-meetings.component](../recipes/upcoming-meetings/upcoming-meetings.component.ts) | [upcoming-meetings.md](upcoming-meetings.md) |
 | Recipes | Workbench shell | [recipes/workbench-shell/workbench-shell.component](../recipes/workbench-shell/workbench-shell.component.ts) | [workbench-shell.md](workbench-shell.md) |
+| Layouts | Metric grid | [layouts/metric-grid/metric-grid.component](../layouts/metric-grid/metric-grid.component.ts) | [metric-grid.md](metric-grid.md) |
 | Layouts | Portal shell | [layouts/portal-shell/portal-shell.component](../layouts/portal-shell/portal-shell.component.ts) | [portal-shell.md](portal-shell.md) |
 | Layouts | Structured editor | [layouts/structured-editor/structured-editor.component](../layouts/structured-editor/structured-editor.component.ts) | [structured-editor.md](structured-editor.md) |
 | Layouts | Structured editor section | [layouts/structured-editor/structured-editor-section.directive](../layouts/structured-editor/structured-editor-section.directive.ts) | [structured-editor.md](structured-editor.md) |

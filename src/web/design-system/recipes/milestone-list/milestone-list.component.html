@@ -1,0 +1,40 @@
+<lsd-surface tone="panel" padding="default" radius="panel" border="default">
+  <section class="lsd-milestone-list" [attr.aria-label]="label()">
+    @if (milestones().length === 0) {
+      <p class="lsd-milestone-list__empty text-sm text-text-muted">{{ emptyMessage() }}</p>
+    } @else {
+      <ol class="lsd-milestone-list__items">
+        @for (milestone of milestones(); track milestone.id) {
+          <li class="lsd-milestone-list__item">
+            <div class="lsd-milestone-list__row">
+              <div class="lsd-milestone-list__content">
+                @if (milestone.navigation; as navigation) {
+                  <a
+                    lsdLink
+                    class="lsd-milestone-list__title"
+                    impact="minimal"
+                    size="small"
+                    [href]="navigation.href"
+                    [attr.aria-label]="navigation.label ?? null"
+                  >{{ milestone.title }}</a>
+                } @else {
+                  <span class="lsd-milestone-list__title-text font-semibold">{{ milestone.title }}</span>
+                }
+
+                <p class="lsd-milestone-list__date text-sm text-text-muted">
+                  @if (milestone.dueDate; as dueDate) {
+                    Due <time [attr.datetime]="dueDate.dateTime ?? null">{{ dueDate.label }}</time>
+                  } @else {
+                    {{ missingDateLabel() }}
+                  }
+                </p>
+              </div>
+
+              <lsd-badge size="small" [variant]="milestone.status.variant">{{ milestone.status.label }}</lsd-badge>
+            </div>
+          </li>
+        }
+      </ol>
+    }
+  </section>
+</lsd-surface>

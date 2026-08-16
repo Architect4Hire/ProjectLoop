@@ -68,6 +68,7 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 - [Form section](form-section.md)
 - [Master detail and trigger](master-detail.md)
 - [Page header](page-header.md)
+- [Project dashboard](project-dashboard.md)
 - [Review approval](review-approval.md)
 - [Search results and result details](search-results.md)
 - [Source preview](source-preview.md)
@@ -86,13 +87,19 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 - [Engagement header](engagement-header.md)
 - [Knowledge search result](knowledge-result.md)
 - [Phase navigation](phase-navigation.md)
+- [Project health](project-health.md)
 - [RAID register](raid-register.md)
+- [Recent decisions](recent-decisions.md)
 - [Requirement row](requirement-row.md)
+- [Metric card](metric-card.md)
+- [Milestone list](milestone-list.md)
 - [Source citations](source-citations.md)
+- [Upcoming meetings](upcoming-meetings.md)
 - [Workbench shell recipe](workbench-shell.md)
 
 ## Layouts
 
+- [Metric grid](metric-grid.md)
 - [Portal shell](portal-shell.md)
 - [Structured editor and section directive](structured-editor.md)
 

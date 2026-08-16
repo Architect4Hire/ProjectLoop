@@ -1,0 +1,59 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+
+.lsd-project-dashboard {
+  display: grid;
+  min-inline-size: 0;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.lsd-project-dashboard__region,
+.lsd-project-dashboard__content {
+  min-inline-size: 0;
+}
+
+.lsd-project-dashboard__region {
+  display: grid;
+  align-content: start;
+  gap: 0.75rem;
+}
+
+.lsd-project-dashboard__heading {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.lsd-project-dashboard__region--health {
+  grid-column: span 4;
+}
+
+.lsd-project-dashboard__region--metrics {
+  grid-column: span 8;
+}
+
+.lsd-project-dashboard__region--milestones,
+.lsd-project-dashboard__region--meetings,
+.lsd-project-dashboard__region--decisions,
+.lsd-project-dashboard__region--deliverables {
+  grid-column: span 6;
+}
+
+@media (max-width: 63.99rem) {
+  .lsd-project-dashboard__region--health,
+  .lsd-project-dashboard__region--metrics,
+  .lsd-project-dashboard__region--milestones,
+  .lsd-project-dashboard__region--meetings,
+  .lsd-project-dashboard__region--decisions,
+  .lsd-project-dashboard__region--deliverables {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 29.99rem) {
+  .lsd-project-dashboard {
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,36 @@
+<lsd-surface tone="panel" padding="default" radius="panel" border="default">
+  <section class="lsd-upcoming-meetings" [attr.aria-label]="label()">
+    @if (meetings().length === 0) {
+      <p class="lsd-upcoming-meetings__empty text-sm text-text-muted">{{ emptyMessage() }}</p>
+    } @else {
+      <ul class="lsd-upcoming-meetings__list">
+        @for (meeting of meetings(); track meeting.id) {
+          <li class="lsd-upcoming-meetings__item">
+            <div class="lsd-upcoming-meetings__details">
+              <p class="lsd-upcoming-meetings__title font-semibold">{{ meeting.title }}</p>
+              <p class="lsd-upcoming-meetings__metadata text-sm text-text-muted">
+                <time [attr.datetime]="meeting.time.dateTime ?? null">{{ meeting.time.label }}</time>
+                <span aria-hidden="true"> · </span>
+                <span>{{ meeting.location }}</span>
+              </p>
+            </div>
+
+            @if (meeting.action; as action) {
+              <a
+                lsdLink
+                class="lsd-upcoming-meetings__action"
+                impact="minimal"
+                size="small"
+                [href]="action.href"
+                [attr.aria-label]="action.accessibleLabel ?? null"
+              >
+                {{ action.label }}
+                <lsd-icon name="chevron-right" size="small" [accessibility]="{ mode: 'decorative' }" />
+              </a>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</lsd-surface>

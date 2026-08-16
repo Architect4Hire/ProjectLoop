@@ -1,0 +1,61 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+
+.lsd-milestone-list,
+.lsd-milestone-list__items,
+.lsd-milestone-list__content {
+  min-inline-size: 0;
+}
+
+.lsd-milestone-list__items {
+  display: grid;
+  margin: 0;
+  padding-inline-start: 1.5rem;
+}
+
+.lsd-milestone-list__item {
+  min-inline-size: 0;
+  padding: 0.75rem 0;
+}
+
+.lsd-milestone-list__item + .lsd-milestone-list__item {
+  border-block-start: 1px solid var(--lsd-color-border-default);
+}
+
+.lsd-milestone-list__item::marker {
+  color: var(--lsd-color-text-muted);
+  font-weight: 600;
+}
+
+.lsd-milestone-list__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 0.75rem 1rem;
+}
+
+.lsd-milestone-list__title,
+.lsd-milestone-list__title-text {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+}
+
+.lsd-milestone-list__title {
+  justify-content: flex-start;
+  margin-inline-start: -0.75rem;
+  text-align: start;
+}
+
+.lsd-milestone-list__date,
+.lsd-milestone-list__empty {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 29.99rem) {
+  .lsd-milestone-list__row {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -10,6 +10,7 @@ export * from './form-section/form-section.component';
 export * from './master-detail/master-detail.component';
 export * from './master-detail/master-detail-trigger.directive';
 export * from './page-header/page-header.component';
+export * from './project-dashboard/project-dashboard.component';
 export * from './review-approval/review-approval.component';
 export * from './search-results/search-result-details.directive';
 export * from './search-results/search-results.component';
