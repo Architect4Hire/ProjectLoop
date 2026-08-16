@@ -1,0 +1,28 @@
+<div #root class="relative inline-block">
+  <button
+    #trigger
+    class="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg bg-transparent px-3 text-sm font-semibold text-text-primary hover:bg-surface-panel"
+    type="button"
+    [attr.aria-controls]="menuId()"
+    [attr.aria-expanded]="open()"
+    [attr.aria-haspopup]="'menu'"
+    [attr.aria-label]="accessibleLabel()"
+    [id]="triggerId()"
+    (click)="toggle()"
+    (keydown)="handleTriggerKeydown($event)">
+    <ng-content select="[lsdMenuTriggerContent]" />
+  </button>
+
+  <div
+    class="absolute end-0 mt-1 min-w-48 rounded-lg border border-border-default bg-surface-raised p-1 text-text-primary"
+    role="menu"
+    [attr.aria-labelledby]="triggerId()"
+    [hidden]="!open()"
+    [id]="menuId()"
+    [style.box-shadow]="menuShadow"
+    [style.z-index]="menuLayer"
+    (click)="handleMenuClick($event)"
+    (keydown)="handleMenuKeydown($event)">
+    <ng-content />
+  </div>
+</div>

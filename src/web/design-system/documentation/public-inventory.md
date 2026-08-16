@@ -4,7 +4,7 @@ Traceability: PLDS-001.
 
 This checked-in snapshot maps every TypeScript leaf module reachable from
 `public-api.ts` through the category barrels to its implementation and the guide
-assigned by `catalog.json`. It contains 70 public modules. Regenerate the
+assigned by `catalog.json`. It contains 76 public modules. Regenerate the
 snapshot from those sources when a public barrel or catalog mapping changes;
 do not infer missing items from this table alone.
 
@@ -27,10 +27,16 @@ do not infer missing items from this table alone.
 | Primitives | Dialog initial focus | [primitives/dialog/dialog-initial-focus.directive](../primitives/dialog/dialog-initial-focus.directive.ts) | [dialog.md](dialog.md) |
 | Primitives | Drawer | [primitives/drawer/drawer.component](../primitives/drawer/drawer.component.ts) | [drawer.md](drawer.md) |
 | Primitives | Drawer initial focus | [primitives/drawer/drawer-initial-focus.directive](../primitives/drawer/drawer-initial-focus.directive.ts) | [drawer.md](drawer.md) |
+| Primitives | Field message | [primitives/field-message/field-message.component](../primitives/field-message/field-message.component.ts) | [field-message.md](field-message.md) |
 | Primitives | Input | [primitives/input/input.component](../primitives/input/input.component.ts) | [input.md](input.md) |
+| Primitives | Link | [primitives/link/link.directive](../primitives/link/link.directive.ts) | [link.md](link.md) |
+| Primitives | Menu | [primitives/menu/menu.component](../primitives/menu/menu.component.ts) | [menu.md](menu.md) |
+| Primitives | Menu item | [primitives/menu/menu-item.directive](../primitives/menu/menu-item.directive.ts) | [menu.md](menu.md) |
+| Primitives | Progress | [primitives/progress/progress.component](../primitives/progress/progress.component.ts) | [progress.md](progress.md) |
 | Primitives | Radio group | [primitives/radio-group/radio-group.component](../primitives/radio-group/radio-group.component.ts) | [checkboxes-and-radios.md](checkboxes-and-radios.md) |
 | Primitives | Separator | [primitives/separator/separator.component](../primitives/separator/separator.component.ts) | [surfaces-and-separators.md](surfaces-and-separators.md) |
 | Primitives | Select | [primitives/select/select.component](../primitives/select/select.component.ts) | [select.md](select.md) |
+| Primitives | Skeleton | [primitives/skeleton/skeleton.component](../primitives/skeleton/skeleton.component.ts) | [skeleton.md](skeleton.md) |
 | Primitives | Surface | [primitives/surface/surface.component](../primitives/surface/surface.component.ts) | [surfaces-and-separators.md](surfaces-and-separators.md) |
 | Primitives | Tab panel | [primitives/tabs/tab-panel.directive](../primitives/tabs/tab-panel.directive.ts) | [tabs.md](tabs.md) |
 | Primitives | Tabs | [primitives/tabs/tabs.component](../primitives/tabs/tabs.component.ts) | [tabs.md](tabs.md) |

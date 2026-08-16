@@ -58,7 +58,7 @@ describe('StateFeedbackComponent', () => {
     const region = fixture.debugElement.query(By.css('#results-state')).nativeElement as HTMLElement;
     expect(region.getAttribute('role')).toBe('status');
     expect(region.getAttribute('aria-busy')).toBe('true');
-    expect(region.querySelector('.lsd-state-feedback__skeleton')?.getAttribute('aria-hidden')).toBe('true');
+    expect(region.querySelector('lsd-skeleton')?.getAttribute('aria-hidden')).toBe('true');
   });
 
   it('uses an assertive announcement only for terminal errors', () => {

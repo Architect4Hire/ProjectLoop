@@ -29,11 +29,7 @@
         <p class="lsd-state-feedback__description text-text-muted" [id]="descriptionId()">{{ description() }}</p>
       }
       @if (kind() === 'skeleton') {
-        <div class="lsd-state-feedback__skeleton" aria-hidden="true">
-          @for (_ of lines(); track $index) {
-            <span class="lsd-state-feedback__skeleton-line"></span>
-          }
-        </div>
+        <lsd-skeleton [lines]="skeletonLines()" />
       }
     }
 

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 
 import { AlertBannerComponent, AlertSeverity } from '../../components/alert-banner/alert-banner.component';
+import { SkeletonComponent } from '../../primitives/skeleton/skeleton.component';
 import { SurfaceComponent } from '../../primitives/surface/surface.component';
 
 export type StateFeedbackKind = 'empty' | 'loading' | 'skeleton' | 'recoverable-error' | 'terminal-error';
@@ -8,7 +9,7 @@ export type StateFeedbackKind = 'empty' | 'loading' | 'skeleton' | 'recoverable-
 @Component({
   selector: 'lsd-state-feedback',
   standalone: true,
-  imports: [AlertBannerComponent, SurfaceComponent],
+  imports: [AlertBannerComponent, SkeletonComponent, SurfaceComponent],
   templateUrl: './state-feedback.component.html',
   styleUrl: './state-feedback.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,9 +37,6 @@ export class StateFeedbackComponent {
   );
   protected readonly errorSeverity = computed<AlertSeverity>(() =>
     this.kind() === 'terminal-error' ? 'danger' : 'warning',
-  );
-  protected readonly lines = computed(() =>
-    Array.from({ length: Math.max(1, Math.min(10, Math.floor(this.skeletonLines()))) }),
   );
   protected readonly isError = computed(() =>
     this.kind() === 'recoverable-error' || this.kind() === 'terminal-error',

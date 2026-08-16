@@ -1,0 +1,8 @@
+<p
+  [attr.aria-atomic]="live() ? 'true' : null"
+  [attr.aria-live]="live()"
+  [attr.role]="role()"
+  [class]="classes()"
+  [id]="id()">
+  <ng-content />
+</p>

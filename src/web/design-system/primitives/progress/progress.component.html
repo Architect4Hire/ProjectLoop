@@ -1,0 +1,23 @@
+<div class="grid gap-1.5 text-text-primary">
+  <div class="flex items-baseline justify-between gap-3 text-sm">
+    <label class="font-semibold" [for]="progressId()" [id]="labelId()">{{ label() }}</label>
+    <span class="text-text-muted" [id]="valueId()">{{ visibleValue() }}</span>
+  </div>
+
+  <progress
+    class="lsd-sr-only"
+    [attr.aria-labelledby]="labelId()"
+    [attr.aria-valuetext]="visibleValue()"
+    [attr.value]="determinate() ? normalizedValue() : null"
+    [id]="progressId()"
+    [max]="normalizedMax()">
+    {{ visibleValue() }}
+  </progress>
+
+  <div class="lsd-progress__track" aria-hidden="true">
+    <span
+      class="lsd-progress__indicator"
+      [class.lsd-progress__indicator--indeterminate]="!determinate()"
+      [style.inline-size.%]="percentage()"></span>
+  </div>
+</div>

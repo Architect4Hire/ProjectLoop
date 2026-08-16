@@ -1,0 +1,40 @@
+.lsd-progress__track {
+  background: var(--lsd-color-surface-raised, Canvas);
+  border: 0.0625rem solid var(--lsd-color-border-default, currentColor);
+  border-radius: var(--radius-pill, 9999px);
+  block-size: 0.625rem;
+  overflow: hidden;
+}
+
+.lsd-progress__indicator {
+  background: var(--lsd-color-accent-primary, Highlight);
+  block-size: 100%;
+  display: block;
+  transition: inline-size var(--motion-duration-normal, 200ms) var(--motion-easing-standard, ease);
+}
+
+.lsd-progress__indicator--indeterminate {
+  animation: lsd-progress-indeterminate var(--motion-duration-slow, 600ms) var(--motion-easing-standard, ease-in-out) infinite alternate;
+  inline-size: 40%;
+}
+
+@keyframes lsd-progress-indeterminate {
+  from {
+    transform: translateX(-25%);
+  }
+
+  to {
+    transform: translateX(175%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lsd-progress__indicator {
+    transition: none;
+  }
+
+  .lsd-progress__indicator--indeterminate {
+    animation: none;
+    transform: none;
+  }
+}

@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  inline-size: min(100%, 36rem);
+}
+
+.lsd-skeleton {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.lsd-skeleton__line {
+  animation: lsd-skeleton-pulse var(--motion-duration-deliberate, 500ms) var(--motion-easing-standard, ease-in-out) infinite alternate;
+  background: var(--lsd-color-surface-raised, Canvas);
+  block-size: 1rem;
+  border-radius: var(--radius-md, 0.375rem);
+}
+
+.lsd-skeleton__line:last-child {
+  inline-size: 70%;
+}
+
+@keyframes lsd-skeleton-pulse {
+  from {
+    opacity: 0.55;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lsd-skeleton__line {
+    animation: none;
+    opacity: 1;
+  }
+}
