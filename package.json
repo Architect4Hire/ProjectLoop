@@ -1,0 +1,26 @@
+{
+  "name": "project-loop-design-system-verification",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build:design-system": "ngc -p tsconfig.design-system.json",
+    "test:feature-boundaries": "node src/web/design-system/testing/check-feature-boundaries.mjs --self-test && node src/web/design-system/testing/check-feature-boundaries.mjs"
+  },
+  "dependencies": {
+    "@angular/common": "22.1.2",
+    "@angular/core": "22.1.2",
+    "rxjs": "7.8.2"
+  },
+  "devDependencies": {
+    "@angular/build": "22.1.4",
+    "@angular/cli": "22.1.4",
+    "@angular/compiler": "22.1.2",
+    "@angular/compiler-cli": "22.1.2",
+    "@angular/platform-browser": "22.1.2",
+    "@axe-core/playwright": "4.13.0",
+    "@playwright/test": "1.62.1",
+    "@tailwindcss/postcss": "4.1.14",
+    "tailwindcss": "4.1.14",
+    "typescript": "6.0.2"
+  }
+}

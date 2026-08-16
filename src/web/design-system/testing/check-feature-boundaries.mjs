@@ -1,9 +1,9 @@
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
+const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../../..');
 const extensions = new Set(['.html', '.ts']);
 const defaultRoots = ['src/web/features', 'src/web/app'];
 const minimumBundleLength = 8;
@@ -90,29 +90,18 @@ export function checkFeatureBoundaries(roots) {
 }
 
 function runSelfTest() {
-  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'lsd-boundary-check-'));
-  try {
-    const bundle = 'flex items-center justify-between gap-4 rounded-lg border border-border-default bg-surface-panel';
-    fs.writeFileSync(path.join(fixtureRoot, 'one.html'), `<div class="${bundle}"></div>\n`);
-    fs.writeFileSync(path.join(fixtureRoot, 'two.html'), `<section class="${bundle}"></section>\n`);
-    fs.writeFileSync(
-      path.join(fixtureRoot, 'one-off.html'),
-      '<main class="grid min-h-dvh grid-cols-1 gap-6 overflow-hidden rounded-lg bg-surface-page"></main>\n',
-    );
-    fs.writeFileSync(
-      path.join(fixtureRoot, 'private.ts'),
-      "import { ButtonComponent } from 'src/web/design-system/primitives/button/button.component';\n",
-    );
-    const violations = checkFeatureBoundaries([fixtureRoot]);
-    const importCount = violations.filter((item) => item.rule === 'design-system-public-import').length;
-    const bundleCount = violations.filter((item) => item.rule === 'repeated-tailwind-bundle').length;
-    if (importCount !== 1 || bundleCount !== 2) {
-      throw new Error(`Expected 1 private import and 2 repeated-bundle locations; received ${importCount} and ${bundleCount}.`);
-    }
-    console.log('Self-test passed: synthetic private import and repeated Tailwind bundle were detected.');
-  } finally {
-    fs.rmSync(fixtureRoot, { recursive: true, force: true });
+  const fixtureRoot = path.join(repositoryRoot, 'test-fixtures/feature-boundaries');
+  const passingViolations = checkFeatureBoundaries([path.join(fixtureRoot, 'passing')]);
+  const failingViolations = checkFeatureBoundaries([path.join(fixtureRoot, 'failing')]);
+  const importViolations = failingViolations.filter((item) => item.rule === 'design-system-public-import');
+
+  if (passingViolations.length !== 0) {
+    throw new Error(`Expected the public-entry-point fixture to pass; received ${passingViolations.length} violation(s).`);
   }
+  if (failingViolations.length !== 1 || importViolations.length !== 1) {
+    throw new Error(`Expected the deep-import fixture to produce one public-import violation; received ${failingViolations.length}.`);
+  }
+  console.log('Self-test passed: the public import was accepted and the deep import was rejected.');
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc/design-system",
+    "rootDir": "./src/web/design-system"
+  },
+  "files": [
+    "src/web/design-system/public-api.ts",
+    "src/web/design-system/testing/public-api-alias.consumer.ts"
+  ],
+  "exclude": [
+    "src/web/design-system/documentation/migration/**",
+    "src/web/design-system/**/*.spec.ts",
+    "src/web/design-system/**/*.visual.spec.ts"
+  ]
+}

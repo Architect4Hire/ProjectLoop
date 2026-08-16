@@ -86,6 +86,7 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 
 ## Supporting policy
 
+- [Public API inventory](public-inventory.md)
 - [Public imports](public-imports.md)
 - [Integration manifest](integration.md)
 - [Final acceptance checklist](final-acceptance-checklist.md)

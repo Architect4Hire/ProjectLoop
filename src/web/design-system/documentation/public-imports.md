@@ -4,12 +4,13 @@ Application features consume the Lake Shore Drive design system through one
 public entry point:
 
 ```ts
-import * as DesignSystem from 'src/web/design-system/public-api';
+import { ButtonComponent, spacingTokens } from '@lsd/design-system';
 ```
 
 Features may import only symbols that are deliberately exported by
-`public-api.ts`. The Angular workspace may replace the source path with a
-configured package alias without changing the public entry-point boundary.
+`public-api.ts`. The Angular workspace maps the exact `@lsd/design-system`
+alias to that source file. There is deliberately no wildcard alias:
+`@lsd/design-system/*` deep imports do not resolve and are unsupported.
 
 ## Public layers
 
