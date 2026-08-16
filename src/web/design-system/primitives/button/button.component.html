@@ -1,0 +1,27 @@
+<button
+  [attr.aria-busy]="loading() || null"
+  [attr.aria-controls]="controls()"
+  [attr.aria-expanded]="expanded()"
+  [attr.aria-label]="accessibleLabel()"
+  [attr.aria-pressed]="pressed()"
+  [class]="classes()"
+  [disabled]="unavailable()"
+  [type]="type()"
+  (click)="activate()">
+  @if (loading()) {
+    <span class="lsd-button__spinner" aria-hidden="true"></span>
+  } @else {
+    <span class="lsd-button__icon" aria-hidden="true">
+      <ng-content select="[lsdButtonLeadingIcon]" />
+    </span>
+  }
+  <span class="lsd-button__label"><ng-content /></span>
+  @if (!loading()) {
+    <span class="lsd-button__icon" aria-hidden="true">
+      <ng-content select="[lsdButtonTrailingIcon]" />
+    </span>
+  }
+</button>
+@if (loading()) {
+  <span class="lsd-sr-only" role="status">{{ loadingLabel() }}</span>
+}
