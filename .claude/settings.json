@@ -1,0 +1,8 @@
+{
+  "project": "Project Loop",
+  "constitution": "CLAUDE.md",
+  "rulesDirectory": ".claude/rules",
+  "skillsDirectory": ".claude/skills",
+  "agentsDirectory": ".claude/agents",
+  "hooksDirectory": ".claude/hooks"
+}

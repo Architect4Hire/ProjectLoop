@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -euo pipefail
+dotnet format --verify-no-changes || exit 1
