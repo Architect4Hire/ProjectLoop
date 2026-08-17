@@ -16,7 +16,7 @@ import { StateFeedbackDetailsComponent } from './state-feedback-details.componen
       title="Results unavailable"
       description="Try the request again.">
       <p>Caller-owned supporting content.</p>
-      <lsd-button lsdStateActions (activated)="retries++">Retry</lsd-button>
+      <lsd-button lsdStateActions (activated)="retry()">Retry</lsd-button>
       <lsd-state-details lsdStateDetails label="Technical details">Request timed out</lsd-state-details>
     </lsd-state-feedback>
   `,
@@ -24,6 +24,7 @@ import { StateFeedbackDetailsComponent } from './state-feedback-details.componen
 class StateFeedbackTestHostComponent {
   kind: StateFeedbackKind = 'recoverable-error';
   retries = 0;
+  retry(): void { this.retries += 1; }
 }
 
 describe('StateFeedbackComponent', () => {

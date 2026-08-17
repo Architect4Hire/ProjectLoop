@@ -16,7 +16,7 @@ import { ConfirmationDialogComponent, type ConfirmationCancelReason } from './co
       actionTone="warning"
       [open]="open"
       [processing]="processing"
-      (confirmed)="confirmCount++"
+      (confirmed)="confirm()"
       (cancelled)="cancel($event)" />
   `,
 })
@@ -26,6 +26,7 @@ class ConfirmationDialogTestHostComponent {
   confirmCount = 0;
   cancelReasons: ConfirmationCancelReason[] = [];
   cancel(reason: ConfirmationCancelReason): void { this.cancelReasons.push(reason); this.open = false; }
+  confirm(): void { this.confirmCount += 1; }
 }
 
 describe('ConfirmationDialogComponent', () => {

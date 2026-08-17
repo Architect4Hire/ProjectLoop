@@ -3,6 +3,8 @@ obj/
 node_modules/
 .angular/
 dist/
+visual-regression/report/
+visual-regression/test-results/
 .env
 .env.*
 !.env.example

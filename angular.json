@@ -20,6 +20,86 @@
               "src/web/design-system/foundations/tailwind.css"
             ]
           }
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "buildTarget": "design-system:build",
+            "tsConfig": "tsconfig.spec.json",
+            "runner": "vitest",
+            "include": [
+              "src/web/design-system/components/app-navigation/app-navigation.component.spec.ts",
+              "src/web/design-system/components/breadcrumb/breadcrumb.component.spec.ts",
+              "src/web/design-system/components/document-download-action/document-download-action.component.spec.ts",
+              "src/web/design-system/components/error-summary/error-summary.component.spec.ts",
+              "src/web/design-system/components/pagination/pagination.component.spec.ts",
+              "src/web/design-system/components/skip-link/skip-link.component.spec.ts",
+              "src/web/design-system/components/user-menu/user-menu.component.spec.ts",
+              "src/web/design-system/components/version-chip/version-chip.component.spec.ts",
+              "src/web/design-system/layouts/metric-grid/metric-grid.component.spec.ts",
+              "src/web/design-system/layouts/portal-shell/portal-shell.component.spec.ts",
+              "src/web/design-system/patterns/approval-history/approval-history.component.spec.ts",
+              "src/web/design-system/patterns/audit-timeline/audit-timeline.component.spec.ts",
+              "src/web/design-system/patterns/document-list/document-list.component.spec.ts",
+              "src/web/design-system/patterns/document-version-history/document-version-history.component.spec.ts",
+              "src/web/design-system/patterns/page-header/page-header.component.spec.ts",
+              "src/web/design-system/patterns/project-dashboard/project-dashboard.component.spec.ts",
+              "src/web/design-system/patterns/state-feedback/state-feedback.component.spec.ts",
+              "src/web/design-system/patterns/version-bound-approval/version-bound-approval.component.spec.ts",
+              "src/web/design-system/primitives/field-message/field-message.component.spec.ts",
+              "src/web/design-system/primitives/link/link.directive.spec.ts",
+              "src/web/design-system/primitives/menu/menu.component.spec.ts",
+              "src/web/design-system/primitives/progress/progress.component.spec.ts",
+              "src/web/design-system/primitives/skeleton/skeleton.component.spec.ts",
+              "src/web/design-system/recipes/approval-comment-field/approval-comment-field.component.spec.ts",
+              "src/web/design-system/recipes/approval-request-banner/approval-request-banner.component.spec.ts",
+              "src/web/design-system/recipes/audit-event/audit-event.component.spec.ts",
+              "src/web/design-system/recipes/confirmation-dialog/confirmation-dialog.component.spec.ts",
+              "src/web/design-system/recipes/document-card/document-card.component.spec.ts",
+              "src/web/design-system/recipes/document-filters/document-filters.component.spec.ts",
+              "src/web/design-system/recipes/document-row/document-row.component.spec.ts",
+              "src/web/design-system/recipes/document-upload/document-upload.component.spec.ts",
+              "src/web/design-system/recipes/metric-card/metric-card.component.spec.ts",
+              "src/web/design-system/recipes/milestone-list/milestone-list.component.spec.ts",
+              "src/web/design-system/recipes/pending-approvals-list/pending-approvals-list.component.spec.ts",
+              "src/web/design-system/recipes/project-health/project-health.component.spec.ts",
+              "src/web/design-system/recipes/recent-decisions/recent-decisions.component.spec.ts",
+              "src/web/design-system/recipes/upcoming-meetings/upcoming-meetings.component.spec.ts",
+              "src/web/design-system/tokens/approval-status.spec.ts",
+              "src/web/design-system/tokens/document-status.spec.ts",
+              "src/web/design-system/testing/fixtures/document-version-approval.regression.spec.ts"
+            ],
+            "setupFiles": [
+              "src/web/design-system/testing/vitest-jasmine-compat.ts"
+            ]
+          }
+        }
+      }
+    },
+    "design-system-visual": {
+      "projectType": "application",
+      "root": "visual-regression/fixture",
+      "sourceRoot": "visual-regression/fixture",
+      "prefix": "visual",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "visual-regression/fixture/main.ts",
+            "index": "visual-regression/fixture/index.html",
+            "outputPath": "dist/design-system-visual",
+            "tsConfig": "visual-regression/fixture/tsconfig.app.json",
+            "styles": [
+              "src/web/design-system/foundations/tailwind.css",
+              "visual-regression/fixture/fixture.css"
+            ]
+          }
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "buildTarget": "design-system-visual:build"
+          }
         }
       }
     }

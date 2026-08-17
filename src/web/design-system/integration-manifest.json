@@ -26,7 +26,7 @@
       "src/web/design-system/**/*.spec.ts",
       "src/web/design-system/**/*.visual.spec.ts"
     ],
-    "legalFiles": ["docs/design/third-party-notices.md"]
+    "legalFiles": []
   },
   "dependencies": {
     "runtimePeers": {
@@ -46,7 +46,9 @@
     "testDev": {
       "@angular/platform-browser": "22.1.2",
       "@axe-core/playwright": "4.13.0",
-      "@playwright/test": "1.62.1"
+      "@playwright/test": "1.62.1",
+      "jsdom": "30.0.1",
+      "vitest": "4.1.10"
     },
     "notRequired": ["zone.js"]
   },
@@ -82,18 +84,27 @@
     "notes": "Components use the local typed icon registry; starter images, fonts, branding, avatars, and icon packs are not required."
   },
   "testSupport": {
-    "copyDirectories": ["visual-regression"],
-    "copyFiles": ["playwright.config.ts"],
+    "copyDirectories": [
+      "src/web/design-system/testing",
+      "visual-regression"
+    ],
+    "copyFiles": [
+      "angular.json",
+      "playwright.config.ts",
+      "tsconfig.json",
+      "tsconfig.design-system.json",
+      "tsconfig.spec.json"
+    ],
     "exclude": [
       "visual-regression/results",
       "visual-regression/test-results",
-      "visual-regression/playwright-report"
+      "visual-regression/playwright-report",
+      "visual-regression/report"
     ],
     "scripts": {
-      "test:integration-manifest": "node src/web/design-system/testing/check-integration-manifest.mjs",
-      "test:boundaries": "node src/web/design-system/testing/check-feature-boundaries.mjs && node src/web/design-system/testing/check-design-system-boundaries.mjs",
       "test:accessibility": "playwright test visual-regression/tests/design-system.accessibility.spec.ts",
-      "test:responsive": "playwright test visual-regression/tests/design-system.responsive.spec.ts",
+      "test:feature-boundaries": "node src/web/design-system/testing/check-feature-boundaries.mjs --self-test && node src/web/design-system/testing/check-feature-boundaries.mjs",
+      "test:unit": "npm run test:design-system",
       "test:visual": "playwright test visual-regression/tests/design-system.visual.spec.ts",
       "test:visual:update": "playwright test visual-regression/tests/design-system.visual.spec.ts --update-snapshots"
     },

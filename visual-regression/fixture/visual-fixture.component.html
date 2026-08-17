@@ -1,0 +1,39 @@
+@if (composition === 'shell') {
+  <lsd-portal-shell [navigationLinks]="navigation" [navigationCompact]="state.includes('compact')">
+    <div lsdPortalHeader class="fixture-header"><strong>Project Loop</strong><span>Verification workspace</span></div>
+    <div lsdPortalMain class="fixture-main">
+      <p class="fixture-kicker">Workspace overview</p>
+      <h1>Delivery confidence and evidence</h1>
+      <p>{{ longContent ? 'A deliberately long summary demonstrating how the authenticated shell responds when caller-owned content extends across several readable lines without clipping navigation, landmarks, or projected notification regions.' : 'A stable overview of delivery activity.' }}</p>
+      <div class="fixture-panel"><h2>Today</h2><p>Three reviews are ready and twelve documents are available.</p></div>
+    </div>
+    <div lsdPortalNotifications class="fixture-notification">Changes saved at 14:32 UTC</div>
+  </lsd-portal-shell>
+} @else {
+  <main class="fixture-page">
+    <header class="fixture-page-header"><p class="fixture-kicker">Deterministic visual fixture</p><h1>{{ composition }}</h1></header>
+    @if (composition === 'dashboard') {
+      <lsd-project-dashboard id="project">
+        <div lsdProjectDashboardHealth class="fixture-panel fixture-health"><strong>Healthy</strong><p>All monitored indicators are within agreed thresholds.</p></div>
+        <div lsdProjectDashboardMetrics class="fixture-metrics"><div class="fixture-panel"><small>Completion</small><strong>87%</strong></div><div class="fixture-panel"><small>Open decisions</small><strong>4</strong></div><div class="fixture-panel"><small>Contributors</small><strong>28</strong></div></div>
+        <div lsdProjectDashboardMilestones class="fixture-panel"><ol><li>Accessibility review — complete</li><li>Operational readiness review with an intentionally long milestone title — due 21 August</li></ol></div>
+        <div lsdProjectDashboardMeetings class="fixture-panel"><p>Design review · 16 August, 16:00 UTC</p></div>
+        <div lsdProjectDashboardDecisions class="fixture-panel"><p>Regional failover policy · Approved</p></div>
+        <div lsdProjectDashboardDeliverables class="fixture-panel"><p>{{ state.includes('feedback') ? 'Loading latest authorized deliverables…' : 'Release evidence package · Ready' }}</p></div>
+      </lsd-project-dashboard>
+    } @else if (composition === 'documents') {
+      <lsd-document-list id="documents" [documents]="state.includes('empty') ? [] : documents" emptyDescription="Authorized documents will appear when available." />
+    } @else if (composition === 'upload') {
+      <lsd-document-upload id="upload" [categoryOptions]="categoryOptions" [visibilityOptions]="visibilityOptions"
+        accept=".pdf,application/pdf" [maxFileSizeBytes]="5242880"
+        filePolicyDescription="PDF files up to 5 MB."
+        [state]="state.includes('failed') ? 'failed' : state.includes('uploading') ? 'uploading' : 'idle'"
+        [progressValue]="state.includes('uploading') ? 42 : undefined" progressText="42 percent uploaded"
+        failureMessage="Upload interrupted. The selected file and metadata are retained for retry." />
+    } @else if (composition === 'approval') {
+      <lsd-version-bound-approval id="approval" [target]="approvalTarget" [requestStatus]="requested" requester="Alex Rivera" [requestedTime]="{ label: 'Requested 15 August 2026 at 13:05 UTC', dateTime: '2026-08-15T13:05:00Z' }" provenance="human-authored" [currentVersion]="{ label: 'v4', qualifierLabel: 'Current version' }" [comment]="longContent ? 'The approved evidence remains bound to v3 while v4 is current. This deterministic long comment verifies wrapping beside the decision controls.' : ''" [processing]="state.includes('processing') ? 'approve' : null" />
+    } @else {
+      <lsd-audit-timeline id="audit" [events]="state.includes('empty') ? [] : auditEvents" [paging]="{ mode: 'load-more', hasMore: true, loading: state.includes('loading') }" />
+    }
+  </main>
+}

@@ -122,6 +122,7 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 
 ## Supporting policy
 
+- [Project Loop portal composition](project-loop-portal-composition.md)
 - [Public API inventory](public-inventory.md)
 - [Public imports](public-imports.md)
 - [Integration manifest](integration.md)

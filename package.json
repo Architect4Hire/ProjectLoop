@@ -4,6 +4,11 @@
   "private": true,
   "scripts": {
     "build:design-system": "ngc -p tsconfig.design-system.json",
+    "test:design-system": "ng test design-system --watch=false",
+    "test:unit": "npm run test:design-system",
+    "test:visual": "playwright test visual-regression/tests/design-system.visual.spec.ts",
+    "test:visual:update": "playwright test visual-regression/tests/design-system.visual.spec.ts --update-snapshots",
+    "test:accessibility": "playwright test visual-regression/tests/design-system.accessibility.spec.ts",
     "test:feature-boundaries": "node src/web/design-system/testing/check-feature-boundaries.mjs --self-test && node src/web/design-system/testing/check-feature-boundaries.mjs"
   },
   "dependencies": {
@@ -20,7 +25,9 @@
     "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.62.1",
     "@tailwindcss/postcss": "4.1.14",
+    "jsdom": "30.0.1",
     "tailwindcss": "4.1.14",
-    "typescript": "6.0.2"
+    "typescript": "6.0.2",
+    "vitest": "4.1.10"
   }
 }

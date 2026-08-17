@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuditTimelineComponent, type AuditTimelineEvent, type AuditTimelinePaging } from './audit-timeline.component';
 
-@Component({ standalone: true, imports: [AuditTimelineComponent], template: `<lsd-audit-timeline id="audit" [events]="events" [paging]="paging" (loadMoreRequested)="loadMoreCount++" />` })
+@Component({ standalone: true, imports: [AuditTimelineComponent], template: `<lsd-audit-timeline id="audit" [events]="events" [paging]="paging" (loadMoreRequested)="recordLoadMore()" />` })
 class AuditTimelineTestHostComponent {
   events: readonly AuditTimelineEvent[] = Array.from({ length: 12 }, (_, index) => ({
     id: `event-${index + 1}`,
@@ -16,6 +16,7 @@ class AuditTimelineTestHostComponent {
   }));
   paging: AuditTimelinePaging = { mode: 'load-more', hasMore: true };
   loadMoreCount = 0;
+  recordLoadMore(): void { this.loadMoreCount += 1; }
 }
 
 describe('AuditTimelineComponent', () => {
