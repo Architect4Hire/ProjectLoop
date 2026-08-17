@@ -1,0 +1,31 @@
+:host,
+form {
+  display: block;
+  min-inline-size: 0;
+}
+
+.lsd-document-filters__controls {
+  display: grid;
+  min-inline-size: 0;
+  flex: 1 1 100%;
+  grid-template-columns: repeat(4, minmax(10rem, 1fr));
+  gap: 0.75rem;
+}
+
+.lsd-document-filters__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (max-width: 63.99rem) {
+  .lsd-document-filters__controls {
+    grid-template-columns: repeat(2, minmax(10rem, 1fr));
+  }
+}
+
+@media (max-width: 47.99rem) {
+  .lsd-document-filters__controls {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

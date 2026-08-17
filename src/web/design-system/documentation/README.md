@@ -48,6 +48,7 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 - [Breadcrumb](breadcrumb.md)
 - [Citation chip](citation-chip.md)
 - [Data table](data-table.md)
+- [Document download action](document-download-action.md)
 - [File picker](file-picker.md)
 - [Icon and icon-name contract](icons.md)
 - [Notification service and viewport](notifications.md)
@@ -55,6 +56,7 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 - [Skip link](skip-link.md)
 - [Stepper](stepper.md)
 - [User menu](user-menu.md)
+- [Version chip](version-chip.md)
 
 ## Patterns
 
@@ -64,6 +66,8 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 - [AI failure](ai-failure.md)
 - [AI generation progress](ai-generation-progress.md)
 - [Command palette](command-palette.md)
+- [Document list](document-list.md)
+- [Document version history](document-version-history.md)
 - [Filter action bar](filter-action-bar.md)
 - [Form section](form-section.md)
 - [Master detail and trigger](master-detail.md)
@@ -83,7 +87,11 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 - [AI generation drawer](ai-generation-drawer.md)
 - [Approval actions](approval-actions.md)
 - [Decision comparison](decision-comparison.md)
+- [Document card](document-card.md)
+- [Document filters](document-filters.md)
+- [Document row](document-row.md)
 - [Document section editor](document-section-editor.md)
+- [Document upload](document-upload.md)
 - [Engagement header](engagement-header.md)
 - [Knowledge search result](knowledge-result.md)
 - [Phase navigation](phase-navigation.md)

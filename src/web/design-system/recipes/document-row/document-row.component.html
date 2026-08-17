@@ -1,0 +1,22 @@
+<th class="lsd-document-row__title" scope="row">{{ document().title }}</th>
+<td class="lsd-document-row__category">{{ document().category }}</td>
+<td><lsd-badge size="small" [variant]="document().status.variant">{{ document().status.label }}</lsd-badge></td>
+<td><lsd-badge size="small" [variant]="document().visibility.variant">{{ document().visibility.label }}</lsd-badge></td>
+<td>
+  <lsd-version-chip
+    [versionLabel]="document().version.label"
+    [qualifier]="document().version.qualifier"
+    [qualifierLabel]="document().version.qualifierLabel" />
+</td>
+<td class="lsd-document-row__updated">
+  @if (document().updated.dateTime; as dateTime) {
+    <time [attr.datetime]="dateTime">{{ document().updated.label }}</time>
+  } @else {
+    {{ document().updated.label }}
+  }
+</td>
+<td>
+  <div class="lsd-document-row__actions" role="group" [attr.aria-label]="actionsLabel() + ' for ' + document().title">
+    <ng-content select="[lsdDocumentRowActions]" />
+  </div>
+</td>

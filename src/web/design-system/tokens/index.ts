@@ -1,4 +1,5 @@
 export * from './borders';
+export * from './document-status';
 export * from './elevation';
 export * from './layers';
 export * from './motion';

@@ -1,0 +1,40 @@
+<form class="lsd-document-upload" (submit)="submit($event)">
+  <lsd-file-picker [id]="id() + '-file'" label="Document file" [description]="filePolicyDescription()"
+    [accept]="accept()" [maxFileSizeBytes]="maxFileSizeBytes()" [validateFile]="validateFile()"
+    [disabled]="controlsDisabled()" (filesSelected)="selectFiles($event)">
+    @if (state() === 'uploading') {
+      <lsd-progress lsdFilePickerProgress [id]="id() + '-progress'" label="Uploading document"
+        [value]="progressValue()" [valueText]="progressText()" />
+    }
+    @if (state() === 'failed') {
+      <lsd-field-message lsdFilePickerError [id]="id() + '-failure'" kind="error">{{ failureMessage() ?? 'The document could not be uploaded.' }}</lsd-field-message>
+    } @else if (fileError()) {
+      <lsd-field-message lsdFilePickerError [id]="id() + '-file-required'" kind="error">{{ fileError() }}</lsd-field-message>
+    }
+  </lsd-file-picker>
+  @if (selectedFile(); as file) {
+    <lsd-field-message [id]="id() + '-selected-file'" kind="success">Selected file: {{ file.name }}</lsd-field-message>
+  }
+  <div class="lsd-document-upload__metadata">
+    <lsd-input [id]="id() + '-title'" label="Document title" name="title" [required]="true"
+      [disabled]="controlsDisabled()" [error]="titleError()" [value]="title()" (valueChange)="title.set($event)" />
+    <lsd-select [id]="id() + '-category'" label="Category" name="category" [required]="true"
+      [disabled]="controlsDisabled()" [options]="categoryOptions()" [error]="categoryError()"
+      [value]="category()" (valueChange)="category.set($event)" />
+    <lsd-select [id]="id() + '-visibility'" label="Visibility" name="visibility" [required]="true"
+      [disabled]="controlsDisabled()" [options]="visibilityOptions()" [error]="visibilityError()"
+      [value]="visibility()" (valueChange)="visibility.set($event)" />
+  </div>
+  @if (state() === 'completed') {
+    <lsd-field-message [id]="id() + '-completed'" kind="success">{{ completedMessage() }}</lsd-field-message>
+  }
+  <div class="lsd-document-upload__actions" role="group" aria-label="Upload actions">
+    @if (state() === 'uploading') {
+      <lsd-button type="button" impact="light" tone="neutral" (activated)="cancel()">Cancel upload</lsd-button>
+    } @else if (state() === 'failed') {
+      <lsd-button type="button" (activated)="retry()">Retry upload</lsd-button>
+    } @else {
+      <lsd-button type="submit" [disabled]="state() === 'completed'">Upload document</lsd-button>
+    }
+  </div>
+</form>

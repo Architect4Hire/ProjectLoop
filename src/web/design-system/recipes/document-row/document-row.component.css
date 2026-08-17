@@ -1,0 +1,37 @@
+:host > th,
+:host > td {
+  padding: 0.75rem 1rem;
+  border-block-end: 1px solid var(--lsd-color-border-default);
+  color: var(--lsd-color-text-primary);
+  text-align: start;
+  vertical-align: middle;
+}
+
+.lsd-document-row__title,
+.lsd-document-row__category,
+.lsd-document-row__updated {
+  min-inline-size: 10rem;
+  max-inline-size: 24rem;
+  overflow-wrap: anywhere;
+}
+
+.lsd-document-row__title {
+  font-weight: 600;
+}
+
+.lsd-document-row__updated {
+  color: var(--lsd-color-text-muted);
+  font-size: 0.875rem;
+}
+
+.lsd-document-row__actions {
+  display: flex;
+  min-inline-size: max-content;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.lsd-document-row__actions:empty {
+  display: none;
+}

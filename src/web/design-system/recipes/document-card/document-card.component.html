@@ -1,0 +1,35 @@
+<lsd-surface tone="panel" padding="default" radius="panel" border="default">
+  <article class="lsd-document-card" [attr.aria-labelledby]="headingId()">
+    <header class="lsd-document-card__header">
+      <div class="lsd-document-card__identity">
+        <p class="lsd-document-card__category text-sm font-semibold text-text-muted">{{ document().category }}</p>
+        @switch (headingLevel()) {
+          @case (2) { <h2 class="lsd-document-card__title font-semibold" [id]="headingId()">{{ document().title }}</h2> }
+          @case (3) { <h3 class="lsd-document-card__title font-semibold" [id]="headingId()">{{ document().title }}</h3> }
+          @case (4) { <h4 class="lsd-document-card__title font-semibold" [id]="headingId()">{{ document().title }}</h4> }
+        }
+      </div>
+
+      <div class="lsd-document-card__actions" role="group" [attr.aria-label]="actionsLabel() + ' for ' + document().title">
+        <ng-content select="[lsdDocumentCardActions]" />
+      </div>
+    </header>
+
+    <div class="lsd-document-card__badges" aria-label="Document status and visibility">
+      <lsd-badge size="small" [variant]="document().status.variant">{{ document().status.label }}</lsd-badge>
+      <lsd-badge size="small" [variant]="document().visibility.variant">{{ document().visibility.label }}</lsd-badge>
+    </div>
+
+    <footer class="lsd-document-card__metadata">
+      <lsd-version-chip
+        [versionLabel]="document().version.label"
+        [qualifier]="document().version.qualifier"
+        [qualifierLabel]="document().version.qualifierLabel" />
+      @if (document().updated.dateTime; as dateTime) {
+        <time class="text-sm text-text-muted" [attr.datetime]="dateTime">{{ document().updated.label }}</time>
+      } @else {
+        <span class="text-sm text-text-muted">{{ document().updated.label }}</span>
+      }
+    </footer>
+  </article>
+</lsd-surface>

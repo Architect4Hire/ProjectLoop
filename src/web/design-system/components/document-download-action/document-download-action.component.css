@@ -1,0 +1,7 @@
+:host { display: inline-block; max-inline-size: 100%; }
+.lsd-document-download-action { display: grid; min-inline-size: 0; gap: 0.5rem; justify-items: start; }
+.lsd-document-download-action__announcement { margin: 0; max-inline-size: 30rem; overflow-wrap: anywhere; }
+.lsd-document-download-action lsd-progress { inline-size: min(100%, 24rem); min-inline-size: 14rem; }
+@media (max-width: 29.99rem) {
+  :host, .lsd-document-download-action, .lsd-document-download-action lsd-button, .lsd-document-download-action lsd-progress { inline-size: 100%; }
+}

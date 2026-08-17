@@ -1,0 +1,41 @@
+<lsd-surface
+  tone="panel"
+  padding="default"
+  radius="panel"
+  border="default"
+  [accessibility]="{ role: 'region', label: accessibleName() }">
+  <ol class="lsd-document-version-history" [attr.aria-label]="accessibleName()" [attr.id]="id()">
+    @for (version of versions(); track version.id; let index = $index) {
+      <li class="lsd-document-version-history__item">
+        <span class="lsd-document-version-history__marker" aria-hidden="true"></span>
+        <article class="lsd-document-version-history__entry" [attr.aria-labelledby]="id() + '-version-' + index">
+          <header class="lsd-document-version-history__header">
+            <h3 class="lsd-document-version-history__version" [id]="id() + '-version-' + index">
+              <lsd-version-chip
+                [versionLabel]="version.versionLabel"
+                [qualifier]="version.qualifier"
+                [qualifierLabel]="version.qualifierLabel" />
+            </h3>
+
+            @if (actionsFor(version.id); as actions) {
+              <div
+                class="lsd-document-version-history__actions"
+                role="group"
+                [attr.aria-label]="actionsLabel() + ' for ' + version.versionLabel">
+                <ng-container
+                  [ngTemplateOutlet]="actions.template"
+                  [ngTemplateOutletContext]="actionContext(version, index)" />
+              </div>
+            }
+          </header>
+
+          <p class="lsd-document-version-history__metadata text-sm text-text-muted">
+            <span>{{ version.actor }}</span>
+            <span aria-hidden="true">·</span>
+            <time [attr.datetime]="version.occurredAt">{{ version.timestampLabel }}</time>
+          </p>
+        </article>
+      </li>
+    }
+  </ol>
+</lsd-surface>

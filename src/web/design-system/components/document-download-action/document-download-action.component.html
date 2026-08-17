@@ -1,0 +1,36 @@
+<div class="lsd-document-download-action" [attr.aria-label]="'Download ' + documentLabel()">
+  @switch (state()) {
+    @case ('ready') {
+      <lsd-button [accessibleLabel]="'Download ' + documentLabel()" (activated)="requestDownload()">Download</lsd-button>
+    }
+    @case ('preparing') {
+      <p class="lsd-document-download-action__announcement text-sm text-text-muted"
+        [id]="id() + '-status'" [attr.role]="announcementRole()" [attr.aria-live]="announcementLive()" aria-atomic="true">
+        Preparing {{ documentLabel() }} for download.
+      </p>
+      <lsd-button [disabled]="true">Preparing…</lsd-button>
+    }
+    @case ('downloading') {
+      <p class="lsd-document-download-action__announcement text-sm text-text-muted"
+        [id]="id() + '-status'" [attr.role]="announcementRole()" [attr.aria-live]="announcementLive()" aria-atomic="true">
+        Downloading {{ documentLabel() }}.
+      </p>
+      <lsd-progress [id]="id() + '-progress'" [label]="'Downloading ' + documentLabel()"
+        [value]="progressValue()" [valueText]="progressText()" />
+    }
+    @case ('failed') {
+      <p class="lsd-document-download-action__announcement text-sm font-medium text-status-danger"
+        [id]="id() + '-status'" [attr.role]="announcementRole()" [attr.aria-live]="announcementLive()" aria-atomic="true">
+        {{ failureMessage() }}
+      </p>
+      <lsd-button tone="primary" [accessibleLabel]="'Retry download of ' + documentLabel()" (activated)="retry()">Retry download</lsd-button>
+    }
+    @case ('unavailable') {
+      <p class="lsd-document-download-action__announcement text-sm text-text-muted"
+        [id]="id() + '-status'" [attr.role]="announcementRole()" [attr.aria-live]="announcementLive()" aria-atomic="true">
+        {{ unavailableMessage() }}
+      </p>
+      <lsd-button [disabled]="true" [accessibleLabel]="'Download unavailable for ' + documentLabel()">Download unavailable</lsd-button>
+    }
+  }
+</div>

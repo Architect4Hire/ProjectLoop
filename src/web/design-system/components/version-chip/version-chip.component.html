@@ -1,0 +1,7 @@
+<lsd-badge size="small" [variant]="variant()">
+  <span class="lsd-version-chip__version">{{ versionLabel() }}</span>
+  @if (visibleQualifier(); as label) {
+    <span aria-hidden="true">·</span>
+    <span class="lsd-version-chip__qualifier">{{ label }}</span>
+  }
+</lsd-badge>

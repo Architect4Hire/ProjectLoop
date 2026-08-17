@@ -1,0 +1,11 @@
+:host { display: block; min-inline-size: 0; }
+.lsd-document-upload { display: grid; min-inline-size: 0; gap: 1rem; }
+.lsd-document-upload__metadata { display: grid; min-inline-size: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; }
+.lsd-document-upload__metadata lsd-input { grid-column: 1 / -1; }
+.lsd-document-upload__actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; }
+@media (max-width: 37.49rem) {
+  .lsd-document-upload__metadata { grid-template-columns: minmax(0, 1fr); }
+  .lsd-document-upload__metadata lsd-input { grid-column: auto; }
+  .lsd-document-upload__actions { justify-content: stretch; }
+  .lsd-document-upload__actions lsd-button { flex: 1 1 100%; }
+}

@@ -1,0 +1,11 @@
+:host {
+  display: inline-flex;
+  max-width: 100%;
+}
+
+.lsd-version-chip__version,
+.lsd-version-chip__qualifier {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

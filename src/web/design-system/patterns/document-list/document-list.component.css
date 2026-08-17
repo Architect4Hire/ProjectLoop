@@ -1,0 +1,51 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+
+.lsd-document-list,
+.lsd-document-list__table {
+  min-inline-size: 0;
+}
+
+.lsd-document-list__table {
+  max-inline-size: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--lsd-color-border-default);
+  border-radius: 0.5rem;
+  background: var(--lsd-color-surface-panel);
+}
+
+table {
+  inline-size: 100%;
+  border-collapse: collapse;
+}
+
+thead th {
+  padding: 0.75rem 1rem;
+  background: var(--lsd-color-surface-raised);
+  color: var(--lsd-color-text-primary);
+  font-size: 0.75rem;
+  letter-spacing: 0.025em;
+  text-align: start;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.lsd-document-list__cards {
+  display: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 47.99rem) {
+  .lsd-document-list__table {
+    display: none;
+  }
+
+  .lsd-document-list__cards {
+    display: grid;
+    gap: 0.75rem;
+  }
+}

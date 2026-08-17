@@ -4,13 +4,14 @@ Traceability: PLDS-001.
 
 This checked-in snapshot maps every TypeScript leaf module reachable from
 `public-api.ts` through the category barrels to its implementation and the guide
-assigned by `catalog.json`. It contains 83 public modules. Regenerate the
+assigned by `catalog.json`. It contains 100 public modules. Regenerate the
 snapshot from those sources when a public barrel or catalog mapping changes;
 do not infer missing items from this table alone.
 
 | Category | Public item | Implementation | Guide |
 | --- | --- | --- | --- |
 | Tokens | Borders | [tokens/borders](../tokens/borders.ts) | [elevation-and-layers.md](elevation-and-layers.md) |
+| Tokens | Document status | [tokens/document-status](../tokens/document-status.ts) | [badges-and-status.md](badges-and-status.md) |
 | Tokens | Elevation | [tokens/elevation](../tokens/elevation.ts) | [elevation-and-layers.md](elevation-and-layers.md) |
 | Tokens | Layers | [tokens/layers](../tokens/layers.ts) | [elevation-and-layers.md](elevation-and-layers.md) |
 | Tokens | Motion | [tokens/motion](../tokens/motion.ts) | [motion.md](motion.md) |
@@ -48,6 +49,7 @@ do not infer missing items from this table alone.
 | Components | Breadcrumb | [components/breadcrumb/breadcrumb.component](../components/breadcrumb/breadcrumb.component.ts) | [breadcrumb.md](breadcrumb.md) |
 | Components | Citation chip | [components/citation-chip/citation-chip.component](../components/citation-chip/citation-chip.component.ts) | [citation-chip.md](citation-chip.md) |
 | Components | Data table | [components/data-table/data-table.component](../components/data-table/data-table.component.ts) | [data-table.md](data-table.md) |
+| Components | Document download action | [components/document-download-action/document-download-action.component](../components/document-download-action/document-download-action.component.ts) | [document-download-action.md](document-download-action.md) |
 | Components | File picker | [components/file-picker/file-picker.component](../components/file-picker/file-picker.component.ts) | [file-picker.md](file-picker.md) |
 | Components | Notification service | [components/notification/notification.service](../components/notification/notification.service.ts) | [notifications.md](notifications.md) |
 | Components | Notification viewport | [components/notification/notification-viewport.component](../components/notification/notification-viewport.component.ts) | [notifications.md](notifications.md) |
@@ -55,6 +57,7 @@ do not infer missing items from this table alone.
 | Components | Skip link | [components/skip-link/skip-link.component](../components/skip-link/skip-link.component.ts) | [skip-link.md](skip-link.md) |
 | Components | Stepper | [components/stepper/stepper.component](../components/stepper/stepper.component.ts) | [stepper.md](stepper.md) |
 | Components | User menu | [components/user-menu/user-menu.component](../components/user-menu/user-menu.component.ts) | [user-menu.md](user-menu.md) |
+| Components | Version chip | [components/version-chip/version-chip.component](../components/version-chip/version-chip.component.ts) | [version-chip.md](version-chip.md) |
 | Patterns | Activity stream | [patterns/activity-stream/activity-stream.component](../patterns/activity-stream/activity-stream.component.ts) | [activity-stream.md](activity-stream.md) |
 | Patterns | Activity stream details | [patterns/activity-stream/activity-stream-details.directive](../patterns/activity-stream/activity-stream-details.directive.ts) | [activity-stream.md](activity-stream.md) |
 | Patterns | AI confidence | [patterns/ai-confidence/ai-confidence.component](../patterns/ai-confidence/ai-confidence.component.ts) | [ai-confidence.md](ai-confidence.md) |
@@ -62,6 +65,9 @@ do not infer missing items from this table alone.
 | Patterns | AI generation progress | [patterns/ai-generation-progress/ai-generation-progress.component](../patterns/ai-generation-progress/ai-generation-progress.component.ts) | [ai-generation-progress.md](ai-generation-progress.md) |
 | Patterns | AI failure | [patterns/ai-failure/ai-failure.component](../patterns/ai-failure/ai-failure.component.ts) | [ai-failure.md](ai-failure.md) |
 | Patterns | Command palette | [patterns/command-palette/command-palette.component](../patterns/command-palette/command-palette.component.ts) | [command-palette.md](command-palette.md) |
+| Patterns | Document list | [patterns/document-list/document-list.component](../patterns/document-list/document-list.component.ts) | [document-list.md](document-list.md) |
+| Patterns | Document version history actions | [patterns/document-version-history/document-version-history-actions.directive](../patterns/document-version-history/document-version-history-actions.directive.ts) | [document-version-history.md](document-version-history.md) |
+| Patterns | Document version history | [patterns/document-version-history/document-version-history.component](../patterns/document-version-history/document-version-history.component.ts) | [document-version-history.md](document-version-history.md) |
 | Patterns | Filter action bar | [patterns/filter-action-bar/filter-action-bar.component](../patterns/filter-action-bar/filter-action-bar.component.ts) | [filter-action-bar.md](filter-action-bar.md) |
 | Patterns | Form section | [patterns/form-section/form-section.component](../patterns/form-section/form-section.component.ts) | [form-section.md](form-section.md) |
 | Patterns | Master detail | [patterns/master-detail/master-detail.component](../patterns/master-detail/master-detail.component.ts) | [master-detail.md](master-detail.md) |
@@ -81,7 +87,11 @@ do not infer missing items from this table alone.
 | Recipes | AI generation drawer | [recipes/ai-generation-drawer/ai-generation-drawer.component](../recipes/ai-generation-drawer/ai-generation-drawer.component.ts) | [ai-generation-drawer.md](ai-generation-drawer.md) |
 | Recipes | Approval actions | [recipes/approval-actions/approval-actions.component](../recipes/approval-actions/approval-actions.component.ts) | [approval-actions.md](approval-actions.md) |
 | Recipes | Decision comparison | [recipes/decision-comparison/decision-comparison.component](../recipes/decision-comparison/decision-comparison.component.ts) | [decision-comparison.md](decision-comparison.md) |
+| Recipes | Document card | [recipes/document-card/document-card.component](../recipes/document-card/document-card.component.ts) | [document-card.md](document-card.md) |
+| Recipes | Document filters | [recipes/document-filters/document-filters.component](../recipes/document-filters/document-filters.component.ts) | [document-filters.md](document-filters.md) |
+| Recipes | Document row | [recipes/document-row/document-row.component](../recipes/document-row/document-row.component.ts) | [document-row.md](document-row.md) |
 | Recipes | Document section editor | [recipes/document-section-editor/document-section-editor.component](../recipes/document-section-editor/document-section-editor.component.ts) | [document-section-editor.md](document-section-editor.md) |
+| Recipes | Document upload | [recipes/document-upload/document-upload.component](../recipes/document-upload/document-upload.component.ts) | [document-upload.md](document-upload.md) |
 | Recipes | Engagement header | [recipes/engagement-header/engagement-header.component](../recipes/engagement-header/engagement-header.component.ts) | [engagement-header.md](engagement-header.md) |
 | Recipes | Knowledge result | [recipes/knowledge-result/knowledge-result.component](../recipes/knowledge-result/knowledge-result.component.ts) | [knowledge-result.md](knowledge-result.md) |
 | Recipes | Metric card | [recipes/metric-card/metric-card.component](../recipes/metric-card/metric-card.component.ts) | [metric-card.md](metric-card.md) |

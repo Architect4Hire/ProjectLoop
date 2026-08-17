@@ -1,0 +1,48 @@
+<form (submit)="submit($event)">
+  <lsd-filter-action-bar
+    [id]="id()"
+    [accessibleName]="accessibleName()"
+    filtersLabel="Document filters"
+    actionsLabel="Filter actions"
+    [activeFilterCount]="activeFilterCount()">
+    <div lsdFilterBarFilters class="lsd-document-filters__controls">
+      <lsd-select
+        [id]="id() + '-project'"
+        label="Project"
+        name="project"
+        placeholder="All projects"
+        [options]="projectOptions()"
+        [value]="project()"
+        (valueChange)="project.set($event)" />
+      <lsd-select
+        [id]="id() + '-category'"
+        label="Category"
+        name="category"
+        placeholder="All categories"
+        [options]="categoryOptions()"
+        [value]="category()"
+        (valueChange)="category.set($event)" />
+      <lsd-select
+        [id]="id() + '-status'"
+        label="Status"
+        name="status"
+        placeholder="All statuses"
+        [options]="statusOptions()"
+        [value]="status()"
+        (valueChange)="status.set($event)" />
+      <lsd-select
+        [id]="id() + '-visibility'"
+        label="Visibility"
+        name="visibility"
+        placeholder="All visibility values"
+        [options]="visibilityOptions()"
+        [value]="visibility()"
+        (valueChange)="visibility.set($event)" />
+    </div>
+
+    <div lsdFilterBarActions class="lsd-document-filters__actions">
+      <lsd-button type="button" impact="minimal" tone="neutral" (activated)="reset()">Reset</lsd-button>
+      <lsd-button type="submit">Apply filters</lsd-button>
+    </div>
+  </lsd-filter-action-bar>
+</form>
