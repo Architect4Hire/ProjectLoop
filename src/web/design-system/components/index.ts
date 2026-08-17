@@ -4,6 +4,7 @@ export * from './breadcrumb/breadcrumb.component';
 export * from './citation-chip/citation-chip.component';
 export * from './data-table/data-table.component';
 export * from './document-download-action/document-download-action.component';
+export * from './error-summary/error-summary.component';
 export * from './file-picker/file-picker.component';
 export * from './notification/notification.service';
 export * from './notification/notification-viewport.component';

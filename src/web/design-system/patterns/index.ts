@@ -1,6 +1,7 @@
 export * from './activity-stream/activity-stream.component';
 export * from './activity-stream/activity-stream-details.directive';
 export * from './approval-history/approval-history.component';
+export * from './audit-timeline/audit-timeline.component';
 export * from './ai-confidence/ai-confidence.component';
 export * from './ai-content/ai-content.component';
 export * from './ai-generation-progress/ai-generation-progress.component';

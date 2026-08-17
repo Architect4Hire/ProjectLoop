@@ -1,0 +1,6 @@
+:host { display: block; min-inline-size: 0; }
+.lsd-audit-timeline { display: grid; min-inline-size: 0; gap: 1rem; }
+.lsd-audit-timeline__load-more { display: flex; justify-content: center; }
+@media (max-width: 30rem) {
+  .lsd-audit-timeline__load-more lsd-button { inline-size: 100%; }
+}

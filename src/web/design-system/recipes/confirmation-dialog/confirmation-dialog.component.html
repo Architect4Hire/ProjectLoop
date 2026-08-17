@@ -1,0 +1,27 @@
+<lsd-dialog
+  [id]="id()"
+  [title]="title()"
+  [description]="consequenceText()"
+  size="small"
+  [open]="open()"
+  [dismissible]="!processing()"
+  (closeRequested)="requestCancellation($event)">
+  <p class="lsd-confirmation-dialog__consequence">{{ consequenceText() }}</p>
+
+  <div lsdDialogActions class="lsd-confirmation-dialog__actions">
+    <lsd-button
+      tone="neutral"
+      impact="minimal"
+      [disabled]="processing()"
+      (activated)="requestCancellation('cancel-button')">
+      {{ cancelLabel() }}
+    </lsd-button>
+    <lsd-button
+      [tone]="actionTone()"
+      [loading]="processing()"
+      [loadingLabel]="processingLabel()"
+      (activated)="requestConfirmation()">
+      {{ actionLabel() }}
+    </lsd-button>
+  </div>
+</lsd-dialog>

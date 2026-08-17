@@ -1,0 +1,39 @@
+<lsd-surface tone="panel" padding="compact" radius="panel" border="default">
+  <article class="lsd-audit-event" [attr.aria-labelledby]="headingId()">
+    <header class="lsd-audit-event__header">
+      <div class="lsd-audit-event__summary">
+        <p class="lsd-audit-event__actor text-sm text-text-muted">{{ actorLabel() }}</p>
+        <h3 class="lsd-audit-event__action font-semibold" [id]="headingId()">{{ action() }}</h3>
+      </div>
+      <lsd-badge size="small" variant="neutral">{{ resource().typeLabel }}</lsd-badge>
+    </header>
+
+    <p class="lsd-audit-event__resource text-sm">
+      <span class="text-text-muted">Resource</span>
+      <strong>{{ resource().label }}</strong>
+    </p>
+
+    <time class="lsd-audit-event__time text-sm text-text-muted" [attr.datetime]="occurredAt().dateTime">
+      {{ occurredAt().label }}
+    </time>
+
+    <div class="lsd-audit-event__correlation">
+      <span class="text-xs text-text-muted">Correlation identifier</span>
+      <code>{{ correlationId() }}</code>
+      <lsd-button
+        size="small"
+        tone="neutral"
+        impact="minimal"
+        [accessibleLabel]="'Copy correlation identifier ' + correlationId()"
+        (activated)="correlationCopyRequested.emit(correlationId())">
+        Copy
+      </lsd-button>
+    </div>
+
+    @if (hasDetails()) {
+      <section class="lsd-audit-event__details" [attr.aria-label]="detailsLabel()">
+        <ng-content select="[lsdAuditEventDetails]" />
+      </section>
+    }
+  </article>
+</lsd-surface>

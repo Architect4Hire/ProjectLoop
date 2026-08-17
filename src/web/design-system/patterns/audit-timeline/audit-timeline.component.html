@@ -1,0 +1,51 @@
+<section class="lsd-audit-timeline" [attr.aria-label]="accessibleName()">
+  <lsd-activity-stream
+    [id]="id() + '-events'"
+    [accessibleName]="accessibleName()"
+    [items]="activityItems()"
+    detailsLabel="Show audit event"
+    [emptyTitle]="emptyTitle()"
+    [emptyDescription]="emptyDescription()">
+    <ng-template lsdActivityDetails let-item>
+      @if (event(item.identity); as auditEvent) {
+        <lsd-audit-event
+          [id]="id() + '-' + auditEvent.id"
+          [actor]="auditEvent.actor"
+          [action]="auditEvent.action"
+          [resource]="auditEvent.resource"
+          [occurredAt]="{ label: auditEvent.timestampLabel, dateTime: auditEvent.occurredAt }"
+          [correlationId]="auditEvent.correlationId"
+          [hasDetails]="!!auditEvent.redactedDetailsSummary"
+          (correlationCopyRequested)="correlationCopyRequested.emit($event)">
+          @if (auditEvent.redactedDetailsSummary) {
+            <p lsdAuditEventDetails>{{ auditEvent.redactedDetailsSummary }}</p>
+          }
+        </lsd-audit-event>
+      }
+    </ng-template>
+  </lsd-activity-stream>
+
+  @if (events().length > 0) {
+    @if (paging(); as pagination) {
+      @if (pagination.mode === 'pages') {
+        <lsd-pagination
+          accessibleName="Audit timeline pages"
+          [currentPage]="pagination.currentPage"
+          [totalPages]="pagination.totalPages"
+          (pageChange)="pageChange.emit($event)" />
+      } @else {
+        <div class="lsd-audit-timeline__load-more">
+          <lsd-button
+            tone="neutral"
+            impact="light"
+            [disabled]="!pagination.hasMore"
+            [loading]="pagination.loading ?? false"
+            loadingLabel="Loading more audit events"
+            (activated)="requestMore()">
+            {{ pagination.hasMore ? 'Load more' : 'All audit events loaded' }}
+          </lsd-button>
+        </div>
+      }
+    }
+  }
+</section>

@@ -1,0 +1,19 @@
+@if (errors().length > 0) {
+  <div #summary class="lsd-error-summary" tabindex="-1">
+    <lsd-alert-banner
+      [id]="id()"
+      [title]="title()"
+      severity="danger"
+      announcement="assertive">
+      <ul class="lsd-error-summary__list">
+        @for (error of errors(); track error.controlId) {
+          <li>
+            <a lsdLink impact="minimal" size="small" tone="danger" [href]="'#' + error.controlId">
+              {{ error.label }}
+            </a>
+          </li>
+        }
+      </ul>
+    </lsd-alert-banner>
+  </div>
+}

@@ -3,6 +3,8 @@ export * from './ai-generation-drawer/ai-generation-drawer.component';
 export * from './approval-actions/approval-actions.component';
 export * from './approval-comment-field/approval-comment-field.component';
 export * from './approval-request-banner/approval-request-banner.component';
+export * from './audit-event/audit-event.component';
+export * from './confirmation-dialog/confirmation-dialog.component';
 export * from './decision-comparison/decision-comparison.component';
 export * from './document-section-editor/document-section-editor.component';
 export * from './document-card/document-card.component';

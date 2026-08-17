@@ -1,0 +1,7 @@
+:host { display: contents; }
+.lsd-confirmation-dialog__consequence { margin: 0; overflow-wrap: anywhere; }
+.lsd-confirmation-dialog__actions { display: flex; min-inline-size: 0; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem; }
+@media (max-width: 30rem) {
+  .lsd-confirmation-dialog__actions { align-items: stretch; flex-direction: column-reverse; }
+  .lsd-confirmation-dialog__actions lsd-button { inline-size: 100%; }
+}

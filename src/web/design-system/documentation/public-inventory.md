@@ -4,7 +4,7 @@ Traceability: PLDS-001.
 
 This checked-in snapshot maps every TypeScript leaf module reachable from
 `public-api.ts` through the category barrels to its implementation and the guide
-assigned by `catalog.json`. It contains 106 public modules. Regenerate the
+assigned by `catalog.json`. It contains 110 public modules. Regenerate the
 snapshot from those sources when a public barrel or catalog mapping changes;
 do not infer missing items from this table alone.
 
@@ -51,6 +51,7 @@ do not infer missing items from this table alone.
 | Components | Citation chip | [components/citation-chip/citation-chip.component](../components/citation-chip/citation-chip.component.ts) | [citation-chip.md](citation-chip.md) |
 | Components | Data table | [components/data-table/data-table.component](../components/data-table/data-table.component.ts) | [data-table.md](data-table.md) |
 | Components | Document download action | [components/document-download-action/document-download-action.component](../components/document-download-action/document-download-action.component.ts) | [document-download-action.md](document-download-action.md) |
+| Components | Error summary | [components/error-summary/error-summary.component](../components/error-summary/error-summary.component.ts) | [error-summary.md](error-summary.md) |
 | Components | File picker | [components/file-picker/file-picker.component](../components/file-picker/file-picker.component.ts) | [file-picker.md](file-picker.md) |
 | Components | Notification service | [components/notification/notification.service](../components/notification/notification.service.ts) | [notifications.md](notifications.md) |
 | Components | Notification viewport | [components/notification/notification-viewport.component](../components/notification/notification-viewport.component.ts) | [notifications.md](notifications.md) |
@@ -62,6 +63,7 @@ do not infer missing items from this table alone.
 | Patterns | Activity stream | [patterns/activity-stream/activity-stream.component](../patterns/activity-stream/activity-stream.component.ts) | [activity-stream.md](activity-stream.md) |
 | Patterns | Activity stream details | [patterns/activity-stream/activity-stream-details.directive](../patterns/activity-stream/activity-stream-details.directive.ts) | [activity-stream.md](activity-stream.md) |
 | Patterns | Approval history | [patterns/approval-history/approval-history.component](../patterns/approval-history/approval-history.component.ts) | [approval-history.md](approval-history.md) |
+| Patterns | Audit timeline | [patterns/audit-timeline/audit-timeline.component](../patterns/audit-timeline/audit-timeline.component.ts) | [audit-timeline.md](audit-timeline.md) |
 | Patterns | AI confidence | [patterns/ai-confidence/ai-confidence.component](../patterns/ai-confidence/ai-confidence.component.ts) | [ai-confidence.md](ai-confidence.md) |
 | Patterns | AI content | [patterns/ai-content/ai-content.component](../patterns/ai-content/ai-content.component.ts) | [ai-content.md](ai-content.md) |
 | Patterns | AI generation progress | [patterns/ai-generation-progress/ai-generation-progress.component](../patterns/ai-generation-progress/ai-generation-progress.component.ts) | [ai-generation-progress.md](ai-generation-progress.md) |
@@ -91,6 +93,8 @@ do not infer missing items from this table alone.
 | Recipes | Approval actions | [recipes/approval-actions/approval-actions.component](../recipes/approval-actions/approval-actions.component.ts) | [approval-actions.md](approval-actions.md) |
 | Recipes | Approval comment field | [recipes/approval-comment-field/approval-comment-field.component](../recipes/approval-comment-field/approval-comment-field.component.ts) | [approval-comment-field.md](approval-comment-field.md) |
 | Recipes | Approval request banner | [recipes/approval-request-banner/approval-request-banner.component](../recipes/approval-request-banner/approval-request-banner.component.ts) | [approval-request-banner.md](approval-request-banner.md) |
+| Recipes | Audit event | [recipes/audit-event/audit-event.component](../recipes/audit-event/audit-event.component.ts) | [audit-event.md](audit-event.md) |
+| Recipes | Confirmation dialog | [recipes/confirmation-dialog/confirmation-dialog.component](../recipes/confirmation-dialog/confirmation-dialog.component.ts) | [confirmation-dialog.md](confirmation-dialog.md) |
 | Recipes | Decision comparison | [recipes/decision-comparison/decision-comparison.component](../recipes/decision-comparison/decision-comparison.component.ts) | [decision-comparison.md](decision-comparison.md) |
 | Recipes | Document card | [recipes/document-card/document-card.component](../recipes/document-card/document-card.component.ts) | [document-card.md](document-card.md) |
 | Recipes | Document filters | [recipes/document-filters/document-filters.component](../recipes/document-filters/document-filters.component.ts) | [document-filters.md](document-filters.md) |
