@@ -45,3 +45,26 @@ const presentation = documentStatusPresentation('published', labels);
 ```
 
 Use the returned `label` as visible Badge content and its `variant` as the Badge variant. Supply a complete caller-owned label map for localization; the semantic variant mapping remains stable. `published` uses `approved`, `superseded` uses `deprecated`, and archived uses `archived`; draft is informational and unavailable is neutral.
+
+## Approval status presentation
+
+The approval-status token maps the complete presentation vocabulary `requested | approved | rejected | cancelled | expired` to existing Badge variants. Its labels are explicit, visible text, and it defines no transitions or approval workflow behavior.
+
+```ts
+import {
+  approvalStatusPresentation,
+  type ApprovalStatusLabels,
+} from 'src/web/design-system/public-api';
+
+const labels: ApprovalStatusLabels = {
+  requested: $localize`Requested`,
+  approved: $localize`Approved`,
+  rejected: $localize`Rejected`,
+  cancelled: $localize`Cancelled`,
+  expired: $localize`Expired`,
+};
+
+const presentation = approvalStatusPresentation('requested', labels);
+```
+
+Use the returned `label` as visible Badge content and its `variant` as the Badge variant. Requested is informational, approved uses the approved semantic, rejected uses danger, cancelled is neutral, and expired uses warning. Callers may replace the complete label map for localization without changing those semantics.

@@ -1,3 +1,4 @@
+export * from './approval-status';
 export * from './borders';
 export * from './document-status';
 export * from './elevation';

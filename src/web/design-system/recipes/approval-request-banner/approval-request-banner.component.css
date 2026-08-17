@@ -1,0 +1,44 @@
+:host {
+  display: block;
+  min-inline-size: 0;
+}
+
+.lsd-approval-request-banner__summary,
+.lsd-approval-request-banner__target,
+.lsd-approval-request-banner__metadata {
+  display: flex;
+  min-inline-size: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.lsd-approval-request-banner__summary {
+  justify-content: space-between;
+}
+
+.lsd-approval-request-banner__target,
+.lsd-approval-request-banner__metadata {
+  margin: 0;
+}
+
+.lsd-approval-request-banner__target strong,
+.lsd-approval-request-banner__metadata dd {
+  overflow-wrap: anywhere;
+}
+
+.lsd-approval-request-banner__metadata {
+  margin-block-start: 0.75rem;
+  align-items: start;
+}
+
+.lsd-approval-request-banner__metadata div {
+  display: grid;
+  min-inline-size: min(100%, 12rem);
+  gap: 0.125rem;
+}
+
+.lsd-approval-request-banner__metadata dd {
+  margin: 0;
+  font-weight: 600;
+}

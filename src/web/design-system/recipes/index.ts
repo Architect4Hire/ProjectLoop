@@ -1,6 +1,8 @@
 export * from './adr-summary/adr-summary.component';
 export * from './ai-generation-drawer/ai-generation-drawer.component';
 export * from './approval-actions/approval-actions.component';
+export * from './approval-comment-field/approval-comment-field.component';
+export * from './approval-request-banner/approval-request-banner.component';
 export * from './decision-comparison/decision-comparison.component';
 export * from './document-section-editor/document-section-editor.component';
 export * from './document-card/document-card.component';
@@ -12,6 +14,7 @@ export * from './knowledge-result/knowledge-result.component';
 export * from './metric-card/metric-card.component';
 export * from './milestone-list/milestone-list.component';
 export * from './phase-navigation/phase-navigation.component';
+export * from './pending-approvals-list/pending-approvals-list.component';
 export * from './project-health/project-health.component';
 export * from './raid-register/raid-register.component';
 export * from './recent-decisions/recent-decisions.component';

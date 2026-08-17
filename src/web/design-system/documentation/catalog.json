@@ -1,4 +1,5 @@
 [
+  { "category": "Tokens", "name": "Approval status", "publicModule": "tokens/approval-status", "doc": "badges-and-status.md" },
   { "category": "Tokens", "name": "Borders", "publicModule": "tokens/borders", "doc": "elevation-and-layers.md" },
   { "category": "Tokens", "name": "Document status", "publicModule": "tokens/document-status", "doc": "badges-and-status.md" },
   { "category": "Tokens", "name": "Elevation", "publicModule": "tokens/elevation", "doc": "elevation-and-layers.md" },
@@ -59,6 +60,7 @@
 
   { "category": "Patterns", "name": "Activity stream", "publicModule": "patterns/activity-stream/activity-stream.component", "doc": "activity-stream.md" },
   { "category": "Patterns", "name": "Activity stream details", "publicModule": "patterns/activity-stream/activity-stream-details.directive", "doc": "activity-stream.md" },
+  { "category": "Patterns", "name": "Approval history", "publicModule": "patterns/approval-history/approval-history.component", "doc": "approval-history.md" },
   { "category": "Patterns", "name": "AI confidence", "publicModule": "patterns/ai-confidence/ai-confidence.component", "doc": "ai-confidence.md" },
   { "category": "Patterns", "name": "AI content", "publicModule": "patterns/ai-content/ai-content.component", "doc": "ai-content.md" },
   { "category": "Patterns", "name": "AI generation progress", "publicModule": "patterns/ai-generation-progress/ai-generation-progress.component", "doc": "ai-generation-progress.md" },
@@ -82,10 +84,13 @@
   { "category": "Patterns", "name": "State feedback details", "publicModule": "patterns/state-feedback/state-feedback-details.component", "doc": "state-feedback.md" },
   { "category": "Patterns", "name": "Suggested change", "publicModule": "patterns/suggested-change/suggested-change.component", "doc": "suggested-change.md" },
   { "category": "Patterns", "name": "Version comparison", "publicModule": "patterns/version-comparison/version-comparison.component", "doc": "version-comparison.md" },
+  { "category": "Patterns", "name": "Version-bound approval", "publicModule": "patterns/version-bound-approval/version-bound-approval.component", "doc": "version-bound-approval.md" },
 
   { "category": "Recipes", "name": "ADR summary", "publicModule": "recipes/adr-summary/adr-summary.component", "doc": "adr-summary.md" },
   { "category": "Recipes", "name": "AI generation drawer", "publicModule": "recipes/ai-generation-drawer/ai-generation-drawer.component", "doc": "ai-generation-drawer.md" },
   { "category": "Recipes", "name": "Approval actions", "publicModule": "recipes/approval-actions/approval-actions.component", "doc": "approval-actions.md" },
+  { "category": "Recipes", "name": "Approval comment field", "publicModule": "recipes/approval-comment-field/approval-comment-field.component", "doc": "approval-comment-field.md" },
+  { "category": "Recipes", "name": "Approval request banner", "publicModule": "recipes/approval-request-banner/approval-request-banner.component", "doc": "approval-request-banner.md" },
   { "category": "Recipes", "name": "Decision comparison", "publicModule": "recipes/decision-comparison/decision-comparison.component", "doc": "decision-comparison.md" },
   { "category": "Recipes", "name": "Document card", "publicModule": "recipes/document-card/document-card.component", "doc": "document-card.md" },
   { "category": "Recipes", "name": "Document filters", "publicModule": "recipes/document-filters/document-filters.component", "doc": "document-filters.md" },
@@ -97,6 +102,7 @@
   { "category": "Recipes", "name": "Metric card", "publicModule": "recipes/metric-card/metric-card.component", "doc": "metric-card.md" },
   { "category": "Recipes", "name": "Milestone list", "publicModule": "recipes/milestone-list/milestone-list.component", "doc": "milestone-list.md" },
   { "category": "Recipes", "name": "Phase navigation", "publicModule": "recipes/phase-navigation/phase-navigation.component", "doc": "phase-navigation.md" },
+  { "category": "Recipes", "name": "Pending approvals list", "publicModule": "recipes/pending-approvals-list/pending-approvals-list.component", "doc": "pending-approvals-list.md" },
   { "category": "Recipes", "name": "Project health", "publicModule": "recipes/project-health/project-health.component", "doc": "project-health.md" },
   { "category": "Recipes", "name": "RAID register", "publicModule": "recipes/raid-register/raid-register.component", "doc": "raid-register.md" },
   { "category": "Recipes", "name": "Recent decisions", "publicModule": "recipes/recent-decisions/recent-decisions.component", "doc": "recent-decisions.md" },

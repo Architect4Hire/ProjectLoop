@@ -61,6 +61,7 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 ## Patterns
 
 - [Activity stream and details](activity-stream.md)
+- [Approval history](approval-history.md)
 - [AI confidence](ai-confidence.md)
 - [AI content](ai-content.md)
 - [AI failure](ai-failure.md)
@@ -80,12 +81,15 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 - [State feedback and details](state-feedback.md)
 - [Suggested change](suggested-change.md)
 - [Version comparison](version-comparison.md)
+- [Version-bound approval](version-bound-approval.md)
 
 ## Recipes
 
 - [ADR summary](adr-summary.md)
 - [AI generation drawer](ai-generation-drawer.md)
 - [Approval actions](approval-actions.md)
+- [Approval comment field](approval-comment-field.md)
+- [Approval request banner](approval-request-banner.md)
 - [Decision comparison](decision-comparison.md)
 - [Document card](document-card.md)
 - [Document filters](document-filters.md)
@@ -95,6 +99,7 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 - [Engagement header](engagement-header.md)
 - [Knowledge search result](knowledge-result.md)
 - [Phase navigation](phase-navigation.md)
+- [Pending approvals list](pending-approvals-list.md)
 - [Project health](project-health.md)
 - [RAID register](raid-register.md)
 - [Recent decisions](recent-decisions.md)

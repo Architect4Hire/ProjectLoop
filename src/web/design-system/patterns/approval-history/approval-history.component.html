@@ -1,0 +1,21 @@
+<lsd-activity-stream
+  [id]="id()"
+  [accessibleName]="accessibleName()"
+  [items]="activityItems()"
+  detailsLabel="Show decision evidence"
+  [emptyTitle]="emptyTitle()"
+  [emptyDescription]="emptyDescription()">
+  <ng-template lsdActivityDetails let-item>
+    <div class="lsd-approval-history__evidence">
+      <p class="lsd-approval-history__target">
+        <span class="text-text-muted">Exact target</span>
+        <strong>{{ entry(item.identity).targetTypeLabel }} · {{ entry(item.identity).targetLabel }}</strong>
+        <lsd-version-chip [versionLabel]="entry(item.identity).versionLabel" />
+      </p>
+      <p class="lsd-approval-history__comment">
+        <span class="text-text-muted">Comment</span>
+        <span>{{ entry(item.identity).commentSummary }}</span>
+      </p>
+    </div>
+  </ng-template>
+</lsd-activity-stream>

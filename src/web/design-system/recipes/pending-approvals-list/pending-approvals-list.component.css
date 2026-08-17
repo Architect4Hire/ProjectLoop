@@ -1,0 +1,15 @@
+:host { display: block; min-inline-size: 0; }
+.lsd-pending-approvals-list,
+.lsd-pending-approvals-list__list { min-inline-size: 0; }
+.lsd-pending-approvals-list__list { display: grid; margin: 0; padding: 0; list-style: none; }
+.lsd-pending-approvals-list__item { display: grid; min-inline-size: 0; grid-template-columns: minmax(0, 1fr) minmax(8rem, auto) auto auto; align-items: center; gap: 0.5rem 0.75rem; padding: 0.625rem 0; }
+.lsd-pending-approvals-list__item + .lsd-pending-approvals-list__item { border-block-start: 1px solid var(--lsd-color-border-default); }
+.lsd-pending-approvals-list__target { display: flex; min-inline-size: 0; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.5rem; }
+.lsd-pending-approvals-list__target strong,
+.lsd-pending-approvals-list__requester span:last-child { overflow-wrap: anywhere; }
+.lsd-pending-approvals-list__requester { display: grid; margin: 0; gap: 0.125rem; }
+.lsd-pending-approvals-list__empty { margin: 0; }
+@media (max-width: 40rem) {
+  .lsd-pending-approvals-list__item { grid-template-columns: minmax(0, 1fr) auto; align-items: start; }
+  .lsd-pending-approvals-list__requester { grid-column: 1 / -1; }
+}

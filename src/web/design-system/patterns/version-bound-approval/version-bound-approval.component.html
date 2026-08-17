@@ -1,0 +1,47 @@
+<section class="lsd-version-bound-approval" [attr.aria-label]="'Review ' + target().label + ' ' + target().versionLabel">
+  <lsd-approval-request-banner
+    [id]="id() + '-request'"
+    [target]="target()"
+    [status]="requestStatus()"
+    [requester]="requester()"
+    [requestedTime]="requestedTime()" />
+
+  <lsd-approval-comment-field
+    [id]="id() + '-comment'"
+    [required]="commentRequired()"
+    [maxLength]="commentMaxLength()"
+    [help]="commentHelp()"
+    [error]="commentError()"
+    [value]="comment()"
+    (valueChange)="comment.set($event)" />
+
+  <lsd-approval-actions
+    [id]="id() + '-actions'"
+    [status]="reviewStatus()"
+    [provenance]="provenance()"
+    [processing]="processing()"
+    [warnings]="warnings()"
+    [approveDisabled]="approveDisabled()"
+    [rejectDisabled]="rejectDisabled()"
+    [requestChangeDisabled]="requestChangeDisabled()"
+    (approved)="emitDecision('approve')"
+    (rejected)="emitDecision('reject')"
+    (changeRequested)="emitDecision('request-change')">
+    <div lsdApprovalContext class="lsd-version-bound-approval__context">
+      <span>
+        <span class="lsd-version-bound-approval__context-label">Reviewing</span>
+        <strong>{{ target().label }}</strong>
+      </span>
+      <lsd-version-chip [versionLabel]="target().versionLabel" />
+      @if (currentVersion(); as current) {
+        <span class="lsd-version-bound-approval__current">
+          <span class="lsd-version-bound-approval__context-label">Current version</span>
+          <lsd-version-chip
+            [versionLabel]="current.label"
+            qualifier="current"
+            [qualifierLabel]="current.qualifierLabel" />
+        </span>
+      }
+    </div>
+  </lsd-approval-actions>
+</section>

@@ -1,5 +1,6 @@
 export * from './activity-stream/activity-stream.component';
 export * from './activity-stream/activity-stream-details.directive';
+export * from './approval-history/approval-history.component';
 export * from './ai-confidence/ai-confidence.component';
 export * from './ai-content/ai-content.component';
 export * from './ai-generation-progress/ai-generation-progress.component';
@@ -23,3 +24,4 @@ export * from './state-feedback/state-feedback.component';
 export * from './state-feedback/state-feedback-details.component';
 export * from './suggested-change/suggested-change.component';
 export * from './version-comparison/version-comparison.component';
+export * from './version-bound-approval/version-bound-approval.component';

@@ -1,0 +1,38 @@
+<lsd-alert-banner
+  [id]="id()"
+  [title]="title()"
+  severity="info"
+  announcement="off">
+  @if (validTarget(); as requestTarget) {
+    <div class="lsd-approval-request-banner__summary">
+      <p class="lsd-approval-request-banner__target">
+        <span class="text-sm text-text-muted">{{ requestTarget.typeLabel }}</span>
+        <strong>{{ requestTarget.label }}</strong>
+        @if (requestTarget.type === 'document') {
+          <lsd-version-chip
+            [versionLabel]="requestTarget.versionLabel"
+            [qualifier]="requestTarget.versionQualifier"
+            [qualifierLabel]="requestTarget.versionQualifierLabel" />
+        }
+      </p>
+      <lsd-badge size="small" [variant]="status().variant">{{ status().label }}</lsd-badge>
+    </div>
+
+    <dl class="lsd-approval-request-banner__metadata text-sm">
+      <div>
+        <dt class="text-text-muted">Requested by</dt>
+        <dd>{{ requester() }}</dd>
+      </div>
+      <div>
+        <dt class="text-text-muted">Requested</dt>
+        <dd>
+          @if (requestedTime().dateTime; as dateTime) {
+            <time [attr.datetime]="dateTime">{{ requestedTime().label }}</time>
+          } @else {
+            {{ requestedTime().label }}
+          }
+        </dd>
+      </div>
+    </dl>
+  }
+</lsd-alert-banner>

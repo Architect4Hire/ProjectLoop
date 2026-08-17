@@ -4,12 +4,13 @@ Traceability: PLDS-001.
 
 This checked-in snapshot maps every TypeScript leaf module reachable from
 `public-api.ts` through the category barrels to its implementation and the guide
-assigned by `catalog.json`. It contains 100 public modules. Regenerate the
+assigned by `catalog.json`. It contains 106 public modules. Regenerate the
 snapshot from those sources when a public barrel or catalog mapping changes;
 do not infer missing items from this table alone.
 
 | Category | Public item | Implementation | Guide |
 | --- | --- | --- | --- |
+| Tokens | Approval status | [tokens/approval-status](../tokens/approval-status.ts) | [badges-and-status.md](badges-and-status.md) |
 | Tokens | Borders | [tokens/borders](../tokens/borders.ts) | [elevation-and-layers.md](elevation-and-layers.md) |
 | Tokens | Document status | [tokens/document-status](../tokens/document-status.ts) | [badges-and-status.md](badges-and-status.md) |
 | Tokens | Elevation | [tokens/elevation](../tokens/elevation.ts) | [elevation-and-layers.md](elevation-and-layers.md) |
@@ -60,6 +61,7 @@ do not infer missing items from this table alone.
 | Components | Version chip | [components/version-chip/version-chip.component](../components/version-chip/version-chip.component.ts) | [version-chip.md](version-chip.md) |
 | Patterns | Activity stream | [patterns/activity-stream/activity-stream.component](../patterns/activity-stream/activity-stream.component.ts) | [activity-stream.md](activity-stream.md) |
 | Patterns | Activity stream details | [patterns/activity-stream/activity-stream-details.directive](../patterns/activity-stream/activity-stream-details.directive.ts) | [activity-stream.md](activity-stream.md) |
+| Patterns | Approval history | [patterns/approval-history/approval-history.component](../patterns/approval-history/approval-history.component.ts) | [approval-history.md](approval-history.md) |
 | Patterns | AI confidence | [patterns/ai-confidence/ai-confidence.component](../patterns/ai-confidence/ai-confidence.component.ts) | [ai-confidence.md](ai-confidence.md) |
 | Patterns | AI content | [patterns/ai-content/ai-content.component](../patterns/ai-content/ai-content.component.ts) | [ai-content.md](ai-content.md) |
 | Patterns | AI generation progress | [patterns/ai-generation-progress/ai-generation-progress.component](../patterns/ai-generation-progress/ai-generation-progress.component.ts) | [ai-generation-progress.md](ai-generation-progress.md) |
@@ -83,9 +85,12 @@ do not infer missing items from this table alone.
 | Patterns | State feedback details | [patterns/state-feedback/state-feedback-details.component](../patterns/state-feedback/state-feedback-details.component.ts) | [state-feedback.md](state-feedback.md) |
 | Patterns | Suggested change | [patterns/suggested-change/suggested-change.component](../patterns/suggested-change/suggested-change.component.ts) | [suggested-change.md](suggested-change.md) |
 | Patterns | Version comparison | [patterns/version-comparison/version-comparison.component](../patterns/version-comparison/version-comparison.component.ts) | [version-comparison.md](version-comparison.md) |
+| Patterns | Version-bound approval | [patterns/version-bound-approval/version-bound-approval.component](../patterns/version-bound-approval/version-bound-approval.component.ts) | [version-bound-approval.md](version-bound-approval.md) |
 | Recipes | ADR summary | [recipes/adr-summary/adr-summary.component](../recipes/adr-summary/adr-summary.component.ts) | [adr-summary.md](adr-summary.md) |
 | Recipes | AI generation drawer | [recipes/ai-generation-drawer/ai-generation-drawer.component](../recipes/ai-generation-drawer/ai-generation-drawer.component.ts) | [ai-generation-drawer.md](ai-generation-drawer.md) |
 | Recipes | Approval actions | [recipes/approval-actions/approval-actions.component](../recipes/approval-actions/approval-actions.component.ts) | [approval-actions.md](approval-actions.md) |
+| Recipes | Approval comment field | [recipes/approval-comment-field/approval-comment-field.component](../recipes/approval-comment-field/approval-comment-field.component.ts) | [approval-comment-field.md](approval-comment-field.md) |
+| Recipes | Approval request banner | [recipes/approval-request-banner/approval-request-banner.component](../recipes/approval-request-banner/approval-request-banner.component.ts) | [approval-request-banner.md](approval-request-banner.md) |
 | Recipes | Decision comparison | [recipes/decision-comparison/decision-comparison.component](../recipes/decision-comparison/decision-comparison.component.ts) | [decision-comparison.md](decision-comparison.md) |
 | Recipes | Document card | [recipes/document-card/document-card.component](../recipes/document-card/document-card.component.ts) | [document-card.md](document-card.md) |
 | Recipes | Document filters | [recipes/document-filters/document-filters.component](../recipes/document-filters/document-filters.component.ts) | [document-filters.md](document-filters.md) |
@@ -97,6 +102,7 @@ do not infer missing items from this table alone.
 | Recipes | Metric card | [recipes/metric-card/metric-card.component](../recipes/metric-card/metric-card.component.ts) | [metric-card.md](metric-card.md) |
 | Recipes | Milestone list | [recipes/milestone-list/milestone-list.component](../recipes/milestone-list/milestone-list.component.ts) | [milestone-list.md](milestone-list.md) |
 | Recipes | Phase navigation | [recipes/phase-navigation/phase-navigation.component](../recipes/phase-navigation/phase-navigation.component.ts) | [phase-navigation.md](phase-navigation.md) |
+| Recipes | Pending approvals list | [recipes/pending-approvals-list/pending-approvals-list.component](../recipes/pending-approvals-list/pending-approvals-list.component.ts) | [pending-approvals-list.md](pending-approvals-list.md) |
 | Recipes | Project health | [recipes/project-health/project-health.component](../recipes/project-health/project-health.component.ts) | [project-health.md](project-health.md) |
 | Recipes | RAID register | [recipes/raid-register/raid-register.component](../recipes/raid-register/raid-register.component.ts) | [raid-register.md](raid-register.md) |
 | Recipes | Recent decisions | [recipes/recent-decisions/recent-decisions.component](../recipes/recent-decisions/recent-decisions.component.ts) | [recent-decisions.md](recent-decisions.md) |

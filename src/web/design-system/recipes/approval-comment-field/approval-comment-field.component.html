@@ -1,0 +1,14 @@
+<div class="lsd-approval-comment-field">
+  <lsd-textarea
+    [id]="id()"
+    [label]="explicitLabel()"
+    [description]="help()"
+    [error]="error()"
+    [required]="required()"
+    [rows]="rows()"
+    [disabled]="disabled()"
+    [value]="value()"
+    (valueChange)="value.set($event)" />
+
+  <lsd-field-message [id]="countId()" kind="help">{{ countText() }}</lsd-field-message>
+</div>

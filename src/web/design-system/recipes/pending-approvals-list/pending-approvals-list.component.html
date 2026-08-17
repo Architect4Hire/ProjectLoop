@@ -1,0 +1,43 @@
+<lsd-surface tone="panel" padding="compact" radius="panel" border="default">
+  <section class="lsd-pending-approvals-list" [attr.aria-label]="label()">
+    @if (items().length === 0) {
+      <p class="lsd-pending-approvals-list__empty text-sm text-text-muted">{{ emptyMessage() }}</p>
+    } @else {
+      <ul class="lsd-pending-approvals-list__list">
+        @for (item of items(); track item.id) {
+          <li class="lsd-pending-approvals-list__item">
+            <div class="lsd-pending-approvals-list__target">
+              <span class="text-xs text-text-muted">{{ item.target.typeLabel }}</span>
+              <strong>{{ item.target.label }}</strong>
+              @if (item.target.type === 'document') {
+                <lsd-version-chip [versionLabel]="item.target.versionLabel" />
+              }
+            </div>
+
+            <p class="lsd-pending-approvals-list__requester text-sm">
+              <span class="text-text-muted">Requested by</span>
+              <span>{{ item.requester }}</span>
+            </p>
+
+            <lsd-badge size="small" [variant]="item.due.variant">
+              @if (item.due.dateTime; as dateTime) {
+                <time [attr.datetime]="dateTime">{{ item.due.label }}</time>
+              } @else {
+                {{ item.due.label }}
+              }
+            </lsd-badge>
+
+            <a
+              lsdLink
+              impact="minimal"
+              size="small"
+              [href]="item.review.href"
+              [attr.aria-label]="item.review.accessibleLabel ?? reviewLabel() + ' ' + item.target.label + (item.target.type === 'document' ? ' ' + item.target.versionLabel : '')">
+              {{ reviewLabel() }}
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+</lsd-surface>
