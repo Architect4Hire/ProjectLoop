@@ -14,6 +14,8 @@ public sealed class IdentityDbContext : IdentityDbContext<ProjectLoopUser>
 
     public DbSet<TenantMembership> TenantMemberships => Set<TenantMembership>();
 
+    public DbSet<ClientInvitation> ClientInvitations => Set<ClientInvitation>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -22,6 +24,7 @@ public sealed class IdentityDbContext : IdentityDbContext<ProjectLoopUser>
 
         builder.ApplyConfiguration(new TenantConfiguration());
         builder.ApplyConfiguration(new TenantMembershipConfiguration());
+        builder.ApplyConfiguration(new ClientInvitationConfiguration());
 
         builder.Entity<ProjectLoopUser>(user =>
         {

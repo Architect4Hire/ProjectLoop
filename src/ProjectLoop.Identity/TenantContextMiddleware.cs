@@ -35,6 +35,12 @@ public sealed class TenantContextMiddleware
             return;
         }
 
+        if (context.GetEndpoint()?.Metadata?.GetMetadata<SkipTenantContextAttribute>() is not null)
+        {
+            await _next(context);
+            return;
+        }
+
         var tenantIdHeader = context.Request.Headers[TenantIdHeaderName].FirstOrDefault();
         if (!Guid.TryParse(tenantIdHeader, out var requestedTenantId))
         {

@@ -102,6 +102,45 @@ public class TenantContextMiddlewareTests
         Assert.Same(tenantContext, accessor.Current);
     }
 
+    [Fact]
+    public async Task SkipTenantContext_Endpoint_Bypasses_Tenant_Resolution_But_Still_Requires_Authentication()
+    {
+        var context = new DefaultHttpContext { User = AuthenticatedUser("user-1") };
+        var endpoint = new Endpoint(
+            requestDelegate: null,
+            metadata: new EndpointMetadataCollection(new SkipTenantContextAttribute()),
+            displayName: "test-endpoint");
+        context.SetEndpoint(endpoint);
+
+        var resolver = new StubTenantContextResolver(TenantContextResolution.Denied(TenantContextDenialReason.MembershipNotFound));
+        var accessor = new CurrentTenantContextAccessor();
+
+        var nextCalled = await InvokeAsync(context, resolver, accessor);
+
+        Assert.True(nextCalled);
+        Assert.False(resolver.Called);
+        Assert.Null(accessor.Current);
+    }
+
+    [Fact]
+    public async Task SkipTenantContext_Endpoint_Still_Returns_401_When_Unauthenticated()
+    {
+        var context = new DefaultHttpContext();
+        var endpoint = new Endpoint(
+            requestDelegate: null,
+            metadata: new EndpointMetadataCollection(new SkipTenantContextAttribute()),
+            displayName: "test-endpoint");
+        context.SetEndpoint(endpoint);
+
+        var resolver = new StubTenantContextResolver(TenantContextResolution.Denied(TenantContextDenialReason.MembershipNotFound));
+        var accessor = new CurrentTenantContextAccessor();
+
+        var nextCalled = await InvokeAsync(context, resolver, accessor);
+
+        Assert.Equal(StatusCodes.Status401Unauthorized, context.Response.StatusCode);
+        Assert.False(nextCalled);
+    }
+
     private static ClaimsPrincipal AuthenticatedUser(string userId)
     {
         var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, userId) }, "Test");
