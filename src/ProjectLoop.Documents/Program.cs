@@ -26,6 +26,11 @@ builder.Services.AddScoped<IDocumentVersionRepository, DocumentVersionRepository
 builder.Services.AddScoped<IDocumentUploadTransaction, DocumentUploadTransaction>();
 builder.Services.AddScoped<IDocumentUploadFacade, DocumentUploadFacade>();
 builder.Services.AddScoped<IDocumentListFacade, DocumentListFacade>();
+builder.Services.AddScoped<IDocumentAddVersionTransaction, DocumentAddVersionTransaction>();
+builder.Services.AddScoped<IDocumentAddVersionFacade, DocumentAddVersionFacade>();
+builder.Services.AddScoped<IDocumentPublishTransaction, DocumentPublishTransaction>();
+builder.Services.AddScoped<IDocumentPublishFacade, DocumentPublishFacade>();
+builder.Services.AddScoped<IDocumentDownloadFacade, DocumentDownloadFacade>();
 
 builder.Services.AddControllers();
 builder.Services.AddAuthentication();

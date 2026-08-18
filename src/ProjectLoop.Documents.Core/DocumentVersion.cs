@@ -19,4 +19,8 @@ public sealed class DocumentVersion
     public required string UploadedByUserId { get; init; }
 
     public required DateTimeOffset CreatedAtUtc { get; init; }
+
+    public bool IsPublished { get; set; }
+
+    public DateTimeOffset? PublishedAtUtc { get; set; }
 }

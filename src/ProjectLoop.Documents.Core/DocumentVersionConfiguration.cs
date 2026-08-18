@@ -39,6 +39,11 @@ public sealed class DocumentVersionConfiguration : IEntityTypeConfiguration<Docu
         builder.Property(v => v.CreatedAtUtc)
             .IsRequired();
 
+        builder.Property(v => v.IsPublished)
+            .IsRequired();
+
+        builder.Property(v => v.PublishedAtUtc);
+
         builder.HasIndex(v => new { v.DocumentId, v.VersionNumber })
             .IsUnique();
 

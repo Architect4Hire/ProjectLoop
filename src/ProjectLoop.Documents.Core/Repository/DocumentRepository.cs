@@ -17,6 +17,10 @@ public sealed class DocumentRepository : IDocumentRepository
         return Task.CompletedTask;
     }
 
+    public Task<Document?> GetByIdAsync(Guid tenantId, Guid documentId, CancellationToken cancellationToken = default) =>
+        _dbContext.Documents
+            .FirstOrDefaultAsync(d => d.Id == documentId && d.TenantId == tenantId, cancellationToken);
+
     public void SetCurrentVersion(Document document, Guid versionId, DateTimeOffset updatedAtUtc)
     {
         if (_dbContext.Entry(document).State == EntityState.Detached)
@@ -25,6 +29,21 @@ public sealed class DocumentRepository : IDocumentRepository
         }
 
         document.CurrentVersionId = versionId;
+        document.UpdatedAtUtc = updatedAtUtc;
+    }
+
+    public void MarkPublished(Document document, DateTimeOffset updatedAtUtc)
+    {
+        if (_dbContext.Entry(document).State == EntityState.Detached)
+        {
+            _dbContext.Documents.Attach(document);
+        }
+
+        if (document.Status == DocumentStatus.Draft)
+        {
+            document.Status = DocumentStatus.Published;
+        }
+
         document.UpdatedAtUtc = updatedAtUtc;
     }
 

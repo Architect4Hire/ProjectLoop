@@ -10,4 +10,12 @@ public interface ITenantContext
     Guid TenantId { get; }
 
     string UserId { get; }
+
+    /// <summary>
+    /// True unless the caller's token asserts internal (consulting-firm)
+    /// status. Internal-only actions such as publishing a document version
+    /// to client visibility require this to be false. See
+    /// ADR-014-internal-client-user-classification.
+    /// </summary>
+    bool IsClientUser { get; }
 }

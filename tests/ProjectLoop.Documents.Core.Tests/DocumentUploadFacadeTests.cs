@@ -12,6 +12,8 @@ public class DocumentUploadFacadeTests
         public required Guid TenantId { get; init; }
 
         public required string UserId { get; init; }
+
+        public bool IsClientUser { get; init; }
     }
 
     private sealed class TestCurrentTenantContextAccessor : ICurrentTenantContextAccessor

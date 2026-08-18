@@ -13,6 +13,8 @@ namespace ProjectLoop.Documents;
 public sealed class TenantContextMiddleware
 {
     private const string TenantIdClaimType = "tenant_id";
+    private const string UserTypeClaimType = "user_type";
+    private const string InternalUserTypeClaimValue = "Internal";
 
     private readonly RequestDelegate _next;
 
@@ -40,7 +42,13 @@ public sealed class TenantContextMiddleware
             return;
         }
 
-        accessor.Current = new TenantContext { TenantId = tenantId, UserId = userId };
+        // Default-deny: only an explicit "Internal" assertion grants
+        // internal (publish-capable) privilege. A missing or unrecognized
+        // claim is treated as a client user. See
+        // ADR-014-internal-client-user-classification.
+        var isClientUser = context.User.FindFirst(UserTypeClaimType)?.Value != InternalUserTypeClaimValue;
+
+        accessor.Current = new TenantContext { TenantId = tenantId, UserId = userId, IsClientUser = isClientUser };
         await _next(context);
     }
 }
