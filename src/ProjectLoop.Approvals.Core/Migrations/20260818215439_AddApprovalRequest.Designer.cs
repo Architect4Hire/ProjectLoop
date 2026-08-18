@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectLoop.Approvals.Core;
 
@@ -11,9 +12,11 @@ using ProjectLoop.Approvals.Core;
 namespace ProjectLoop.Approvals.Core.Migrations
 {
     [DbContext(typeof(ApprovalsDbContext))]
-    partial class ApprovalsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260818215439_AddApprovalRequest")]
+    partial class AddApprovalRequest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,59 +25,6 @@ namespace ProjectLoop.Approvals.Core.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ProjectLoop.Approvals.Core.ApprovalDecision", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ApprovalRequestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ApproverUserId")
-                        .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<string>("Comments")
-                        .HasMaxLength(2048)
-                        .HasColumnType("nvarchar(2048)");
-
-                    b.Property<string>("CorrelationId")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
-
-                    b.Property<DateTimeOffset>("DecidedAtUtc")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Decision")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<Guid>("TargetId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("TargetType")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<Guid?>("TargetVersionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ApprovalRequestId");
-
-                    b.HasIndex("TenantId", "ApprovalRequestId");
-
-                    b.ToTable("ApprovalDecisions", "approvals");
-                });
 
             modelBuilder.Entity("ProjectLoop.Approvals.Core.ApprovalRequest", b =>
                 {
@@ -179,15 +129,6 @@ namespace ProjectLoop.Approvals.Core.Migrations
                     b.HasIndex("Status", "CreatedAtUtc");
 
                     b.ToTable("OutboxMessages", "approvals");
-                });
-
-            modelBuilder.Entity("ProjectLoop.Approvals.Core.ApprovalDecision", b =>
-                {
-                    b.HasOne("ProjectLoop.Approvals.Core.ApprovalRequest", null)
-                        .WithMany()
-                        .HasForeignKey("ApprovalRequestId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

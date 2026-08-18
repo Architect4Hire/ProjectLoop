@@ -11,6 +11,10 @@ public sealed class ApprovalsDbContext : DbContext
 
     public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
 
+    public DbSet<ApprovalRequest> ApprovalRequests => Set<ApprovalRequest>();
+
+    public DbSet<ApprovalDecision> ApprovalDecisions => Set<ApprovalDecision>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -18,5 +22,7 @@ public sealed class ApprovalsDbContext : DbContext
         builder.HasDefaultSchema("approvals");
 
         builder.ApplyConfiguration(new OutboxMessageConfiguration());
+        builder.ApplyConfiguration(new ApprovalRequestConfiguration());
+        builder.ApplyConfiguration(new ApprovalDecisionConfiguration());
     }
 }

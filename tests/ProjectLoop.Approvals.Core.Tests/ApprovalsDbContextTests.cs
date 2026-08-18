@@ -44,4 +44,42 @@ public class ApprovalsDbContextTests
 
         Assert.NotNull(context.OutboxMessages);
     }
+
+    [Fact]
+    public void Model_Includes_ApprovalRequest()
+    {
+        using var context = CreateDbContext();
+
+        var entity = context.Model.FindEntityType(typeof(ApprovalRequest));
+
+        Assert.NotNull(entity);
+        Assert.Equal("ApprovalRequests", entity.GetTableName());
+    }
+
+    [Fact]
+    public void ApprovalRequests_DbSet_Is_Queryable()
+    {
+        using var context = CreateDbContext();
+
+        Assert.NotNull(context.ApprovalRequests);
+    }
+
+    [Fact]
+    public void Model_Includes_ApprovalDecision()
+    {
+        using var context = CreateDbContext();
+
+        var entity = context.Model.FindEntityType(typeof(ApprovalDecision));
+
+        Assert.NotNull(entity);
+        Assert.Equal("ApprovalDecisions", entity.GetTableName());
+    }
+
+    [Fact]
+    public void ApprovalDecisions_DbSet_Is_Queryable()
+    {
+        using var context = CreateDbContext();
+
+        Assert.NotNull(context.ApprovalDecisions);
+    }
 }
