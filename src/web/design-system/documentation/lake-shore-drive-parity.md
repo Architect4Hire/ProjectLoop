@@ -152,11 +152,14 @@ new design decision rather than improve parity.
 
 ## Verification record
 
-- `npm ci`: passed; 384 packages installed from the lockfile, zero reported vulnerabilities.
-- `npm run build:design-system`: passed.
-- `npm run test:feature-boundaries`: passed, including its positive and negative self-test fixtures.
-- `npm run test:unit`: 40 files and 138 tests passed with zero failures after test hosts were converted to signal-backed zoneless state.
-- Playwright's DSE-003 targeted runs build and serve the production fixture, execute Chromium, and shut down without an orphan. The selected accessibility case reports one shell-notification landmark violation, and the selected screenshot case has no approved Windows baseline. Browser acceptance remains required before release.
+Current DSE-017 evidence, recorded 2026-08-18:
+
+- `npm ci`: passed; 384 packages installed from the checked-in lockfile. npm reported five install scripts awaiting allow-list review.
+- `npm run build:design-system`: passed with zero errors and nine NG8113 warnings; this strict compile includes the public alias consumer.
+- `npm run test:unit`: 58 files and 221 tests passed with zero failures.
+- `npm run test:documentation`: all three checkers passed; coverage is 110 public modules across 115 catalog entries, 42 component/recipe modules in 41 guides, and 104 Markdown files.
+- `npm run test:integration-manifest`: failed with one blocker, `no approved visual baselines found`.
+- Boundary, accessibility, responsive, and visual commands were not run after the failure. No snapshots were updated. Release acceptance remains **FAIL** pending a visual-baseline acceptance follow-up and a complete DSE-017 rerun.
 
 ## Acceptance boundary
 

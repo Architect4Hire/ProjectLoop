@@ -6,7 +6,7 @@
     "build:design-system": "ngc -p tsconfig.design-system.json",
     "test:design-system": "ng test design-system --watch=false",
     "test:unit": "npm run test:design-system",
-    "test:documentation": "node src/web/design-system/documentation/check-documentation-coverage.mjs && node src/web/design-system/documentation/check-component-documentation.mjs",
+    "test:documentation": "node src/web/design-system/documentation/check-documentation-coverage.mjs && node src/web/design-system/documentation/check-component-documentation.mjs && node src/web/design-system/documentation/check-documentation-links.mjs",
     "test:responsive": "node src/web/design-system/documentation/check-responsive-documentation.mjs",
     "test:integration-manifest": "node src/web/design-system/testing/check-integration-manifest.mjs",
     "test:boundaries": "node src/web/design-system/testing/check-feature-boundaries.mjs --self-test && node src/web/design-system/testing/check-feature-boundaries.mjs && node src/web/design-system/testing/check-design-system-boundaries.mjs --self-test && node src/web/design-system/testing/check-design-system-boundaries.mjs",

@@ -8,13 +8,14 @@ failure; no assertions, axe rules, or snapshots were changed.
 | --- | --- | --- | --- |
 | Clean install | `npm ci` | PASS | 384 packages installed; exit 0. npm reported 5 dependency install scripts awaiting allow-list review. |
 | Design-system compile | `npm run build:design-system` | PASS | Exit 0; 0 errors and 9 Angular NG8113 unused-import warnings. |
-| Unit | `npm run test:unit` | PASS | 40 files passed; 138 tests passed; 0 failed. Signal-backed test hosts now schedule zoneless input updates deterministically. |
-| Documentation | `npm run test:documentation` | PASS | 2 of 2 checkers passed: 110 public modules across 114 catalog entries; 42 public component/recipe modules covered by 41 guides. |
-| Boundaries | `npm run test:boundaries` | PASS | 4 of 4 invocations passed: feature self-test, real feature scan, design-system self-test, and real design-system scan. |
-| Integration manifest | `npm run test:integration-manifest` | FAIL | 0 passed, 1 blocker: no approved visual baselines found. |
-| Responsive documentation | `npm run test:responsive` | PASS | All 12 of 12 critical recipes document narrow-screen behavior. This is the static responsive contract gate, not browser layout acceptance. |
-| Accessibility | `npm run test:accessibility` | FAIL | The DSE-003 targeted lifecycle run built, bound, executed Chromium, and shut down in 11.5 seconds. Its one selected spec failed one unsuppressed axe `region` violation for `.lsd-portal-shell__notifications`. |
-| Visual | `npm run test:visual` | FAIL | The DSE-003 targeted lifecycle run built, bound, executed Chromium, and shut down in 11.3 seconds. Its one selected screenshot spec failed because the approved Windows baseline is absent; the generated candidate was removed. |
+| Strict public-consumer compile | `npm run build:design-system` | PASS | The strict Angular compilation includes `testing/public-api-alias.consumer.ts` through `tsconfig.design-system.json`; exit 0. |
+| Unit | `npm run test:unit` | PASS | 58 files passed; 221 tests passed; 0 failed. Test compilation reported the 9 production NG8113 warnings plus 3 unused test-host imports. |
+| Documentation | `npm run test:documentation` | PASS | 3 of 3 checkers passed: 110 public modules across 115 catalog entries; 42 public component/recipe modules in 41 guides; 104 Markdown files passed local-link validation. |
+| Integration manifest | `npm run test:integration-manifest` | FAIL | Exit 1; 1 blocker: no approved visual baselines found. |
+| Boundaries | `npm run test:boundaries` | NOT RUN | Stopped after the integration-manifest failure as required by DSE-017. |
+| Accessibility | `npm run test:accessibility` | NOT RUN | Stopped after the integration-manifest failure as required by DSE-017. |
+| Responsive documentation | `npm run test:responsive` | NOT RUN | Stopped after the integration-manifest failure as required by DSE-017. |
+| Visual | `npm run test:visual` | NOT RUN | No snapshots were updated; stopped after the integration-manifest failure. |
 
 ## Entry-point contract
 
@@ -26,11 +27,12 @@ lifecycle through `visual-regression/serve-fixture.mjs`.
 
 ## Residual blockers
 
-1. The portal-shell notification fixture must be contained by an appropriate
-   landmark without suppressing the axe `region` rule.
-2. Approved visual baselines must be reviewed and committed through the visual
-   acceptance workflow; they must not be generated automatically by this gate.
+1. Approved visual baselines must be reviewed and committed through a dedicated
+   visual-baseline acceptance follow-up; they must not be generated automatically
+   by DSE-017.
+2. Boundary, accessibility, responsive, and visual gates require a new DSE-017
+   run after the manifest blocker is resolved.
 
-Current root acceptance is **FAIL** because 3 of 9 root gates fail. The
-commands themselves are present and executable; downstream correctness remains
-assigned to DSE-003 and visual-baseline acceptance.
+Current root acceptance is **FAIL** because the integration-manifest gate fails
+and four downstream gates were not run. Ownership is the visual-baseline
+acceptance follow-up, followed by a complete rerun of DSE-017.

@@ -118,5 +118,7 @@
   { "category": "Layouts", "name": "Metric grid", "publicModule": "layouts/metric-grid/metric-grid.component", "doc": "metric-grid.md" },
   { "category": "Layouts", "name": "Portal shell", "publicModule": "layouts/portal-shell/portal-shell.component", "doc": "portal-shell.md" },
   { "category": "Layouts", "name": "Structured editor", "publicModule": "layouts/structured-editor/structured-editor.component", "doc": "structured-editor.md" },
-  { "category": "Layouts", "name": "Structured editor section", "publicModule": "layouts/structured-editor/structured-editor-section.directive", "doc": "structured-editor.md" }
+  { "category": "Layouts", "name": "Structured editor section", "publicModule": "layouts/structured-editor/structured-editor-section.directive", "doc": "structured-editor.md" },
+
+  { "category": "Guidance", "name": "Feature composition", "publicModule": null, "doc": "feature-composition.md" }
 ]

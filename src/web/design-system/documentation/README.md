@@ -122,6 +122,7 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 
 ## Supporting policy
 
+- [Composing Project Loop features](feature-composition.md)
 - [Project Loop portal composition](project-loop-portal-composition.md)
 - [Public API inventory](public-inventory.md)
 - [Public imports](public-imports.md)
@@ -140,6 +141,7 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 
 ```sh
 node src/web/design-system/documentation/check-documentation-coverage.mjs
+node src/web/design-system/documentation/check-documentation-links.mjs
 ```
 
-The command fails for an undocumented public export, a stale or duplicate catalog mapping, or a missing guide. Foundation CSS entries are cataloged even though they are included through the production stylesheet rather than exported as TypeScript.
+The commands fail for an undocumented public export, a stale or duplicate catalog mapping, a missing guide, or a broken local documentation link. Foundation CSS entries are cataloged even though they are included through the production stylesheet rather than exported as TypeScript.

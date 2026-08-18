@@ -10,12 +10,13 @@ Acceptance scope: the local Angular design system, its typed presentation contra
 | --- | --- | --- |
 | Clean dependency resolution | PASS | `npm ci` installed 384 packages from `package-lock.json`; 5 dependency install scripts await allow-list review. |
 | Build | PASS | `npm run build:design-system` completed with 0 errors and 9 NG8113 warnings. |
-| Unit tests | PASS | `npm run test:unit`: 40 files and 138 tests passed with zero failures after the DSE-002 zoneless host repair. |
-| Documentation and boundaries | PASS | `npm run test:documentation`, `npm run test:boundaries`, and `npm run test:responsive` pass from the root. |
+| Unit tests | PASS | `npm run test:unit`: 58 files and 221 tests passed with zero failures. |
+| Documentation | PASS | `npm run test:documentation`: all 3 checkers passed; 110 public modules, 115 catalog entries, 42 component/recipe modules in 41 guides, and 104 linked Markdown files. |
+| Boundaries | NOT RUN | DSE-017 stopped at the integration-manifest failure. |
 | Integration manifest | FAIL | `npm run test:integration-manifest`: no approved visual baselines found. |
-| Visual regression | FAIL | DSE-003 proves the browser lifecycle completes; the selected screenshot fails because its approved Windows baseline is absent. |
-| Accessibility | FAIL | DSE-003 proves axe executes through the browser lifecycle; the selected shell case reports one unsuppressed `region` violation. |
-| Responsive behavior | PARTIAL | Static documentation coverage passes for 12 of 12 critical recipes; full browser layout acceptance remains pending. |
+| Visual regression | NOT RUN | No snapshots were updated; DSE-017 stopped before this gate because approved baselines are absent. |
+| Accessibility | NOT RUN | DSE-017 stopped at the integration-manifest failure. |
+| Responsive behavior | NOT RUN | DSE-017 stopped at the integration-manifest failure. |
 | Public API | PASS | `public-api.ts`, layer barrels, documentation coverage, and deep-import/static boundary checks. |
 | License | PASS | Starter attribution retained in `docs/design/third-party-notices.md`; private migration material is not a public API. |
 
@@ -68,8 +69,8 @@ Acceptance scope: the local Angular design system, its typed presentation contra
 
 ## Acceptance result
 
-**FAIL — implementation and documentation evidence exist, but current release
-acceptance is blocked by one known shell landmark violation and missing
-approved visual baselines.** See `verification-entry-points.md`.
+**FAIL — the current release gate is blocked by missing approved visual
+baselines.** The owning work is a dedicated visual-baseline acceptance
+follow-up, then a complete rerun of DSE-017. See `verification-entry-points.md`.
 Application-owned persistence, authorization, retrieval, model execution, and
 workflow behavior remain outside the design-system deliverable.

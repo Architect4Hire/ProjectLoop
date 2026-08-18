@@ -2,6 +2,8 @@
 
 This guide maps Project Loop portal screens to the supported public design-system compositions. It describes composition and ownership boundaries; the linked component guides remain authoritative for individual inputs, outputs, accessibility behavior, and variants.
 
+For screens not yet listed here, follow [Composing Project Loop features](feature-composition.md): select a public pattern or recipe first, compose only through the package entry point, and retain application state and effects in the feature layer.
+
 ## Public imports
 
 Import every composition and public model from the application alias. Feature code must not import implementation files below a barrel.

@@ -32,6 +32,8 @@ import { ButtonComponent } from 'src/web/design-system/public-api';
 
 The target may map that same entry to `@lsd/design-system`. Deep imports are unsupported. Run the boundary scripts to enforce the rule.
 
+After installation, use [Composing Project Loop features](feature-composition.md) for the feature selection workflow and ownership boundaries. The [documentation index](README.md) remains the catalog of authoritative per-component guides.
+
 ## Test integration and verification
 
 Copy approved screenshots rather than regenerating them during installation. Merge the manifest's named scripts into the target package scripts and adjust only the target Angular project name/serve command where necessary. Then run the verification commands in order. The manifest validator checks payload existence, exclusions, dependency versions, foundation imports, Tailwind sources, public layers, configuration deltas, assets, baselines, and scripts.

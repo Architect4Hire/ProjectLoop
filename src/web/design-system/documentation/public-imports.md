@@ -7,6 +7,8 @@ public entry point:
 import { ButtonComponent, spacingTokens } from '@lsd/design-system';
 ```
 
+Future feature authors should use [Composing Project Loop features](feature-composition.md) to select the highest-level suitable public API, then follow the linked per-component guides for its contract.
+
 Features may import only symbols that are deliberately exported by
 `public-api.ts`. The Angular workspace maps the exact `@lsd/design-system`
 alias to that source file. There is deliberately no wildcard alias:
