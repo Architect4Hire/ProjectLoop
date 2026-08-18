@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -7,10 +7,10 @@ import { RecentDecisionsComponent, type RecentDecisionRecord } from './recent-de
 @Component({
   standalone: true,
   imports: [RecentDecisionsComponent],
-  template: `<lsd-recent-decisions [decisions]="decisions" />`,
+  template: `<lsd-recent-decisions [decisions]="decisions()" />`,
 })
 class RecentDecisionsTestHostComponent {
-  decisions: readonly RecentDecisionRecord[] = [
+  readonly decisions = signal<readonly RecentDecisionRecord[]>([
     {
       id: 'accepted',
       label: 'Use the shared public entry point',
@@ -32,7 +32,7 @@ class RecentDecisionsTestHostComponent {
       date: { label: 'August 14, 2026' },
       navigation: { href: '/decisions/superseded' },
     },
-  ];
+  ]);
 }
 
 describe('RecentDecisionsComponent', () => {
@@ -64,7 +64,7 @@ describe('RecentDecisionsComponent', () => {
   });
 
   it('renders an explicit empty presentation', () => {
-    host.decisions = [];
+    host.decisions.set([]);
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('ul'))).toBeNull();
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('No recent decisions.');

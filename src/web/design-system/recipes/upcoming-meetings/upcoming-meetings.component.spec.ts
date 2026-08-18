@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -7,10 +7,10 @@ import { UpcomingMeetingsComponent, type MeetingSummary } from './upcoming-meeti
 @Component({
   standalone: true,
   imports: [UpcomingMeetingsComponent],
-  template: `<lsd-upcoming-meetings [meetings]="meetings" />`,
+  template: `<lsd-upcoming-meetings [meetings]="meetings()" />`,
 })
 class UpcomingMeetingsTestHostComponent {
-  meetings: readonly MeetingSummary[] = [
+  readonly meetings = signal<readonly MeetingSummary[]>([
     {
       id: 'planning',
       title: 'A long planning conversation title that remains readable in a narrow container',
@@ -24,7 +24,7 @@ class UpcomingMeetingsTestHostComponent {
       time: { label: 'Tuesday, August 18 at 2:00 PM CDT' },
       location: 'Room 204',
     },
-  ];
+  ]);
 }
 
 describe('UpcomingMeetingsComponent', () => {
@@ -61,7 +61,7 @@ describe('UpcomingMeetingsComponent', () => {
   });
 
   it('renders an explicit no-meetings state', () => {
-    host.meetings = [];
+    host.meetings.set([]);
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('ul'))).toBeNull();
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('No upcoming meetings.');

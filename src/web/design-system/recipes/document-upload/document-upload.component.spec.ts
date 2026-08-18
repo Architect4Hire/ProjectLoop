@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DocumentUploadComponent, type DocumentUploadIntent, type DocumentUploadState } from './document-upload.component';
@@ -8,10 +8,10 @@ import { DocumentUploadComponent, type DocumentUploadIntent, type DocumentUpload
     filePolicyDescription="PDF files up to 10 bytes"
     [categoryOptions]="[{ value: 'architecture', label: 'Architecture' }]"
     [visibilityOptions]="[{ value: 'confidential', label: 'Confidential' }]"
-    [state]="state" [progressValue]="40" [failureMessage]="failureMessage"
+    [state]="state()" [progressValue]="40" [failureMessage]="failureMessage"
     (uploadIntent)="intent = $event" />` })
 class Host {
-  state: DocumentUploadState = 'idle';
+  readonly state = signal<DocumentUploadState>('idle');
   failureMessage = 'Network interrupted. Your file was not uploaded.';
   intent: DocumentUploadIntent | null = null;
 }
@@ -26,14 +26,14 @@ describe('DocumentUploadComponent', () => {
     expect(text).toContain('Select a document category.'); expect(text).toContain('Select document visibility.'); expect(host.intent).toBeNull();
   });
   it('renders caller-owned progress with native semantics', () => {
-    host.state = 'uploading'; fixture.detectChanges(); const progress = fixture.debugElement.query(By.css('progress')).nativeElement as HTMLProgressElement;
+    host.state.set('uploading'); fixture.detectChanges(); const progress = fixture.debugElement.query(By.css('progress')).nativeElement as HTMLProgressElement;
     expect(progress.value).toBe(40); expect(progress.max).toBe(100); expect(fixture.nativeElement.textContent).toContain('40%');
   });
   it('emits cancellation intent only', () => {
-    host.state = 'uploading'; fixture.detectChanges(); fixture.debugElement.query(By.css('.lsd-document-upload__actions button')).nativeElement.click(); expect(host.intent).toEqual({ type: 'cancel' });
+    host.state.set('uploading'); fixture.detectChanges(); fixture.debugElement.query(By.css('.lsd-document-upload__actions button')).nativeElement.click(); expect(host.intent).toEqual({ type: 'cancel' });
   });
   it('announces failure and emits retry intent for caller recovery', () => {
-    host.state = 'failed'; fixture.detectChanges(); const failure = fixture.debugElement.query(By.css('#document-upload-failure')).nativeElement as HTMLElement;
+    host.state.set('failed'); fixture.detectChanges(); const failure = fixture.debugElement.query(By.css('#document-upload-failure')).nativeElement as HTMLElement;
     expect(failure.getAttribute('role')).toBe('alert'); expect(failure.textContent).toContain('Network interrupted');
     fixture.debugElement.query(By.css('.lsd-document-upload__actions button')).nativeElement.click(); expect(host.intent).toEqual({ type: 'retry' });
   });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -10,7 +10,7 @@ import { ProjectHealthComponent, type ProjectHealthStatus } from './project-heal
   template: `
     <lsd-project-health
       id="delivery"
-      [status]="status"
+      [status]="status()"
       description="Caller-supplied explanation of the current state."
       [lastUpdated]="{ label: '16 August 2026 at 9:30 AM', dateTime: '2026-08-16T14:30:00Z' }"
       [indicators]="[
@@ -21,7 +21,7 @@ import { ProjectHealthComponent, type ProjectHealthStatus } from './project-heal
   `,
 })
 class ProjectHealthTestHostComponent {
-  status: ProjectHealthStatus = 'healthy';
+  readonly status = signal<ProjectHealthStatus>('healthy');
 }
 
 describe('ProjectHealthComponent', () => {
@@ -44,7 +44,7 @@ describe('ProjectHealthComponent', () => {
     };
 
     for (const status of Object.keys(expected) as ProjectHealthStatus[]) {
-      host.status = status;
+      host.status.set(status);
       fixture.detectChanges();
       const badge = fixture.debugElement.query(By.css('lsd-badge')).nativeElement as HTMLElement;
       expect(badge.textContent).toContain(expected[status]);

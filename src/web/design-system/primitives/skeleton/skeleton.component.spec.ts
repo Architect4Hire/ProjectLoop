@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -9,12 +9,12 @@ import { SkeletonComponent } from './skeleton.component';
   imports: [SkeletonComponent],
   template: `
     <section role="status" aria-busy="true" aria-label="Loading results">
-      <lsd-skeleton [lines]="lines" />
+      <lsd-skeleton [lines]="lines()" />
     </section>
   `,
 })
 class SkeletonTestHostComponent {
-  lines = 3;
+  readonly lines = signal(3);
 }
 
 describe('SkeletonComponent', () => {
@@ -38,7 +38,7 @@ describe('SkeletonComponent', () => {
   });
 
   it('clamps the decorative line count', () => {
-    fixture.componentInstance.lines = 20;
+    fixture.componentInstance.lines.set(20);
     fixture.detectChanges();
     expect(fixture.debugElement.queryAll(By.css('.lsd-skeleton__line'))).toHaveSize(10);
   });

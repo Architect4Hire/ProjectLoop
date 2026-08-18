@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -8,7 +8,7 @@ import { LinkDirective } from './link.directive';
   standalone: true,
   imports: [LinkDirective],
   template: `
-    <a lsdLink [href]="href" [tone]="tone" [impact]="impact" [size]="size" [shape]="shape">
+    <a lsdLink [href]="href" [tone]="tone()" [impact]="impact()" [size]="size()" [shape]="shape()">
       Projected destination
     </a>
     <a
@@ -23,10 +23,10 @@ import { LinkDirective } from './link.directive';
 })
 class LinkTestHostComponent {
   href = '/projects/42';
-  tone: 'primary' | 'danger' = 'primary';
-  impact: 'bold' | 'light' | 'minimal' = 'minimal';
-  size: 'small' | 'medium' | 'large' = 'medium';
-  shape: 'square' | 'rounded' | 'pill' = 'rounded';
+  readonly tone = signal<'primary' | 'danger'>('primary');
+  readonly impact = signal<'bold' | 'light' | 'minimal'>('minimal');
+  readonly size = signal<'small' | 'medium' | 'large'>('medium');
+  readonly shape = signal<'square' | 'rounded' | 'pill'>('rounded');
 }
 
 describe('LinkDirective', () => {
@@ -64,10 +64,10 @@ describe('LinkDirective', () => {
 
   it('applies the selected Button-aligned visual variants', () => {
     const host = fixture.componentInstance;
-    host.tone = 'danger';
-    host.impact = 'bold';
-    host.size = 'large';
-    host.shape = 'pill';
+    host.tone.set('danger');
+    host.impact.set('bold');
+    host.size.set('large');
+    host.shape.set('pill');
     fixture.detectChanges();
 
     const link = links()[0];

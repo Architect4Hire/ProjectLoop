@@ -24,8 +24,9 @@ function collectLeafModules(file, visited = new Set()) {
   const exportPattern = /export\s+(?:type\s+)?(?:\*|\{[\s\S]*?\})\s+from\s+['"](\.[^'"]+)['"]/g;
   for (const match of source.matchAll(exportPattern)) {
     const target = moduleFile(file, match[1]);
-    if (target.endsWith('/index.ts')) modules.push(...collectLeafModules(target, visited));
-    else modules.push(relative(designSystemDirectory, target).replace(extensionPattern, ''));
+    const normalizedTarget = target.replaceAll('\\', '/');
+    if (normalizedTarget.endsWith('/index.ts')) modules.push(...collectLeafModules(target, visited));
+    else modules.push(relative(designSystemDirectory, target).replaceAll('\\', '/').replace(extensionPattern, ''));
   }
   return modules;
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -11,11 +11,11 @@ import { AppNavigationComponent, AppNavigationLink } from './app-navigation.comp
     <lsd-app-navigation
       accessibleName="Primary"
       [links]="links"
-      [compact]="compact" />
+      [compact]="compact()" />
   `,
 })
 class AppNavigationTestHostComponent {
-  compact = false;
+  readonly compact = signal(false);
   links: readonly AppNavigationLink[] = [
     { label: 'Overview', href: '/overview', icon: 'info' },
     { label: 'Documents', href: '/documents', icon: 'search', active: true, count: 7 },
@@ -44,7 +44,7 @@ describe('AppNavigationComponent', () => {
   });
 
   it('exposes compact presentation for narrow navigation while retaining labels', () => {
-    fixture.componentInstance.compact = true;
+    fixture.componentInstance.compact.set(true);
     fixture.detectChanges();
 
     const nav = fixture.debugElement.query(By.css('nav')).nativeElement as HTMLElement;

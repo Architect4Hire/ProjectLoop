@@ -8,16 +8,16 @@ Acceptance scope: the local Angular design system, its typed presentation contra
 
 | Check | Status | Evidence |
 | --- | --- | --- |
-| Clean dependency resolution | PASS | `npm ci` completed against `package-lock.json` during cleanup acceptance. |
-| Build | PASS | `npm run build`; Angular production fixture compiles from the public design-system source. |
-| Lint and static policy | PASS | `npm run lint`; integration, feature-boundary, design-system dependency/token, documentation, and responsive-documentation checks. |
-| Browser tests | PASS | `npm test`; accessibility, responsive, and visual suites. |
-| Visual regression | PASS | Five deterministic light/dark and desktop/tablet/mobile baselines under `visual-regression/baselines/`; `test:visual`. |
-| Accessibility | PASS | Eleven representative automated checks; `test:accessibility`, plus the manual verification limits documented in `visual-regression/ACCESSIBILITY.md`. |
-| Responsive behavior | PASS | Eight browser checks and documented narrow behavior for all twelve critical recipes; `test:responsive`. |
+| Clean dependency resolution | PASS | `npm ci` installed 384 packages from `package-lock.json`; 5 dependency install scripts await allow-list review. |
+| Build | PASS | `npm run build:design-system` completed with 0 errors and 9 NG8113 warnings. |
+| Unit tests | PASS | `npm run test:unit`: 40 files and 138 tests passed with zero failures after the DSE-002 zoneless host repair. |
+| Documentation and boundaries | PASS | `npm run test:documentation`, `npm run test:boundaries`, and `npm run test:responsive` pass from the root. |
+| Integration manifest | FAIL | `npm run test:integration-manifest`: no approved visual baselines found. |
+| Visual regression | FAIL | DSE-003 proves the browser lifecycle completes; the selected screenshot fails because its approved Windows baseline is absent. |
+| Accessibility | FAIL | DSE-003 proves axe executes through the browser lifecycle; the selected shell case reports one unsuppressed `region` violation. |
+| Responsive behavior | PARTIAL | Static documentation coverage passes for 12 of 12 critical recipes; full browser layout acceptance remains pending. |
 | Public API | PASS | `public-api.ts`, layer barrels, documentation coverage, and deep-import/static boundary checks. |
 | License | PASS | Starter attribution retained in `docs/design/third-party-notices.md`; private migration material is not a public API. |
-| Integration manifest | PASS | Manifest validator accounts for fourteen payload paths, thirteen dependencies, visible configuration, test support, and five baselines. |
 
 ## Design-system requirements
 
@@ -68,4 +68,8 @@ Acceptance scope: the local Angular design system, its typed presentation contra
 
 ## Acceptance result
 
-**PASS — 27 of 27 traced requirements have implementation, verification, and documentation evidence appropriate to the design-system deliverable. There are no unexplained failures.** Application-owned persistence, authorization, retrieval, model execution, and workflow behavior are explicitly identified above and are not represented as design-system implementation.
+**FAIL — implementation and documentation evidence exist, but current release
+acceptance is blocked by one known shell landmark violation and missing
+approved visual baselines.** See `verification-entry-points.md`.
+Application-owned persistence, authorization, retrieval, model execution, and
+workflow behavior remain outside the design-system deliverable.

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -12,7 +12,7 @@ import { StateFeedbackDetailsComponent } from './state-feedback-details.componen
   template: `
     <lsd-state-feedback
       id="results-state"
-      [kind]="kind"
+      [kind]="kind()"
       title="Results unavailable"
       description="Try the request again.">
       <p>Caller-owned supporting content.</p>
@@ -22,7 +22,7 @@ import { StateFeedbackDetailsComponent } from './state-feedback-details.componen
   `,
 })
 class StateFeedbackTestHostComponent {
-  kind: StateFeedbackKind = 'recoverable-error';
+  readonly kind = signal<StateFeedbackKind>('recoverable-error');
   retries = 0;
   retry(): void { this.retries += 1; }
 }
@@ -37,7 +37,7 @@ describe('StateFeedbackComponent', () => {
   });
 
   it('composes the alert and caller-owned recovery action for recoverable errors', () => {
-    const region = fixture.debugElement.query(By.css('#results-state')).nativeElement as HTMLElement;
+    const region = fixture.debugElement.query(By.css('.lsd-state-feedback')).nativeElement as HTMLElement;
     expect(region.getAttribute('role')).toBe('alert');
     expect(region.getAttribute('aria-live')).toBe('polite');
     expect(region.querySelector('lsd-alert-banner')).not.toBeNull();
@@ -54,18 +54,18 @@ describe('StateFeedbackComponent', () => {
   });
 
   it('announces loading and skeleton states as busy without exposing skeleton decoration', () => {
-    fixture.componentInstance.kind = 'skeleton';
+    fixture.componentInstance.kind.set('skeleton');
     fixture.detectChanges();
-    const region = fixture.debugElement.query(By.css('#results-state')).nativeElement as HTMLElement;
+    const region = fixture.debugElement.query(By.css('.lsd-state-feedback')).nativeElement as HTMLElement;
     expect(region.getAttribute('role')).toBe('status');
     expect(region.getAttribute('aria-busy')).toBe('true');
     expect(region.querySelector('lsd-skeleton')?.getAttribute('aria-hidden')).toBe('true');
   });
 
   it('uses an assertive announcement only for terminal errors', () => {
-    fixture.componentInstance.kind = 'terminal-error';
+    fixture.componentInstance.kind.set('terminal-error');
     fixture.detectChanges();
-    const region = fixture.debugElement.query(By.css('#results-state')).nativeElement as HTMLElement;
+    const region = fixture.debugElement.query(By.css('.lsd-state-feedback')).nativeElement as HTMLElement;
     expect(region.getAttribute('aria-live')).toBe('assertive');
   });
 });

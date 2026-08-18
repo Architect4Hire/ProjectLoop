@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -7,10 +7,10 @@ import { MilestoneListComponent, type MilestoneSummary } from './milestone-list.
 @Component({
   standalone: true,
   imports: [MilestoneListComponent],
-  template: `<lsd-milestone-list [milestones]="milestones" />`,
+  template: `<lsd-milestone-list [milestones]="milestones()" />`,
 })
 class MilestoneListTestHostComponent {
-  milestones: readonly MilestoneSummary[] = [
+  readonly milestones = signal<readonly MilestoneSummary[]>([
     {
       id: 'first',
       title: 'A very long caller-supplied milestone title that must remain readable without changing its chronological position',
@@ -23,7 +23,7 @@ class MilestoneListTestHostComponent {
       title: 'Second milestone',
       status: { label: 'Planned', variant: 'neutral' },
     },
-  ];
+  ]);
 }
 
 describe('MilestoneListComponent', () => {
@@ -60,7 +60,7 @@ describe('MilestoneListComponent', () => {
   });
 
   it('renders an explicit empty presentation', () => {
-    host.milestones = [];
+    host.milestones.set([]);
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('ol'))).toBeNull();
     expect((fixture.nativeElement as HTMLElement).textContent).toContain('No milestones to show.');

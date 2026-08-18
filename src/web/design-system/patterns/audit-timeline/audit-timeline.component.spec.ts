@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AuditTimelineComponent, type AuditTimelineEvent, type AuditTimelinePaging } from './audit-timeline.component';
 
-@Component({ standalone: true, imports: [AuditTimelineComponent], template: `<lsd-audit-timeline id="audit" [events]="events" [paging]="paging" (loadMoreRequested)="recordLoadMore()" />` })
+@Component({ standalone: true, imports: [AuditTimelineComponent], template: `<lsd-audit-timeline id="audit" [events]="events()" [paging]="paging()" (loadMoreRequested)="recordLoadMore()" />` })
 class AuditTimelineTestHostComponent {
-  events: readonly AuditTimelineEvent[] = Array.from({ length: 12 }, (_, index) => ({
+  readonly events = signal<readonly AuditTimelineEvent[]>(Array.from({ length: 12 }, (_, index) => ({
     id: `event-${index + 1}`,
     actor: `Actor ${index + 1}`,
     action: index % 2 ? 'Viewed' : 'Updated',
@@ -13,8 +13,8 @@ class AuditTimelineTestHostComponent {
     occurredAt: `2026-08-17T${String(index).padStart(2, '0')}:00:00Z`,
     timestampLabel: `17 August 2026 at ${String(index).padStart(2, '0')}:00 UTC`,
     correlationId: `correlation-${index + 1}`,
-  }));
-  paging: AuditTimelinePaging = { mode: 'load-more', hasMore: true };
+  })));
+  readonly paging = signal<AuditTimelinePaging>({ mode: 'load-more', hasMore: true });
   loadMoreCount = 0;
   recordLoadMore(): void { this.loadMoreCount += 1; }
 }
@@ -30,7 +30,7 @@ describe('AuditTimelineComponent', () => {
   });
 
   it('uses the Activity Stream empty state without paging controls', () => {
-    host.events = [];
+    host.events.set([]);
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('No audit events');
     expect(fixture.debugElement.query(By.css('.lsd-audit-timeline__load-more'))).toBeNull();
@@ -47,17 +47,17 @@ describe('AuditTimelineComponent', () => {
     const button = fixture.debugElement.query(By.css('.lsd-audit-timeline__load-more button')).nativeElement as HTMLButtonElement;
     button.click();
     expect(host.loadMoreCount).toBe(1);
-    expect(host.events).toHaveSize(12);
-    expect(host.paging).toEqual({ mode: 'load-more', hasMore: true });
+    expect(host.events()).toHaveSize(12);
+    expect(host.paging()).toEqual({ mode: 'load-more', hasMore: true });
   });
 
   it('disables load more when complete and exposes caller loading state', () => {
-    host.paging = { mode: 'load-more', hasMore: false };
+    host.paging.set({ mode: 'load-more', hasMore: false });
     fixture.detectChanges();
     expect((fixture.debugElement.query(By.css('.lsd-audit-timeline__load-more button')).nativeElement as HTMLButtonElement).disabled).toBeTrue();
     expect(fixture.nativeElement.textContent).toContain('All audit events loaded');
 
-    host.paging = { mode: 'load-more', hasMore: true, loading: true };
+    host.paging.set({ mode: 'load-more', hasMore: true, loading: true });
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('Loading more audit events');
   });

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -9,15 +9,15 @@ import { VersionChipComponent, type VersionQualifier } from './version-chip.comp
   imports: [VersionChipComponent],
   template: `
     <lsd-version-chip
-      [versionLabel]="versionLabel"
-      [qualifier]="qualifier"
-      [qualifierLabel]="qualifierLabel" />
+      [versionLabel]="versionLabel()"
+      [qualifier]="qualifier()"
+      [qualifierLabel]="qualifierLabel()" />
   `,
 })
 class VersionChipTestHostComponent {
-  versionLabel = 'v2.7.0-rc.1';
-  qualifier: VersionQualifier | undefined;
-  qualifierLabel: string | undefined;
+  readonly versionLabel = signal('v2.7.0-rc.1');
+  readonly qualifier = signal<VersionQualifier | undefined>(undefined);
+  readonly qualifierLabel = signal<string | undefined>(undefined);
 }
 
 describe('VersionChipComponent', () => {
@@ -42,7 +42,7 @@ describe('VersionChipComponent', () => {
     };
 
     for (const qualifier of Object.keys(expected) as VersionQualifier[]) {
-      fixture.componentInstance.qualifier = qualifier;
+      fixture.componentInstance.qualifier.set(qualifier);
       fixture.detectChanges();
       const qualifierText = fixture.debugElement.query(By.css('.lsd-version-chip__qualifier')).nativeElement as HTMLElement;
       expect(qualifierText.textContent).toBe(expected[qualifier]);
@@ -51,8 +51,8 @@ describe('VersionChipComponent', () => {
   });
 
   it('uses an overrideable qualifier label without changing the exact version text', () => {
-    fixture.componentInstance.qualifier = 'approved';
-    fixture.componentInstance.qualifierLabel = 'Aprobada';
+    fixture.componentInstance.qualifier.set('approved');
+    fixture.componentInstance.qualifierLabel.set('Aprobada');
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('.lsd-version-chip__qualifier')).nativeElement.textContent).toBe('Aprobada');
     expect(fixture.debugElement.query(By.css('.lsd-version-chip__version')).nativeElement.textContent).toBe('v2.7.0-rc.1');

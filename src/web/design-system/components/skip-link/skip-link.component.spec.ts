@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -9,11 +9,11 @@ import { SkipLinkComponent } from './skip-link.component';
   imports: [SkipLinkComponent],
   template: `
     <lsd-skip-link />
-    @if (showMain) { <main id="main-content" tabindex="-1">Application content</main> }
+    @if (showMain()) { <main id="main-content" tabindex="-1">Application content</main> }
   `,
 })
 class SkipLinkTestHostComponent {
-  showMain = true;
+  readonly showMain = signal(true);
 }
 
 describe('SkipLinkComponent', () => {
@@ -43,7 +43,7 @@ describe('SkipLinkComponent', () => {
   });
 
   it('does not intercept activation when the main-content target is missing', () => {
-    fixture.componentInstance.showMain = false;
+    fixture.componentInstance.showMain.set(false);
     fixture.detectChanges();
     const anchor = link();
     let defaultPrevented = false;

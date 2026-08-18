@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -12,16 +12,16 @@ type AccountAction = 'profile' | 'sign-out';
   template: `
     <lsd-user-menu
       id="account-menu"
-      [displayName]="displayName"
-      [identityDetail]="identityDetail"
+      [displayName]="displayName()"
+      [identityDetail]="identityDetail()"
       [avatarUrl]="avatarUrl"
       [actions]="actions"
       (actionRequested)="requestedAction = $event" />
   `,
 })
 class UserMenuTestHostComponent {
-  displayName = 'Ada Lovelace';
-  identityDetail = 'ada@example.com';
+  readonly displayName = signal('Ada Lovelace');
+  readonly identityDetail = signal('ada@example.com');
   avatarUrl: string | null = null;
   actions: readonly UserMenuAction<AccountAction>[] = [
     { id: 'profile', label: 'Profile' },
@@ -53,8 +53,8 @@ describe('UserMenuComponent', () => {
   it('preserves long display-safe identity text while allowing visual truncation', () => {
     const longName = 'Alexandria Catherine Montgomery-Worthington the Third';
     const longDetail = 'alexandria.montgomery-worthington@example-enterprise.test';
-    fixture.componentInstance.displayName = longName;
-    fixture.componentInstance.identityDetail = longDetail;
+    fixture.componentInstance.displayName.set(longName);
+    fixture.componentInstance.identityDetail.set(longDetail);
     fixture.detectChanges();
 
     expect(fixture.debugElement.query(By.css('.lsd-user-menu__name')).nativeElement.textContent).toBe(longName);
@@ -76,6 +76,7 @@ describe('UserMenuComponent', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     items()[1].click();
+    fixture.detectChanges();
 
     expect(fixture.componentInstance.requestedAction).toBe('sign-out');
     expect(trigger().getAttribute('aria-expanded')).toBe('false');

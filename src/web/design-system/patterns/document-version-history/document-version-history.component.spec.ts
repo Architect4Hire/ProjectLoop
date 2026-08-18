@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -13,7 +13,7 @@ import {
   standalone: true,
   imports: [ButtonComponent, DocumentVersionHistoryActionsDirective, DocumentVersionHistoryComponent],
   template: `
-    <lsd-document-version-history id="proposal-history" [versions]="versions">
+    <lsd-document-version-history id="proposal-history" [versions]="versions()">
       <ng-template lsdDocumentVersionActions="v3" let-version>
         <button lsdButton type="button">View {{ version.versionLabel }}</button>
       </ng-template>
@@ -24,7 +24,7 @@ import {
   `,
 })
 class DocumentVersionHistoryTestHostComponent {
-  readonly versions: readonly DocumentHistoryVersion[] = [
+  readonly versions = signal<readonly DocumentHistoryVersion[]>([
     {
       id: 'v3',
       versionLabel: 'v3',
@@ -41,7 +41,7 @@ class DocumentVersionHistoryTestHostComponent {
       occurredAt: '2026-08-16T09:00:00-05:00',
       timestampLabel: 'August 16, 2026 at 9:00 AM',
     },
-  ];
+  ]);
 }
 
 describe('DocumentVersionHistoryComponent', () => {
@@ -67,8 +67,8 @@ describe('DocumentVersionHistoryComponent', () => {
   it('preserves caller-supplied chronological order, actor text, and native times', () => {
     const items = fixture.debugElement.queryAll(By.css('.lsd-document-version-history__item'));
     expect(items.map((item) => item.query(By.css('lsd-version-chip')).nativeElement.textContent.trim())).toEqual([
-      'v3 · Approved',
-      'v4 · Current',
+      'v3·Approved',
+      'v4·Current',
     ]);
     expect(items[0].nativeElement.textContent).toContain('Avery Architect');
     expect(items[1].nativeElement.textContent).toContain('Morgan Editor');
@@ -84,8 +84,8 @@ describe('DocumentVersionHistoryComponent', () => {
   });
 
   it('does not mutate the supplied versions', () => {
-    expect(fixture.componentInstance.versions.map((version) => version.id)).toEqual(['v3', 'v4']);
-    expect(fixture.componentInstance.versions[0].qualifier).toBe('approved');
-    expect(fixture.componentInstance.versions[1].qualifier).toBe('current');
+    expect(fixture.componentInstance.versions().map((version) => version.id)).toEqual(['v3', 'v4']);
+    expect(fixture.componentInstance.versions()[0].qualifier).toBe('approved');
+    expect(fixture.componentInstance.versions()[1].qualifier).toBe('current');
   });
 });

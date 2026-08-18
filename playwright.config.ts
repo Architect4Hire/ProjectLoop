@@ -2,6 +2,7 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   testDir: './visual-regression/tests',
+  globalTeardown: './visual-regression/shutdown-fixture.mjs',
   outputDir: './visual-regression/test-results',
   fullyParallel: true,
   retries: 0,
@@ -23,7 +24,7 @@ export default defineConfig({
   webServer: {
     command: 'node visual-regression/serve-fixture.mjs',
     url: 'http://127.0.0.1:4207',
-    reuseExistingServer: !process.env['CI'],
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 });

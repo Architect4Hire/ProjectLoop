@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -10,13 +10,13 @@ import { PaginationComponent } from './pagination.component';
   template: `
     <lsd-pagination
       accessibleName="Results pages"
-      [currentPage]="currentPage"
+      [currentPage]="currentPage()"
       [totalPages]="totalPages"
       (pageChange)="requestedPage = $event" />
   `,
 })
 class PaginationTestHostComponent {
-  currentPage = 1;
+  readonly currentPage = signal(1);
   totalPages = 5;
   requestedPage: number | null = null;
 }
@@ -43,7 +43,7 @@ describe('PaginationComponent', () => {
   });
 
   it('exposes the last-page state and does not emit beyond the upper boundary', () => {
-    fixture.componentInstance.currentPage = 5;
+    fixture.componentInstance.currentPage.set(5);
     fixture.detectChanges();
 
     expect(buttons()[0].disabled).toBeFalse();
@@ -53,7 +53,7 @@ describe('PaginationComponent', () => {
   });
 
   it('uses keyboard-native buttons to emit intent without changing controlled state', () => {
-    fixture.componentInstance.currentPage = 3;
+    fixture.componentInstance.currentPage.set(3);
     fixture.detectChanges();
     const next = buttons()[1];
     next.focus();
@@ -64,6 +64,6 @@ describe('PaginationComponent', () => {
     expect(enter.defaultPrevented).toBeFalse();
     next.click();
     expect(fixture.componentInstance.requestedPage).toBe(4);
-    expect(fixture.componentInstance.currentPage).toBe(3);
+    expect(fixture.componentInstance.currentPage()).toBe(3);
   });
 });

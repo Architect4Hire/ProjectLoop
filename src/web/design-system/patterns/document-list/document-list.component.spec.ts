@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -18,10 +18,10 @@ const document = (id: string, title: string): DocumentCardViewModel => ({
 @Component({
   standalone: true,
   imports: [DocumentListComponent],
-  template: `<lsd-document-list id="project-documents" accessibleName="Project documents" [documents]="documents" />`,
+  template: `<lsd-document-list id="project-documents" accessibleName="Project documents" [documents]="documents()" />`,
 })
 class DocumentListTestHostComponent {
-  documents: readonly DocumentCardViewModel[] = [];
+  readonly documents = signal<readonly DocumentCardViewModel[]>([]);
 }
 
 describe('DocumentListComponent', () => {
@@ -43,7 +43,7 @@ describe('DocumentListComponent', () => {
   });
 
   it('renders one document with identical row and card information', () => {
-    host.documents = [document('one', 'Document one')];
+    host.documents.set([document('one', 'Document one')]);
     fixture.detectChanges();
 
     expect(fixture.debugElement.queryAll(By.css('tr[lsdDocumentRow]')).length).toBe(1);
@@ -57,7 +57,7 @@ describe('DocumentListComponent', () => {
   });
 
   it('preserves caller order for many documents in both presentations', () => {
-    host.documents = [document('first', 'First'), document('second', 'Second'), document('third', 'Third')];
+    host.documents.set([document('first', 'First'), document('second', 'Second'), document('third', 'Third')]);
     fixture.detectChanges();
 
     const rowTitles = fixture.debugElement.queryAll(By.css('tbody th[scope="row"]'))
@@ -69,7 +69,7 @@ describe('DocumentListComponent', () => {
   });
 
   it('provides mutually switched row and narrow card presentations', () => {
-    host.documents = [document('one', 'Document one')];
+    host.documents.set([document('one', 'Document one')]);
     fixture.detectChanges();
 
     expect(fixture.debugElement.query(By.css('[data-presentation="rows"]'))).not.toBeNull();

@@ -127,6 +127,8 @@ Import supported TypeScript APIs only through `src/web/design-system/public-api.
 - [Public imports](public-imports.md)
 - [Integration manifest](integration.md)
 - [Final acceptance checklist](final-acceptance-checklist.md)
+- [Root verification entry points](verification-entry-points.md)
+- [Lake Shore Drive parity review](lake-shore-drive-parity.md)
 - [Business-neutral APIs](business-neutrality.md)
 - [Starter cleanup audit](cleanup-audit.md)
 - [Feature boundary check](feature-boundary-check.md)

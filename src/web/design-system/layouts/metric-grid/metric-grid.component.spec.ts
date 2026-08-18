@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -10,19 +10,19 @@ import { MetricGridComponent } from './metric-grid.component';
   imports: [MetricCardComponent, MetricGridComponent],
   template: `
     <lsd-metric-grid>
-      @for (metric of metrics; track metric.label) {
+      @for (metric of metrics(); track metric.label) {
         <lsd-metric-card [label]="metric.label" [value]="metric.value" />
       }
     </lsd-metric-grid>
   `,
 })
 class MetricGridTestHostComponent {
-  metrics = [
+  readonly metrics = signal([
     { label: 'First', value: '1' },
     { label: 'Second', value: '2' },
     { label: 'Third', value: '3' },
     { label: 'Fourth', value: '4' },
-  ];
+  ]);
 }
 
 describe('MetricGridComponent', () => {
@@ -41,7 +41,7 @@ describe('MetricGridComponent', () => {
     const grid = fixture.debugElement.query(By.css('.lsd-metric-grid')).nativeElement as HTMLElement;
     expect(grid.getAttribute('role')).toBeNull();
 
-    host.metrics = host.metrics.slice(0, 1);
+    host.metrics.update(metrics => metrics.slice(0, 1));
     fixture.detectChanges();
     expect(fixture.debugElement.queryAll(By.directive(MetricCardComponent))).toHaveSize(1);
   });

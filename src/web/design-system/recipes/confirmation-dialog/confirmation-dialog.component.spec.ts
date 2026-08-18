@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ConfirmationDialogComponent, type ConfirmationCancelReason } from './confirmation-dialog.component';
@@ -14,18 +14,18 @@ import { ConfirmationDialogComponent, type ConfirmationCancelReason } from './co
       consequenceText="This change affects all collaborators."
       actionLabel="Apply change"
       actionTone="warning"
-      [open]="open"
-      [processing]="processing"
+      [open]="open()"
+      [processing]="processing()"
       (confirmed)="confirm()"
       (cancelled)="cancel($event)" />
   `,
 })
 class ConfirmationDialogTestHostComponent {
-  open = false;
-  processing = false;
+  readonly open = signal(false);
+  readonly processing = signal(false);
   confirmCount = 0;
   cancelReasons: ConfirmationCancelReason[] = [];
-  cancel(reason: ConfirmationCancelReason): void { this.cancelReasons.push(reason); this.open = false; }
+  cancel(reason: ConfirmationCancelReason): void { this.cancelReasons.push(reason); this.open.set(false); }
   confirm(): void { this.confirmCount += 1; }
 }
 
@@ -39,6 +39,10 @@ describe('ConfirmationDialogComponent', () => {
     host = fixture.componentInstance;
     fixture.detectChanges();
     dialog = fixture.debugElement.query(By.css('dialog')).nativeElement;
+    Object.defineProperties(dialog, {
+      showModal: { configurable: true, value: () => dialog.setAttribute('open', '') },
+      close: { configurable: true, value: () => dialog.removeAttribute('open') },
+    });
     spyOn(dialog, 'showModal').and.callFake(() => dialog.setAttribute('open', ''));
     spyOn(dialog, 'close').and.callFake(() => dialog.removeAttribute('open'));
   });
@@ -46,7 +50,7 @@ describe('ConfirmationDialogComponent', () => {
   it('opens modally and moves focus inside the confirmation dialog', async () => {
     const opener = fixture.debugElement.query(By.css('#opener')).nativeElement as HTMLButtonElement;
     opener.focus();
-    host.open = true;
+    host.open.set(true);
     fixture.detectChanges();
     await fixture.whenStable();
     expect(dialog.showModal).toHaveBeenCalled();
@@ -56,7 +60,7 @@ describe('ConfirmationDialogComponent', () => {
   it('emits an Escape cancellation intent and restores trigger focus', () => {
     const opener = fixture.debugElement.query(By.css('#opener')).nativeElement as HTMLButtonElement;
     opener.focus();
-    host.open = true;
+    host.open.set(true);
     fixture.detectChanges();
     dialog.dispatchEvent(new Event('cancel', { cancelable: true }));
     fixture.detectChanges();
@@ -65,8 +69,8 @@ describe('ConfirmationDialogComponent', () => {
   });
 
   it('locks dismissal and both actions while processing', () => {
-    host.open = true;
-    host.processing = true;
+    host.open.set(true);
+    host.processing.set(true);
     fixture.detectChanges();
     dialog.dispatchEvent(new Event('cancel', { cancelable: true }));
     const buttons = fixture.debugElement.queryAll(By.css('.lsd-confirmation-dialog__actions button'));
@@ -77,7 +81,7 @@ describe('ConfirmationDialogComponent', () => {
   });
 
   it('emits caller-owned confirmation and explicit cancel-button intents', () => {
-    host.open = true;
+    host.open.set(true);
     fixture.detectChanges();
     const buttons = fixture.debugElement.queryAll(By.css('.lsd-confirmation-dialog__actions button'));
     (buttons[1].nativeElement as HTMLButtonElement).click();

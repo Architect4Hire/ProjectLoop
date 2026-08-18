@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -7,10 +7,10 @@ import { BreadcrumbComponent, BreadcrumbItem } from './breadcrumb.component';
 @Component({
   standalone: true,
   imports: [BreadcrumbComponent],
-  template: `<lsd-breadcrumb accessibleName="Project location" [items]="items" />`,
+  template: `<lsd-breadcrumb accessibleName="Project location" [items]="items()" />`,
 })
 class BreadcrumbTestHostComponent {
-  items: readonly BreadcrumbItem[] = [{ label: 'Projects', href: '/projects' }];
+  readonly items = signal<readonly BreadcrumbItem[]>([{ label: 'Projects', href: '/projects' }]);
 }
 
 describe('BreadcrumbComponent', () => {
@@ -34,11 +34,11 @@ describe('BreadcrumbComponent', () => {
   });
 
   it('renders nested caller-supplied labels and URLs in order', () => {
-    fixture.componentInstance.items = [
+    fixture.componentInstance.items.set([
       { label: 'Projects', href: '/projects' },
       { label: 'Lake Shore Drive', href: '/projects/lake-shore-drive' },
       { label: 'Requirements', href: '/projects/lake-shore-drive/requirements' },
-    ];
+    ]);
     fixture.detectChanges();
 
     expect(anchors().map((anchor) => anchor.textContent?.trim())).toEqual([
@@ -58,7 +58,7 @@ describe('BreadcrumbComponent', () => {
 
   it('preserves a long label as accessible text while allowing visual truncation', () => {
     const label = 'A deliberately long current-page label that must remain complete for assistive technology';
-    fixture.componentInstance.items = [{ label, href: '/projects/long-label' }];
+    fixture.componentInstance.items.set([{ label, href: '/projects/long-label' }]);
     fixture.detectChanges();
 
     const labelElement = fixture.debugElement.query(By.css('.lsd-breadcrumb__label')).nativeElement as HTMLElement;

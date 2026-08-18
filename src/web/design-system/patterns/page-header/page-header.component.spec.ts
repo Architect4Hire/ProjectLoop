@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -11,7 +11,7 @@ import { PageHeaderComponent, PageHeaderHeadingLevel } from './page-header.compo
     <lsd-page-header
       title="Requirements"
       description="Review and manage requirements."
-      [headingLevel]="headingLevel"
+      [headingLevel]="headingLevel()"
       [breadcrumbs]="breadcrumbs"
       [metadata]="metadata">
       <div lsdPageHeaderActions>
@@ -22,7 +22,7 @@ import { PageHeaderComponent, PageHeaderHeadingLevel } from './page-header.compo
   `,
 })
 class PageHeaderTestHostComponent {
-  headingLevel: PageHeaderHeadingLevel = 1;
+  readonly headingLevel = signal<PageHeaderHeadingLevel>(1);
   readonly breadcrumbs = [
     { label: 'Projects', href: '/projects' },
     { label: 'Requirements', href: '/projects/current/requirements' },
@@ -43,7 +43,7 @@ describe('PageHeaderComponent', () => {
     expect(fixture.debugElement.queryAll(By.css('h1'))).toHaveSize(1);
     expect(fixture.debugElement.queryAll(By.css('h2, h3, h4, h5, h6'))).toHaveSize(0);
 
-    fixture.componentInstance.headingLevel = 3;
+    fixture.componentInstance.headingLevel.set(3);
     fixture.detectChanges();
     expect(fixture.debugElement.queryAll(By.css('h1, h2, h4, h5, h6'))).toHaveSize(0);
     expect(fixture.debugElement.query(By.css('h3')).nativeElement.textContent).toContain('Requirements');

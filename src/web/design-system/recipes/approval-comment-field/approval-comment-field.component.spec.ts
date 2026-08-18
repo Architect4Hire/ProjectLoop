@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -10,15 +10,15 @@ import { ApprovalCommentFieldComponent } from './approval-comment-field.componen
   template: `
     <lsd-approval-comment-field
       id="decision-comment"
-      [required]="required"
+      [required]="required()"
       [maxLength]="20"
-      [error]="error"
+      [error]="error()"
       [(value)]="value" />
   `,
 })
 class ApprovalCommentFieldTestHostComponent {
-  required = false;
-  error: string | undefined;
+  readonly required = signal(false);
+  readonly error = signal<string | undefined>(undefined);
   value = '';
 }
 
@@ -43,7 +43,7 @@ describe('ApprovalCommentFieldComponent', () => {
   });
 
   it('labels and exposes caller-required comments through native semantics', () => {
-    host.required = true;
+    host.required.set(true);
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('label')).nativeElement.textContent).toContain(
       'Decision comment (required)',
@@ -62,7 +62,7 @@ describe('ApprovalCommentFieldComponent', () => {
   });
 
   it('associates and announces a caller-supplied error', () => {
-    host.error = 'A comment is required for this decision.';
+    host.error.set('A comment is required for this decision.');
     fixture.detectChanges();
     expect(textarea().getAttribute('aria-invalid')).toBe('true');
     expect(textarea().getAttribute('aria-errormessage')).toBe('decision-comment-error');

@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { PendingApprovalsListComponent, type PendingApprovalItem } from './pending-approvals-list.component';
 
-@Component({ standalone: true, imports: [PendingApprovalsListComponent], template: `<lsd-pending-approvals-list [items]="items" />` })
+@Component({ standalone: true, imports: [PendingApprovalsListComponent], template: `<lsd-pending-approvals-list [items]="items()" />` })
 class PendingApprovalsListTestHostComponent {
-  items: readonly PendingApprovalItem[] = [
+  readonly items = signal<readonly PendingApprovalItem[]>([
     { id: 'document-v3', target: { type: 'document', typeLabel: 'Document', label: 'Delivery plan', versionLabel: 'v3' }, requester: 'Morgan Lee', due: { label: 'Overdue by 2 days', variant: 'danger', dateTime: '2026-08-15' }, review: { href: '/approvals/document-v3' } },
     { id: 'milestone', target: { type: 'other', typeLabel: 'Milestone', label: 'Architecture sign-off' }, requester: 'Alex Rivera', due: { label: 'Due August 20', variant: 'neutral', dateTime: '2026-08-20' }, review: { href: '/approvals/milestone' } },
-  ];
+  ]);
 }
 
 describe('PendingApprovalsListComponent', () => {
@@ -22,7 +22,7 @@ describe('PendingApprovalsListComponent', () => {
   });
 
   it('renders an explicit empty state', () => {
-    host.items = [];
+    host.items.set([]);
     fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('ul'))).toBeNull();
     expect(fixture.nativeElement.textContent).toContain('No pending approval requests.');

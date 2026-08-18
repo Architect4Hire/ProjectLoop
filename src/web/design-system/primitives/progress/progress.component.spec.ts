@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -8,11 +8,11 @@ import { ProgressComponent } from './progress.component';
   standalone: true,
   imports: [ProgressComponent],
   template: `
-    <lsd-progress id="generation" label="Generating summary" [value]="value" [max]="maximum" />
+    <lsd-progress id="generation" label="Generating summary" [value]="value()" [max]="maximum" />
   `,
 })
 class ProgressTestHostComponent {
-  value: number | undefined = 25;
+  readonly value = signal<number | undefined>(25);
   maximum = 50;
 }
 
@@ -32,17 +32,17 @@ describe('ProgressComponent', () => {
     expect(progress().max).toBe(50);
     expect(progress().value).toBe(25);
 
-    fixture.componentInstance.value = 75;
+    fixture.componentInstance.value.set(75);
     fixture.detectChanges();
     expect(progress().value).toBe(50);
 
-    fixture.componentInstance.value = -10;
+    fixture.componentInstance.value.set(-10);
     fixture.detectChanges();
     expect(progress().value).toBe(0);
   });
 
   it('uses native indeterminate semantics by omitting value', () => {
-    fixture.componentInstance.value = undefined;
+    fixture.componentInstance.value.set(undefined);
     fixture.detectChanges();
 
     expect(progress().hasAttribute('value')).toBeFalse();
