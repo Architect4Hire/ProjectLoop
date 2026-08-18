@@ -43,8 +43,16 @@ public sealed class AzureBlobDocumentStore : IBlobDocumentStore
         return await blobClient.OpenReadAsync(cancellationToken: cancellationToken);
     }
 
-    public Task DeleteIfOrphanAsync(string objectKey, CancellationToken cancellationToken = default) =>
-        throw new NotImplementedException();
+    public async Task DeleteIfOrphanAsync(string objectKey, CancellationToken cancellationToken = default)
+    {
+        // Compensation path for an upload whose SQL metadata write failed
+        // after the blob was already stored: remove the now-orphaned blob so
+        // it does not linger as unreferenced content.
+        var containerClient = _blobServiceClient.GetBlobContainerClient(_containerName);
+        var blobClient = containerClient.GetBlobClient(objectKey);
+
+        await blobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken);
+    }
 
     private async Task<BlobContainerClient> EnsureContainerAsync(CancellationToken cancellationToken)
     {
