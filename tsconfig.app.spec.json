@@ -1,0 +1,27 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc/app-spec"
+  },
+  "files": [
+    "src/web/design-system/testing/vitest-jasmine-compat.ts",
+    "src/web/design-system/testing/vitest-jasmine-compat.d.ts",
+    "src/web/app/main.ts",
+    "src/web/app/app.component.ts",
+    "src/web/app/app.routes.ts",
+    "src/web/app/app.component.spec.ts",
+    "src/web/app/app.routes.spec.ts",
+    "src/web/app/shell/app-shell.component.ts",
+    "src/web/app/shell/app-shell.component.spec.ts",
+    "src/web/app/routes/dashboard/dashboard.component.ts",
+    "src/web/app/routes/dashboard/dashboard.component.spec.ts",
+    "src/web/app/routes/projects/projects.component.ts",
+    "src/web/app/routes/projects/projects.component.spec.ts",
+    "src/web/app/routes/documents/documents.component.ts",
+    "src/web/app/routes/documents/documents.component.spec.ts",
+    "src/web/app/routes/approvals/approvals.component.ts",
+    "src/web/app/routes/approvals/approvals.component.spec.ts",
+    "src/web/app/routes/account/account.component.ts",
+    "src/web/app/routes/account/account.component.spec.ts"
+  ]
+}

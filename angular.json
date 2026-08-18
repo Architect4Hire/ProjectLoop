@@ -3,6 +3,69 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "app": {
+      "projectType": "application",
+      "root": "",
+      "sourceRoot": "src/web/app",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "outputPath": "dist/app",
+            "index": "src/web/app/index.html",
+            "browser": "src/web/app/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/web/design-system/foundations/tailwind.css",
+              "src/web/app/styles.css"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "buildTarget": "app:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "app:build:production"
+            },
+            "development": {
+              "buildTarget": "app:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "buildTarget": "app:build",
+            "tsConfig": "tsconfig.app.spec.json",
+            "runner": "vitest",
+            "include": [
+              "src/web/app/**/*.spec.ts"
+            ]
+          }
+        }
+      }
+    },
     "design-system": {
       "projectType": "application",
       "root": "",
@@ -121,5 +184,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "a2511535-7750-4c0b-8ff8-c076b1d21bbb"
   }
 }
