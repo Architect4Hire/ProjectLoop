@@ -7,7 +7,10 @@ const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url))
 const extensions = new Set(['.html', '.ts']);
 const defaultRoots = ['src/web/features', 'src/web/app'];
 const minimumBundleLength = 8;
-const designSystemRoot = path.resolve('src/web/design-system');
+const designSystemRoot = path.join(repositoryRoot, 'src/web/design-system');
+const duplicatedControlRoles = new Set([
+  'button', 'checkbox', 'dialog', 'drawer', 'input', 'radio', 'radio-group', 'select', 'textarea',
+]);
 const commonUtilities = new Set([
   'absolute', 'block', 'border', 'contents', 'fixed', 'flex', 'grid', 'hidden',
   'inline', 'relative', 'sticky', 'table',
@@ -49,10 +52,39 @@ function isPrivateDesignSystemImport(specifier) {
   return normalized.includes('/design-system/') || normalized.startsWith('design-system/');
 }
 
+function publicDesignSystemSelectors() {
+  const selectors = new Set();
+  for (const file of walkDesignSystem(designSystemRoot)) {
+    const source = fs.readFileSync(file, 'utf8');
+    for (const match of source.matchAll(/selector\s*:\s*["']([^"']+)["']/g)) {
+      for (const selector of match[1].split(',').map((item) => item.trim())) {
+        if (/^lsd-[a-z0-9-]+$/.test(selector)) selectors.add(selector);
+      }
+    }
+  }
+  return selectors;
+}
+
+function walkDesignSystem(root) {
+  if (!fs.existsSync(root)) return [];
+  return fs.readdirSync(root, { withFileTypes: true }).flatMap((entry) => {
+    const target = path.join(root, entry.name);
+    if (entry.isDirectory()) return walkDesignSystem(target);
+    return entry.name.endsWith('.component.ts') ? [target] : [];
+  });
+}
+
+function duplicatedComponentRole(selector, publicSelectors) {
+  if (publicSelectors.has(selector)) return `the public selector ${selector}`;
+  const role = [...duplicatedControlRoles].find((candidate) => selector.endsWith(`-${candidate}`));
+  return role ? `the public ${role} control role` : null;
+}
+
 export function checkFeatureBoundaries(roots) {
   const files = roots.flatMap((root) => walk(path.resolve(root)));
   const violations = [];
   const occurrences = new Map();
+  const publicSelectors = publicDesignSystemSelectors();
 
   for (const file of files) {
     const source = fs.readFileSync(file, 'utf8');
@@ -64,6 +96,20 @@ export function checkFeatureBoundaries(roots) {
           line: lineAt(source, match.index ?? 0),
           rule: 'design-system-public-import',
           message: `Import from the public entry point instead of "${match[1]}".`,
+        });
+      }
+    }
+
+    const componentSelectors = /@Component\s*\(\s*\{[\s\S]*?selector\s*:\s*["']([^"']+)["']/g;
+    for (const match of source.matchAll(componentSelectors)) {
+      for (const selector of match[1].split(',').map((item) => item.trim())) {
+        const duplicate = duplicatedComponentRole(selector, publicSelectors);
+        if (!duplicate) continue;
+        violations.push({
+          file,
+          line: lineAt(source, (match.index ?? 0) + match[0].indexOf('selector')),
+          rule: 'design-system-control-duplicate',
+          message: `Feature-local selector "${selector}" duplicates ${duplicate}; compose the corresponding API from @lsd/design-system.`,
         });
       }
     }
@@ -93,15 +139,29 @@ function runSelfTest() {
   const fixtureRoot = path.join(repositoryRoot, 'test-fixtures/feature-boundaries');
   const passingViolations = checkFeatureBoundaries([path.join(fixtureRoot, 'passing')]);
   const failingViolations = checkFeatureBoundaries([path.join(fixtureRoot, 'failing')]);
-  const importViolations = failingViolations.filter((item) => item.rule === 'design-system-public-import');
+  const expectedFailures = new Map([
+    ['design-system-public-import', { count: 1, diagnostic: 'public entry point' }],
+    ['repeated-tailwind-bundle', { count: 2, diagnostic: 'promote the shared pattern' }],
+    ['design-system-control-duplicate', { count: 2, diagnostic: '@lsd/design-system' }],
+  ]);
 
   if (passingViolations.length !== 0) {
     throw new Error(`Expected the public-entry-point fixture to pass; received ${passingViolations.length} violation(s).`);
   }
-  if (failingViolations.length !== 1 || importViolations.length !== 1) {
-    throw new Error(`Expected the deep-import fixture to produce one public-import violation; received ${failingViolations.length}.`);
+  for (const [rule, expectation] of expectedFailures) {
+    const matching = failingViolations.filter((item) => item.rule === rule);
+    if (matching.length !== expectation.count) {
+      throw new Error(`Expected ${expectation.count} ${rule} violation(s); received ${matching.length}.`);
+    }
+    if (matching.some((item) => !item.message.includes(expectation.diagnostic))) {
+      throw new Error(`Expected every ${rule} diagnostic to include "${expectation.diagnostic}".`);
+    }
   }
-  console.log('Self-test passed: the public import was accepted and the deep import was rejected.');
+  const expectedTotal = [...expectedFailures.values()].reduce((total, item) => total + item.count, 0);
+  if (failingViolations.length !== expectedTotal) {
+    throw new Error(`Expected ${expectedTotal} total failing-fixture violations; received ${failingViolations.length}.`);
+  }
+  console.log('Self-test passed: public imports and feature composition were accepted; deep imports, repeated long utility bundles, and duplicated selectors/control roles were rejected.');
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
