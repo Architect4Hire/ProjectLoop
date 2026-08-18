@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectLoop.Approvals.Core;
 
@@ -11,9 +12,11 @@ using ProjectLoop.Approvals.Core;
 namespace ProjectLoop.Approvals.Core.Migrations
 {
     [DbContext(typeof(ApprovalsDbContext))]
-    partial class ApprovalsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260818221715_AddApprovalsInboxMessage")]
+    partial class AddApprovalsInboxMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

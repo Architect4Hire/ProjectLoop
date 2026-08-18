@@ -82,4 +82,23 @@ public class ApprovalsDbContextTests
 
         Assert.NotNull(context.ApprovalDecisions);
     }
+
+    [Fact]
+    public void Model_Includes_InboxMessage()
+    {
+        using var context = CreateDbContext();
+
+        var entity = context.Model.FindEntityType(typeof(InboxMessage));
+
+        Assert.NotNull(entity);
+        Assert.Equal("InboxMessages", entity.GetTableName());
+    }
+
+    [Fact]
+    public void InboxMessages_DbSet_Is_Queryable()
+    {
+        using var context = CreateDbContext();
+
+        Assert.NotNull(context.InboxMessages);
+    }
 }

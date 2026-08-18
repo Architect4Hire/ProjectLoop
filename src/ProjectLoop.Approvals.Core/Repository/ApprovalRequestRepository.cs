@@ -24,4 +24,9 @@ public sealed class ApprovalRequestRepository : IApprovalRequestRepository
 
         request.Status = status;
     }
+
+    public void Add(ApprovalRequest request)
+    {
+        _dbContext.ApprovalRequests.Add(request);
+    }
 }

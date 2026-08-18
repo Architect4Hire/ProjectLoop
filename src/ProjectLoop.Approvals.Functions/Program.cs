@@ -21,6 +21,10 @@ var host = new HostBuilder()
         services.AddScoped<IOutboxMessageRepository, OutboxMessageRepository>();
         services.AddScoped<IOutboxMessagePublisher, ServiceBusOutboxMessagePublisher>();
         services.AddScoped<IOutboxRelay, OutboxRelay>();
+
+        services.AddScoped<IApprovalRequestRepository, ApprovalRequestRepository>();
+        services.AddScoped<IDocumentPublishedConsumerTransaction, DocumentPublishedConsumerTransaction>();
+        services.AddScoped<IDocumentPublishedConsumer, DocumentPublishedConsumer>();
     })
     .Build();
 

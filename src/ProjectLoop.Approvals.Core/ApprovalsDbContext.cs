@@ -15,6 +15,8 @@ public sealed class ApprovalsDbContext : DbContext
 
     public DbSet<ApprovalDecision> ApprovalDecisions => Set<ApprovalDecision>();
 
+    public DbSet<InboxMessage> InboxMessages => Set<InboxMessage>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -24,5 +26,6 @@ public sealed class ApprovalsDbContext : DbContext
         builder.ApplyConfiguration(new OutboxMessageConfiguration());
         builder.ApplyConfiguration(new ApprovalRequestConfiguration());
         builder.ApplyConfiguration(new ApprovalDecisionConfiguration());
+        builder.ApplyConfiguration(new InboxMessageConfiguration());
     }
 }

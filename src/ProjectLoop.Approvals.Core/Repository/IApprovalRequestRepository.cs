@@ -18,4 +18,9 @@ public interface IApprovalRequestRepository
     /// method only persists, it does not decide. Does not commit.
     /// </summary>
     void ApplyDecision(ApprovalRequest request, ApprovalRequestStatus status);
+
+    /// <summary>
+    /// Stages a new ApprovalRequest for insertion. Does not commit.
+    /// </summary>
+    void Add(ApprovalRequest request);
 }

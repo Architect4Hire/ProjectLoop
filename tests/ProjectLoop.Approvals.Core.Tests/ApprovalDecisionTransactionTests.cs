@@ -53,7 +53,24 @@ public class ApprovalDecisionTransactionTests
     }
 
     [Fact]
-    public async Task ExecuteAsync_Does_Not_Enqueue_An_Outbox_Message()
+    public async Task ExecuteAsync_Approved_Enqueues_One_ApprovalGranted_Outbox_Message()
+    {
+        await using var dbContext = CreateDbContext();
+        var request = await SeedPendingRequestAsync(dbContext);
+        var transaction = new ApprovalDecisionTransaction(
+            dbContext,
+            new ApprovalRequestRepository(dbContext),
+            new ApprovalDecisionRepository(dbContext));
+
+        await transaction.ExecuteAsync(request, ApprovalRequestStatus.Approved, "approver-1", null, DateTimeOffset.UtcNow);
+
+        var outboxRow = await dbContext.OutboxMessages.SingleAsync();
+        Assert.Equal("ApprovalGranted", outboxRow.EventType);
+        Assert.Equal(OutboxMessageStatus.Pending, outboxRow.Status);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_Rejected_Enqueues_One_ApprovalRejected_Outbox_Message()
     {
         await using var dbContext = CreateDbContext();
         var request = await SeedPendingRequestAsync(dbContext);
@@ -64,6 +81,8 @@ public class ApprovalDecisionTransactionTests
 
         await transaction.ExecuteAsync(request, ApprovalRequestStatus.Rejected, "approver-1", null, DateTimeOffset.UtcNow);
 
-        Assert.False(await dbContext.OutboxMessages.AnyAsync());
+        var outboxRow = await dbContext.OutboxMessages.SingleAsync();
+        Assert.Equal("ApprovalRejected", outboxRow.EventType);
+        Assert.Equal(OutboxMessageStatus.Pending, outboxRow.Status);
     }
 }
