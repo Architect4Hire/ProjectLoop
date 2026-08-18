@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../ProjectLoop.ServiceDefaults/ProjectLoop.ServiceDefaults.csproj" />
+  <ProjectReference Include="../ProjectLoop.Documents.Core/ProjectLoop.Documents.Core.csproj" />
+  </ItemGroup>
+
+</Project>
+

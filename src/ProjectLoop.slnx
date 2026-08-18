@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Solution>
+  <Metadata>
+    <Version>1.0</Version>
+  </Metadata>
+  <Projects>
+    <Project Path="ProjectLoop.AppHost/ProjectLoop.AppHost.csproj" />
+    <Project Path="ProjectLoop.ServiceDefaults/ProjectLoop.ServiceDefaults.csproj" />
+    <Project Path="ProjectLoop.Gateway/ProjectLoop.Gateway.csproj" />
+    <Project Path="ProjectLoop.Identity/ProjectLoop.Identity.csproj" />
+    <Project Path="ProjectLoop.Identity.Core/ProjectLoop.Identity.Core.csproj" />
+    <Project Path="ProjectLoop.Identity.Functions/ProjectLoop.Identity.Functions.csproj" />
+    <Project Path="ProjectLoop.Engagement/ProjectLoop.Engagement.csproj" />
+    <Project Path="ProjectLoop.Engagement.Core/ProjectLoop.Engagement.Core.csproj" />
+    <Project Path="ProjectLoop.Engagement.Functions/ProjectLoop.Engagement.Functions.csproj" />
+    <Project Path="ProjectLoop.Documents/ProjectLoop.Documents.csproj" />
+    <Project Path="ProjectLoop.Documents.Core/ProjectLoop.Documents.Core.csproj" />
+    <Project Path="ProjectLoop.Documents.Functions/ProjectLoop.Documents.Functions.csproj" />
+    <Project Path="ProjectLoop.Approvals/ProjectLoop.Approvals.csproj" />
+    <Project Path="ProjectLoop.Approvals.Core/ProjectLoop.Approvals.Core.csproj" />
+    <Project Path="ProjectLoop.Approvals.Functions/ProjectLoop.Approvals.Functions.csproj" />
+    <Project Path="ProjectLoop.Notifications/ProjectLoop.Notifications.csproj" />
+    <Project Path="ProjectLoop.Notifications.Core/ProjectLoop.Notifications.Core.csproj" />
+    <Project Path="ProjectLoop.Notifications.Functions/ProjectLoop.Notifications.Functions.csproj" />
+    <Project Path="ProjectLoop.Audit/ProjectLoop.Audit.csproj" />
+    <Project Path="ProjectLoop.Audit.Core/ProjectLoop.Audit.Core.csproj" />
+    <Project Path="ProjectLoop.Audit.Functions/ProjectLoop.Audit.Functions.csproj" />
+    <Project Path="ProjectLoop.Commercial/ProjectLoop.Commercial.csproj" />
+    <Project Path="ProjectLoop.Commercial.Core/ProjectLoop.Commercial.Core.csproj" />
+  </Projects>
+</Solution>
