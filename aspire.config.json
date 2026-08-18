@@ -1,0 +1,5 @@
+{
+  "appHost": {
+    "path": "src/ProjectLoop.AppHost/ProjectLoop.AppHost.csproj"
+  }
+}
