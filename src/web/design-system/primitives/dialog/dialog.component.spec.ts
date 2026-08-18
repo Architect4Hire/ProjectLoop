@@ -15,6 +15,7 @@ import { DialogInitialFocusDirective } from './dialog-initial-focus.directive';
       title="Review changes"
       description="Confirm the proposed changes."
       size="large"
+      [dismissible]="dismissible()"
       [open]="open()"
       (closeRequested)="closed($event)">
       <button lsdDialogInitialFocus type="button">Review details</button>
@@ -24,6 +25,7 @@ import { DialogInitialFocusDirective } from './dialog-initial-focus.directive';
 })
 class DialogTestHostComponent {
   readonly open = signal(false);
+  readonly dismissible = signal(true);
   reason: DialogCloseReason | undefined;
   closed(reason: DialogCloseReason): void { this.reason = reason; this.open.set(false); }
 }
@@ -38,6 +40,8 @@ describe('DialogComponent', () => {
     fixture = TestBed.createComponent(DialogTestHostComponent);
     host = fixture.componentInstance;
     nativeDialog = fixture.debugElement.query(By.css('dialog')).nativeElement;
+    Object.defineProperty(nativeDialog, 'showModal', { configurable: true, value: () => undefined });
+    Object.defineProperty(nativeDialog, 'close', { configurable: true, value: () => undefined });
     spyOn(nativeDialog, 'showModal').and.callFake(() => nativeDialog.setAttribute('open', ''));
     spyOn(nativeDialog, 'close').and.callFake(() => nativeDialog.removeAttribute('open'));
     fixture.detectChanges();
@@ -61,6 +65,22 @@ describe('DialogComponent', () => {
     nativeDialog.dispatchEvent(new Event('cancel', { cancelable: true })); fixture.detectChanges();
     expect(host.reason).toBe('escape');
     expect(document.activeElement).toBe(opener);
+  });
+
+  it('requests backdrop dismissal only when the backdrop itself is clicked', () => {
+    host.open.set(true); fixture.detectChanges();
+    nativeDialog.dispatchEvent(new MouseEvent('click', { bubbles: true })); fixture.detectChanges();
+    expect(host.reason).toBe('backdrop');
+  });
+
+  it('does not close a processing-locked dialog from Escape, backdrop, or close controls', () => {
+    host.dismissible.set(false); host.open.set(true); fixture.detectChanges();
+    nativeDialog.dispatchEvent(new Event('cancel', { cancelable: true }));
+    nativeDialog.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    fixture.detectChanges();
+    expect(host.reason).toBeUndefined();
+    expect(nativeDialog.hasAttribute('open')).toBeTrue();
+    expect(fixture.debugElement.query(By.css('.lsd-dialog__close'))).toBeNull();
   });
 
   it('exposes responsive sizing and semantic appearance classes', () => {

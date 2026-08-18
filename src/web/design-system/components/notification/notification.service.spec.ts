@@ -13,9 +13,8 @@ describe('NotificationService', () => {
 
   it('queues typed notifications with accessible defaults', () => {
     const id = service.notify({ title: 'Saved', message: 'Changes were saved.', severity: 'success' });
-    expect(service.notifications()).toEqual([
-      jasmine.objectContaining({ id, severity: 'success', announcement: 'polite', dismissible: true }),
-    ]);
+    expect(service.notifications()).toHaveSize(1);
+    expect(service.notifications()[0]).toMatchObject({ id, severity: 'success', announcement: 'polite', dismissible: true });
   });
 
   it('dismisses one notification without disturbing the remaining queue', () => {

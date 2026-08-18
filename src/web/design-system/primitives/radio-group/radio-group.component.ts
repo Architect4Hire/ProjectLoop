@@ -1,5 +1,7 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
 
+import { FieldMessageComponent } from '../field-message/field-message.component';
+
 export interface RadioOption<T> {
   readonly value: T;
   readonly label: string;
@@ -12,6 +14,8 @@ export type RadioGroupOrientation = 'horizontal' | 'vertical';
 @Component({
   selector: 'lsd-radio-group',
   standalone: true,
+  imports: [FieldMessageComponent],
+  host: { '[attr.id]': 'null' },
   templateUrl: './radio-group.component.html',
   styleUrl: './radio-group.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

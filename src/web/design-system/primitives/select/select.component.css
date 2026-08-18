@@ -5,4 +5,5 @@
 select {
   box-sizing: border-box;
   font: inherit;
+  min-block-size: var(--control-size-touch, 2.75rem);
 }

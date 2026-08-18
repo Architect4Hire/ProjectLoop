@@ -1,5 +1,7 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
 
+import { FieldMessageComponent } from '../field-message/field-message.component';
+
 export interface SelectOption<T> {
   readonly value: T;
   readonly label: string;
@@ -11,6 +13,8 @@ export type SelectCompareWith<T> = (left: T, right: T) => boolean;
 @Component({
   selector: 'lsd-select',
   standalone: true,
+  imports: [FieldMessageComponent],
+  host: { '[attr.id]': 'null' },
   templateUrl: './select.component.html',
   styleUrl: './select.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

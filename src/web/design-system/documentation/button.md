@@ -19,6 +19,7 @@
 - `disabled` and `loading` both make the native button unavailable. Loading also sets `aria-busy` and announces `loadingLabel` through a polite status.
 - `pressed` supplies native toggle-button state when defined.
 - `accessibleLabel` forwards an accessible name for icon-only usage. Visible button text remains preferred.
+- `fullWidth`: expands the native button to the available inline size.
 - Icons compose through `lsdButtonLeadingIcon` and `lsdButtonTrailingIcon`; projected icons are decorative because the button label owns the accessible name.
 
 Native `<button>` behavior supplies Enter/Space activation, form semantics, focus order, and disabled-event suppression. The shared interaction foundation supplies focus-visible and disabled treatment. All colors use semantic light/dark tokens, and reduced-motion mode removes the transition and spinner rotation without hiding loading state.

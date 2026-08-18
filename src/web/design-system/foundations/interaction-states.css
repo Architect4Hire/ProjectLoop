@@ -23,6 +23,12 @@
   opacity: var(--state-disabled-opacity);
 }
 
+@media (max-width: 47.999rem), (pointer: coarse) {
+  :where(.lsd-link) {
+    min-block-size: var(--control-size-touch, 2.75rem);
+  }
+}
+
 :where(input, select, textarea):invalid,
 :where([aria-invalid='true']) {
   border-color: var(--lsd-color-status-danger, currentColor);

@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { RadioGroupComponent, type RadioOption } from './radio-group.component';
+
+interface ReviewDepth { readonly id: number; }
 
 @Component({
   standalone: true,
@@ -13,22 +15,24 @@ import { RadioGroupComponent, type RadioOption } from './radio-group.component';
       name="review-depth"
       label="Review depth"
       description="Choose one review level."
-      [disabled]="disabled"
-      [error]="error"
+      [compareWith]="compareById"
+      [disabled]="disabled()"
+      [error]="error()"
       [options]="options"
       required
       [(value)]="value" />
   `,
 })
 class RadioGroupTestHostComponent {
-  disabled = false;
-  error: string | undefined;
-  readonly options: readonly RadioOption<number>[] = [
-    { value: 1, label: 'Focused' },
-    { value: 2, label: 'Standard' },
-    { value: 3, label: 'Comprehensive', disabled: true },
+  readonly disabled = signal(false);
+  readonly error = signal<string | undefined>(undefined);
+  readonly options: readonly RadioOption<ReviewDepth>[] = [
+    { value: { id: 1 }, label: 'Focused' },
+    { value: { id: 2 }, label: 'Standard' },
+    { value: { id: 3 }, label: 'Comprehensive', disabled: true },
   ];
-  value: number | null = 1;
+  readonly value = signal<ReviewDepth | null>({ id: 1 });
+  readonly compareById = (left: ReviewDepth, right: ReviewDepth): boolean => left.id === right.id;
 }
 
 describe('RadioGroupComponent', () => {
@@ -54,20 +58,29 @@ describe('RadioGroupComponent', () => {
   it('preserves a typed value after native radio selection', () => {
     controls()[1].checked = true;
     controls()[1].dispatchEvent(new Event('change'));
-    expect(host.value).toBe(2);
-    expect(typeof host.value).toBe('number');
+    expect(host.value()).toBe(host.options[1].value);
+    expect(host.value()?.id).toBe(2);
+  });
+
+  it('uses typed compareWith for equivalent non-string values', () => {
+    expect(controls()[0].checked).toBeTrue();
+    host.value.set({ id: 2 });
+    fixture.detectChanges();
+    expect(controls()[1].checked).toBeTrue();
   });
 
   it('retains native keyboard grouping and option disabled state', () => {
     expect(controls().every((control) => !control.hasAttribute('tabindex'))).toBeTrue();
     expect(controls()[2].disabled).toBeTrue();
-    host.disabled = true;
+    controls()[0].focus();
+    expect(document.activeElement).toBe(controls()[0]);
+    host.disabled.set(true);
     fixture.detectChanges();
     expect((fixture.debugElement.query(By.css('fieldset')).nativeElement as HTMLFieldSetElement).disabled).toBeTrue();
   });
 
   it('associates group help and an announced error', () => {
-    host.error = 'Select a review depth.';
+    host.error.set('Select a review depth.');
     fixture.detectChanges();
     const group = fixture.debugElement.query(By.css('fieldset')).nativeElement as HTMLFieldSetElement;
     expect(group.getAttribute('aria-invalid')).toBe('true');
@@ -76,5 +89,6 @@ describe('RadioGroupComponent', () => {
     expect(fixture.debugElement.query(By.css('[role="alert"]')).nativeElement.textContent).toContain(
       'Select a review depth.',
     );
+    expect(fixture.debugElement.query(By.css('[role="alert"]')).attributes['aria-atomic']).toBe('true');
   });
 });

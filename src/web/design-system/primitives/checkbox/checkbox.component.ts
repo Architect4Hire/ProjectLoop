@@ -1,8 +1,12 @@
 import { booleanAttribute, ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
 
+import { FieldMessageComponent } from '../field-message/field-message.component';
+
 @Component({
   selector: 'lsd-checkbox',
   standalone: true,
+  imports: [FieldMessageComponent],
+  host: { '[attr.id]': 'null' },
   templateUrl: './checkbox.component.html',
   styleUrl: './checkbox.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

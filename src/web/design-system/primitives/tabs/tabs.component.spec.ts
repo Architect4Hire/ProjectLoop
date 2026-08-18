@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -11,8 +11,8 @@ type TestTab = 'overview' | 'sources' | 'history';
   standalone: true,
   imports: [TabsComponent, TabPanelDirective],
   template: `
-    <lsd-tabs id="details" label="Detail sections" [tabs]="tabs" [selected]="selected"
-      (selectionChange)="selected = $event">
+    <lsd-tabs id="details" label="Detail sections" [tabs]="tabs" [selected]="selected()"
+      (selectionChange)="selected.set($event)">
       <ng-template lsdTabPanel="overview">Overview panel</ng-template>
       <ng-template lsdTabPanel="sources">Sources panel</ng-template>
       <ng-template lsdTabPanel="history">History panel</ng-template>
@@ -25,7 +25,7 @@ class TabsTestHostComponent {
     { identity: 'sources', label: 'Sources', disabled: true },
     { identity: 'history', label: 'History' },
   ];
-  selected: TestTab = 'overview';
+  readonly selected = signal<TestTab>('overview');
 }
 
 describe('TabsComponent', () => {
@@ -52,25 +52,25 @@ describe('TabsComponent', () => {
 
   it('preserves typed identity on pointer selection', () => {
     buttons()[2].click(); fixture.detectChanges();
-    expect(host.selected).toBe('history');
+    expect(host.selected()).toBe('history');
     expect(fixture.debugElement.query(By.css('[role="tabpanel"]')).nativeElement.textContent).toContain('History panel');
   });
 
   it('uses arrow keys with wrapping and skips disabled tabs', async () => {
     buttons()[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     fixture.detectChanges(); await fixture.whenStable();
-    expect(host.selected).toBe('history');
+    expect(host.selected()).toBe('history');
     expect(document.activeElement).toBe(buttons()[2]);
 
     buttons()[2].dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
     fixture.detectChanges(); await fixture.whenStable();
-    expect(host.selected).toBe('overview');
+    expect(host.selected()).toBe('overview');
   });
 
   it('supports Home and End navigation', () => {
     buttons()[0].dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true })); fixture.detectChanges();
-    expect(host.selected).toBe('history');
+    expect(host.selected()).toBe('history');
     buttons()[2].dispatchEvent(new KeyboardEvent('keydown', { key: 'Home', bubbles: true })); fixture.detectChanges();
-    expect(host.selected).toBe('overview');
+    expect(host.selected()).toBe('overview');
   });
 });

@@ -8,7 +8,7 @@ import { LinkDirective } from './link.directive';
   standalone: true,
   imports: [LinkDirective],
   template: `
-    <a lsdLink [href]="href" [tone]="tone()" [impact]="impact()" [size]="size()" [shape]="shape()">
+    <a lsdLink [href]="href" [tone]="tone()" [impact]="impact()" [size]="size()" [shape]="shape()" [fullWidth]="fullWidth()">
       Projected destination
     </a>
     <a
@@ -27,6 +27,7 @@ class LinkTestHostComponent {
   readonly impact = signal<'bold' | 'light' | 'minimal'>('minimal');
   readonly size = signal<'small' | 'medium' | 'large'>('medium');
   readonly shape = signal<'square' | 'rounded' | 'pill'>('rounded');
+  readonly fullWidth = signal(false);
 }
 
 describe('LinkDirective', () => {
@@ -74,5 +75,19 @@ describe('LinkDirective', () => {
     expect(link.classList).toContain('bg-status-danger');
     expect(link.classList).toContain('min-h-12');
     expect(link.classList).toContain('rounded-full');
+  });
+
+  it('supports the same full-width layout contract as Button', () => {
+    fixture.componentInstance.fullWidth.set(true);
+    fixture.detectChanges();
+    expect(links()[0].classList).toContain('w-full');
+  });
+
+  it('does not intercept navigation or simulate disabled and loading anchor states', () => {
+    const link = links()[0];
+    expect(link.getAttribute('href')).toBe('/projects/42');
+    expect(link.hasAttribute('disabled')).toBeFalse();
+    expect(link.hasAttribute('aria-disabled')).toBeFalse();
+    expect(link.hasAttribute('aria-busy')).toBeFalse();
   });
 });

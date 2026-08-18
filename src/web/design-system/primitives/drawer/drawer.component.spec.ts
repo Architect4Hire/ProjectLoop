@@ -11,7 +11,7 @@ import { DrawerInitialFocusDirective } from './drawer-initial-focus.directive';
   template: `
     <button id="opener" type="button">Preview source</button>
     <lsd-drawer id="source-preview" title="Source preview" description="Inspect supporting evidence."
-      placement="start" size="wide" [open]="open()" (closeRequested)="closed($event)">
+      placement="start" size="wide" [dismissible]="dismissible()" [open]="open()" (closeRequested)="closed($event)">
       <button lsdDrawerInitialFocus type="button">Open source</button>
       <div lsdDrawerActions><button type="button">Done</button></div>
     </lsd-drawer>
@@ -19,6 +19,7 @@ import { DrawerInitialFocusDirective } from './drawer-initial-focus.directive';
 })
 class DrawerTestHostComponent {
   readonly open = signal(false);
+  readonly dismissible = signal(true);
   reason: DrawerCloseReason | undefined;
   closed(reason: DrawerCloseReason): void { this.reason = reason; this.open.set(false); }
 }
@@ -33,6 +34,8 @@ describe('DrawerComponent', () => {
     fixture = TestBed.createComponent(DrawerTestHostComponent);
     host = fixture.componentInstance;
     drawer = fixture.debugElement.query(By.css('dialog')).nativeElement;
+    Object.defineProperty(drawer, 'showModal', { configurable: true, value: () => undefined });
+    Object.defineProperty(drawer, 'close', { configurable: true, value: () => undefined });
     spyOn(drawer, 'showModal').and.callFake(() => drawer.setAttribute('open', ''));
     spyOn(drawer, 'close').and.callFake(() => drawer.removeAttribute('open'));
     fixture.detectChanges();
@@ -56,6 +59,22 @@ describe('DrawerComponent', () => {
     drawer.dispatchEvent(new Event('cancel', { cancelable: true })); fixture.detectChanges();
     expect(host.reason).toBe('escape');
     expect(document.activeElement).toBe(opener);
+  });
+
+  it('requests backdrop dismissal only when the backdrop itself is clicked', () => {
+    host.open.set(true); fixture.detectChanges();
+    drawer.dispatchEvent(new MouseEvent('click', { bubbles: true })); fixture.detectChanges();
+    expect(host.reason).toBe('backdrop');
+  });
+
+  it('does not close a processing-locked drawer from Escape, backdrop, or close controls', () => {
+    host.dismissible.set(false); host.open.set(true); fixture.detectChanges();
+    drawer.dispatchEvent(new Event('cancel', { cancelable: true }));
+    drawer.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    fixture.detectChanges();
+    expect(host.reason).toBeUndefined();
+    expect(drawer.hasAttribute('open')).toBeTrue();
+    expect(fixture.debugElement.query(By.css('.lsd-drawer__close'))).toBeNull();
   });
 
   it('applies logical placement, tokenized width, and semantic appearance', () => {

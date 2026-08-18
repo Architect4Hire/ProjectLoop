@@ -1,9 +1,12 @@
 import {
+  afterNextRender,
   ChangeDetectionStrategy,
   Component,
   ElementRef,
   contentChildren,
   input,
+  inject,
+  Injector,
   signal,
   viewChild,
 } from '@angular/core';
@@ -33,6 +36,7 @@ export class MenuComponent {
   protected readonly triggerId = () => `${this.id()}-trigger`;
 
   private readonly root = viewChild.required<ElementRef<HTMLElement>>('root');
+  private readonly injector = inject(Injector);
   private readonly trigger = viewChild.required<ElementRef<HTMLButtonElement>>('trigger');
   private readonly items = contentChildren(MenuItemDirective, { descendants: true });
 
@@ -98,10 +102,10 @@ export class MenuComponent {
 
   private show(focusIndex: 0 | -1): void {
     this.open.set(true);
-    queueMicrotask(() => {
+    afterNextRender(() => {
       const available = this.availableItems();
       available[focusIndex === -1 ? available.length - 1 : 0]?.focus();
-    });
+    }, { injector: this.injector });
   }
 
   private dismiss(restoreFocus: boolean): void {

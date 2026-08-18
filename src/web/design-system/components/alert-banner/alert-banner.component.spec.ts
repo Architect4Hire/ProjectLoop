@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -9,14 +9,14 @@ import { AlertAnnouncement, AlertBannerComponent } from './alert-banner.componen
   imports: [AlertBannerComponent],
   template: `
     <lsd-alert-banner id="save-error" title="Changes were not saved" severity="danger"
-      [announcement]="announcement" dismissible (dismissed)="dismissCount += 1">
+      [announcement]="announcement()" dismissible (dismissed)="dismissCount += 1">
       Retry the operation when the connection returns.
       <div lsdAlertActions><button type="button">Retry</button></div>
     </lsd-alert-banner>
   `,
 })
 class AlertBannerTestHostComponent {
-  announcement: AlertAnnouncement = 'assertive';
+  readonly announcement = signal<AlertAnnouncement>('assertive');
   dismissCount = 0;
 }
 
@@ -44,9 +44,9 @@ describe('AlertBannerComponent', () => {
   });
 
   it('supports polite status and non-announcing group semantics', () => {
-    host.announcement = 'polite'; fixture.detectChanges();
+    host.announcement.set('polite'); fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('[role="status"]')).attributes['aria-live']).toBe('polite');
-    host.announcement = 'off'; fixture.detectChanges();
+    host.announcement.set('off'); fixture.detectChanges();
     expect(fixture.debugElement.query(By.css('[role="group"]')).attributes['aria-live']).toBe('off');
   });
 

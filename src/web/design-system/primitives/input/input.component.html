@@ -8,11 +8,10 @@
   </label>
 
   @if (description()) {
-    <p class="m-0 text-sm text-text-muted" [id]="descriptionId()">{{ description() }}</p>
+    <lsd-field-message [id]="descriptionId()">{{ description() }}</lsd-field-message>
   }
 
-  <div
-    class="flex min-h-10 items-center gap-2 rounded-md border border-border-default bg-surface-panel px-3 text-text-primary">
+  <div [class]="controlClasses()">
     <span class="lsd-input__adornment inline-flex shrink-0 text-text-muted" aria-hidden="true">
       <ng-content select="[lsdInputPrefix]" />
     </span>
@@ -38,8 +37,6 @@
   </div>
 
   @if (error()) {
-    <p class="m-0 text-sm font-medium text-status-danger" [id]="errorId()" role="alert">
-      {{ error() }}
-    </p>
+    <lsd-field-message [id]="errorId()" kind="error">{{ error() }}</lsd-field-message>
   }
 </div>

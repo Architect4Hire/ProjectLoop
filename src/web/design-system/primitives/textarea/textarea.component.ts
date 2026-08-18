@@ -8,6 +8,8 @@ import {
   numberAttribute,
 } from '@angular/core';
 
+import { FieldMessageComponent } from '../field-message/field-message.component';
+
 export type TextareaDensity = 'compact' | 'default' | 'comfortable';
 export type TextareaResize = 'none' | 'vertical' | 'both';
 export type TextareaWrap = 'hard' | 'soft';
@@ -15,6 +17,7 @@ export type TextareaWrap = 'hard' | 'soft';
 @Component({
   selector: 'lsd-textarea',
   standalone: true,
+  imports: [FieldMessageComponent],
   templateUrl: './textarea.component.html',
   styleUrl: './textarea.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

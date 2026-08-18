@@ -12,7 +12,94 @@
 } @else {
   <main class="fixture-page">
     <header class="fixture-page-header"><p class="fixture-kicker">Deterministic visual fixture</p><h1>{{ composition }}</h1></header>
-    @if (composition === 'dashboard') {
+    @if (composition === 'feedback') {
+      <section class="fixture-feedback" aria-label="Feedback state examples">
+        <lsd-alert-banner id="feedback-success" title="Changes saved" severity="success">The latest caller-confirmed version is available.</lsd-alert-banner>
+        <lsd-state-feedback id="feedback-loading" kind="loading" title="Loading authorized records" description="Existing records remain unchanged while this request completes." />
+        <lsd-state-feedback id="feedback-skeleton" kind="skeleton" title="Loading document summaries" description="Content placeholders are decorative." [skeletonLines]="3" />
+        <lsd-state-feedback id="feedback-recoverable" kind="recoverable-error" title="Records could not be refreshed" description="Try the request again.">
+          <lsd-button lsdStateActions>Retry refresh</lsd-button>
+        </lsd-state-feedback>
+        <lsd-state-feedback id="feedback-terminal" kind="terminal-error" title="Records are unavailable" description="Contact support with the displayed reference." />
+        <lsd-progress id="feedback-progress" label="Preparing evidence package" [value]="64" valueText="64 percent complete" />
+        <lsd-document-download-action id="feedback-download" documentLabel="Evidence package" state="unavailable" />
+        <lsd-ai-generation-progress id="feedback-ai" title="Generate executive summary" state="cancelling" mode="indeterminate" announcement="Cancellation requested" />
+      </section>
+    } @else if (composition === 'overlays') {
+      <section class="fixture-overlays" aria-label="Overlay and disclosure controls">
+        <div class="fixture-control-row">
+          <lsd-tooltip id="overlay-tooltip" text="Supplemental keyboard guidance." placement="bottom">
+            <button lsdTooltipTrigger type="button">Tooltip trigger</button>
+          </lsd-tooltip>
+          <lsd-menu id="overlay-menu" accessibleLabel="Fixture actions">
+            <span lsdMenuTriggerContent>Menu actions</span>
+            <button lsdMenuItem type="button">First action</button>
+            <button lsdMenuItem type="button" disabled>Unavailable action</button>
+            <button lsdMenuItem type="button">Last action</button>
+          </lsd-menu>
+          <button type="button" (click)="dialogOpen.set(true)">Open dialog</button>
+          <button type="button" (click)="drawerOpen.set(true)">Open drawer</button>
+          <button type="button" (click)="paletteOpen.set(true)">Open command palette</button>
+        </div>
+        <lsd-tabs id="overlay-tabs" label="Fixture sections" [tabs]="overlayTabs" [selected]="selectedOverlayTab()" (selectionChange)="selectedOverlayTab.set($event)">
+          <ng-template lsdTabPanel="overview">Overview content</ng-template>
+          <ng-template lsdTabPanel="disabled">Unavailable content</ng-template>
+          <ng-template lsdTabPanel="history">History content</ng-template>
+        </lsd-tabs>
+        <lsd-dialog id="fixture-dialog" title="Review changes" description="Confirm the proposed changes." [open]="dialogOpen()" (closeRequested)="dialogOpen.set(false)">
+          <button lsdDialogInitialFocus type="button">Review details</button>
+          <button type="button">Secondary dialog action</button>
+        </lsd-dialog>
+        <lsd-drawer id="fixture-drawer" title="Source preview" description="Inspect supporting evidence." placement="end" [open]="drawerOpen()" (closeRequested)="drawerOpen.set(false)">
+          <button lsdDrawerInitialFocus type="button">Open source</button>
+          <button type="button">Secondary drawer action</button>
+        </lsd-drawer>
+        <lsd-command-palette id="fixture-palette" [groups]="commandGroups" [(open)]="paletteOpen" />
+      </section>
+    } @else if (composition === 'choices') {
+      <section class="fixture-fields" aria-label="Native choice control states">
+        <lsd-select id="choice-select" label="Reviewer capacity" description="Choose the available reviewer capacity." error="Select reviewer capacity." [options]="choiceOptions" required />
+        <lsd-checkbox id="choice-checkbox" label="Include supporting evidence" description="Adds cited evidence to the output." error="Choose whether to include evidence." [indeterminate]="true" required />
+        <lsd-radio-group id="choice-radio" name="choice-radio" label="Review depth" description="Choose one available review level." error="Select a review depth." [options]="radioOptions" required />
+        <lsd-select id="choice-disabled-select" label="Unavailable selection" [options]="choiceOptions" disabled />
+        <lsd-checkbox id="choice-disabled-checkbox" label="Unavailable confirmation" disabled />
+        <lsd-radio-group id="choice-disabled-radio" name="choice-disabled-radio" label="Unavailable review depth" [options]="radioOptions" disabled />
+      </section>
+    } @else if (composition === 'fields') {
+      <section class="fixture-fields" aria-label="Input and textarea states">
+        <lsd-input id="field-default" label="Project name" description="Use the client-facing project name." placeholder="Transformation program" required />
+        <lsd-input id="field-invalid" label="Contact email" description="We use this address for review notifications." placeholder="name@example.com" type="email" error="Enter a valid email address." density="compact" />
+        <lsd-input id="field-readonly" label="Engagement identifier" description="Assigned when the engagement was created." value="ENG-2048" readonly density="comfortable" />
+        <lsd-input id="field-disabled" label="Archived reference" value="Unavailable" disabled />
+        <lsd-textarea id="notes-default" label="Architecture notes" description="Record decisions, constraints, and open questions." placeholder="Record the rationale" required density="compact" />
+        <lsd-textarea id="notes-invalid" label="Approval rationale" description="Explain the decision for the audit record." error="Approval rationale is required." density="comfortable" />
+        <lsd-textarea id="notes-readonly" label="Published summary" value="This published summary remains selectable but cannot be edited." readonly />
+        <lsd-textarea id="notes-disabled" label="Unavailable notes" value="Unavailable" disabled />
+      </section>
+    } @else if (composition === 'controls') {
+      <section class="fixture-controls" aria-label="Button and link variants">
+        <div class="fixture-control-row">
+          <lsd-button tone="primary"><span lsdButtonLeadingIcon aria-hidden="true">+</span>Primary action</lsd-button>
+          <lsd-button tone="danger" impact="light" shape="pill">Danger light</lsd-button>
+          <lsd-button tone="success" impact="minimal" size="small">Success minimal</lsd-button>
+          <lsd-button tone="warning" size="large" shape="square">Warning square</lsd-button>
+          <lsd-button tone="info" [loading]="state.includes('states')" loadingLabel="Saving changes">Saving</lsd-button>
+          <lsd-button tone="neutral" [disabled]="state.includes('states')">Disabled action</lsd-button>
+        </div>
+        <div class="fixture-control-row">
+          <a lsdLink href="#primary" tone="primary" impact="bold"><span aria-hidden="true">&#8594;</span> Primary destination</a>
+          <a lsdLink href="#danger" tone="danger" impact="light" shape="pill">Danger light link</a>
+          <a lsdLink href="#success" tone="success" impact="minimal" size="small">Success minimal link</a>
+          <a lsdLink href="#warning" tone="warning" size="large" shape="square">Warning square link</a>
+          <a lsdLink href="#info" tone="info">Information link</a>
+          <a lsdLink href="#neutral" tone="neutral">Neutral link</a>
+        </div>
+        <div class="fixture-control-full-width">
+          <lsd-button [fullWidth]="true">Full-width action</lsd-button>
+          <a lsdLink href="#full-width" [fullWidth]="true">Full-width destination</a>
+        </div>
+      </section>
+    } @else if (composition === 'dashboard') {
       <lsd-project-dashboard id="project">
         <div lsdProjectDashboardHealth class="fixture-panel fixture-health"><strong>Healthy</strong><p>All monitored indicators are within agreed thresholds.</p></div>
         <div lsdProjectDashboardMetrics class="fixture-metrics"><div class="fixture-panel"><small>Completion</small><strong>87%</strong></div><div class="fixture-panel"><small>Open decisions</small><strong>4</strong></div><div class="fixture-panel"><small>Contributors</small><strong>28</strong></div></div>

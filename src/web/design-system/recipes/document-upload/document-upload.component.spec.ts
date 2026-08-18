@@ -37,4 +37,14 @@ describe('DocumentUploadComponent', () => {
     expect(failure.getAttribute('role')).toBe('alert'); expect(failure.textContent).toContain('Network interrupted');
     fixture.debugElement.query(By.css('.lsd-document-upload__actions button')).nativeElement.click(); expect(host.intent).toEqual({ type: 'retry' });
   });
+  it('announces caller-confirmed completion without presenting another upload action', () => {
+    host.state.set('completed'); fixture.detectChanges();
+    const status = fixture.debugElement.query(By.css('[role="status"]')).nativeElement as HTMLElement;
+    expect(status.getAttribute('aria-live')).toBe('polite');
+    expect(fixture.debugElement.query(By.css('#document-upload-completed')).nativeElement.textContent).toContain('Upload completed');
+    const upload = fixture.debugElement.queryAll(By.css('button'))
+      .map((item) => item.nativeElement as HTMLButtonElement)
+      .find((button) => button.textContent?.includes('Upload document'));
+    expect(upload?.disabled).toBeTrue();
+  });
 });

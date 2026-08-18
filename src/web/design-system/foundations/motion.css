@@ -11,6 +11,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  :where(.lsd-link) {
+    transition: none;
+  }
   :root {
     --motion-duration-fast: 0ms;
     --motion-duration-default: 0ms;

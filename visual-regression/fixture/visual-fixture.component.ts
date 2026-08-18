@@ -1,24 +1,51 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import {
   AppearanceService,
+  AiGenerationProgressComponent,
+  AlertBannerComponent,
   AuditTimelineComponent,
+  ButtonComponent,
+  CheckboxComponent,
+  CommandPaletteComponent,
+  DialogComponent,
+  DialogInitialFocusDirective,
   DocumentListComponent,
+  DocumentDownloadActionComponent,
   DocumentUploadComponent,
+  DrawerComponent,
+  DrawerInitialFocusDirective,
+  InputComponent,
   PortalShellComponent,
   ProjectDashboardComponent,
+  LinkDirective,
+  MenuComponent,
+  MenuItemDirective,
+  RadioGroupComponent,
+  ProgressComponent,
+  SelectComponent,
+  StateFeedbackComponent,
+  TabPanelDirective,
+  TabsComponent,
+  TextareaComponent,
+  TooltipComponent,
+  TooltipTriggerDirective,
   VersionBoundApprovalComponent,
   approvalStatusPresentation,
   type AppNavigationLink,
   type AuditTimelineEvent,
   type DocumentCardViewModel,
+  type CommandPaletteGroup,
+  type RadioOption,
+  type SelectOption,
+  type TabItem,
 } from '@lsd/design-system';
 
-type Composition = 'shell' | 'dashboard' | 'documents' | 'upload' | 'approval' | 'audit';
+type Composition = 'shell' | 'dashboard' | 'documents' | 'upload' | 'approval' | 'audit' | 'controls' | 'fields' | 'choices' | 'overlays' | 'feedback';
 
 @Component({
   selector: 'visual-root',
   standalone: true,
-  imports: [AuditTimelineComponent, DocumentListComponent, DocumentUploadComponent, PortalShellComponent, ProjectDashboardComponent, VersionBoundApprovalComponent],
+  imports: [AiGenerationProgressComponent, AlertBannerComponent, AuditTimelineComponent, ButtonComponent, CheckboxComponent, CommandPaletteComponent, DialogComponent, DialogInitialFocusDirective, DocumentDownloadActionComponent, DocumentListComponent, DocumentUploadComponent, DrawerComponent, DrawerInitialFocusDirective, InputComponent, LinkDirective, MenuComponent, MenuItemDirective, PortalShellComponent, ProgressComponent, ProjectDashboardComponent, RadioGroupComponent, SelectComponent, StateFeedbackComponent, TabPanelDirective, TabsComponent, TextareaComponent, TooltipComponent, TooltipTriggerDirective, VersionBoundApprovalComponent],
   templateUrl: './visual-fixture.component.html',
   styleUrl: './visual-fixture.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,6 +54,10 @@ export class VisualFixtureComponent {
   protected readonly composition: Composition;
   protected readonly state: string;
   protected readonly longContent: boolean;
+  protected readonly dialogOpen = signal(false);
+  protected readonly drawerOpen = signal(false);
+  protected readonly paletteOpen = signal(false);
+  protected readonly selectedOverlayTab = signal<'overview' | 'disabled' | 'history'>('overview');
 
   protected readonly navigation: readonly AppNavigationLink[] = [
     { label: 'Overview', href: '#overview', icon: 'menu', active: true },
@@ -81,6 +112,28 @@ export class VisualFixtureComponent {
     { label: 'Project team', value: 'team' },
     { label: 'Confidential', value: 'confidential' },
   ] as const;
+  protected readonly choiceOptions: readonly SelectOption<number>[] = [
+    { value: 10, label: 'Ten reviewers' },
+    { value: 20, label: 'Twenty reviewers' },
+    { value: 50, label: 'Fifty reviewers', disabled: true },
+  ];
+  protected readonly radioOptions: readonly RadioOption<number>[] = [
+    { value: 1, label: 'Focused review' },
+    { value: 2, label: 'Standard review' },
+    { value: 3, label: 'Comprehensive review', disabled: true },
+  ];
+  protected readonly overlayTabs: readonly TabItem<'overview' | 'disabled' | 'history'>[] = [
+    { identity: 'overview', label: 'Overview' },
+    { identity: 'disabled', label: 'Unavailable', disabled: true },
+    { identity: 'history', label: 'History' },
+  ];
+  protected readonly commandGroups: readonly CommandPaletteGroup<string>[] = [{
+    id: 'fixture', label: 'Fixture commands', commands: [
+      { id: 'open', identity: 'open', label: 'Open project' },
+      { id: 'disabled', identity: 'disabled', label: 'Unavailable command', disabled: true },
+      { id: 'create', identity: 'create', label: 'Create project' },
+    ],
+  }];
   protected readonly approvalTarget = {
     type: 'document' as const,
     typeLabel: 'Document',

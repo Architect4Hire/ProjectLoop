@@ -68,4 +68,14 @@ describe('StateFeedbackComponent', () => {
     const region = fixture.debugElement.query(By.css('.lsd-state-feedback')).nativeElement as HTMLElement;
     expect(region.getAttribute('aria-live')).toBe('assertive');
   });
+
+  it('presents idle empty state visibly without claiming busy or failure', () => {
+    fixture.componentInstance.kind.set('empty');
+    fixture.detectChanges();
+    const region = fixture.debugElement.query(By.css('.lsd-state-feedback')).nativeElement as HTMLElement;
+    expect(region.getAttribute('role')).toBe('status');
+    expect(region.hasAttribute('aria-busy')).toBeFalse();
+    expect(region.textContent).toContain('Results unavailable');
+    expect(region.querySelector('[role="alert"]')).toBeNull();
+  });
 });

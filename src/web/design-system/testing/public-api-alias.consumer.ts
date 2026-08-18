@@ -62,17 +62,32 @@ type FixtureChoice = Readonly<{ id: 'alpha' | 'beta'; label: string }>;
           <lsd-button (activated)="acceptActivation()">Continue</lsd-button>
           <lsd-input id="fixture-name" label="Name" [(value)]="name" />
           <lsd-textarea id="fixture-notes" label="Notes" [(value)]="notes" />
-          <lsd-select id="fixture-select" label="Choice" [options]="choices" [(value)]="selectedChoice" />
+          <lsd-select
+            id="fixture-select"
+            label="Choice"
+            description="Choose a typed object value."
+            error="A choice is required."
+            [compareWith]="compareChoice"
+            [options]="choices"
+            required
+            [(value)]="selectedChoice" />
           <lsd-checkbox
             id="fixture-checkbox"
             label="Confirmed"
+            description="Confirm the reviewed selection."
+            error="Confirmation is required."
+            required
             [(checked)]="confirmed"
             [(indeterminate)]="partiallyConfirmed" />
           <lsd-radio-group
             id="fixture-radio"
             name="fixture-radio"
             label="Preferred choice"
+            description="Choose one available typed value."
+            error="A preferred choice is required."
+            [compareWith]="compareChoice"
             [options]="radioChoices"
+            required
             [(value)]="preferredChoice" />
           <lsd-dialog
             id="fixture-dialog"
@@ -122,7 +137,7 @@ export class PublicApiConsumerFixtureComponent {
 
   protected readonly choices: readonly SelectOption<FixtureChoice>[] = [
     { value: { id: 'alpha', label: 'Alpha' }, label: 'Alpha' },
-    { value: { id: 'beta', label: 'Beta' }, label: 'Beta' },
+    { value: { id: 'beta', label: 'Beta' }, label: 'Beta', disabled: true },
   ];
   protected readonly radioChoices: readonly RadioOption<FixtureChoice>[] = this.choices;
   protected readonly navigation: readonly AppNavigationLink[] = [
@@ -163,6 +178,7 @@ export class PublicApiConsumerFixtureComponent {
   ];
 
   protected acceptActivation(): void {}
+  protected readonly compareChoice = (left: FixtureChoice, right: FixtureChoice): boolean => left.id === right.id;
   protected acceptDialogClose(_reason: DialogCloseReason): void {}
   protected acceptDrawerClose(_reason: DrawerCloseReason): void {}
   protected acceptDecision(_intent: VersionBoundApprovalIntent): void {}

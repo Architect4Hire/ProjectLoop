@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { SelectComponent, type SelectOption } from './select.component';
+
+interface PageSize { readonly id: number; }
 
 @Component({
   standalone: true,
@@ -12,22 +14,24 @@ import { SelectComponent, type SelectOption } from './select.component';
       id="page-size"
       label="Page size"
       description="Choose the number of rows."
-      [disabled]="disabled"
-      [error]="error"
+      [compareWith]="compareById"
+      [disabled]="disabled()"
+      [error]="error()"
       [options]="options"
       required
       [(value)]="value" />
   `,
 })
 class SelectTestHostComponent {
-  disabled = false;
-  error: string | undefined;
-  readonly options: readonly SelectOption<number>[] = [
-    { value: 10, label: 'Ten' },
-    { value: 20, label: 'Twenty' },
-    { value: 50, label: 'Fifty', disabled: true },
+  readonly disabled = signal(false);
+  readonly error = signal<string | undefined>(undefined);
+  readonly options: readonly SelectOption<PageSize>[] = [
+    { value: { id: 10 }, label: 'Ten' },
+    { value: { id: 20 }, label: 'Twenty' },
+    { value: { id: 50 }, label: 'Fifty', disabled: true },
   ];
-  value: number | null = 10;
+  readonly value = signal<PageSize | null>({ id: 10 });
+  readonly compareById = (left: PageSize, right: PageSize): boolean => left.id === right.id;
 }
 
 describe('SelectComponent', () => {
@@ -54,20 +58,27 @@ describe('SelectComponent', () => {
   it('preserves typed option values through native change events', () => {
     control().value = '1';
     control().dispatchEvent(new Event('change'));
-    expect(host.value).toBe(20);
-    expect(typeof host.value).toBe('number');
+    expect(host.value()).toBe(host.options[1].value);
+    expect(host.value()?.id).toBe(20);
+  });
+
+  it('uses typed compareWith to select an equivalent non-string value', () => {
+    expect(control().selectedIndex).toBe(1);
+    host.value.set({ id: 20 });
+    fixture.detectChanges();
+    expect(control().selectedIndex).toBe(2);
   });
 
   it('retains native keyboard focus and disabled option semantics', () => {
     expect(control().hasAttribute('tabindex')).toBeFalse();
     expect(control().options.item(3)?.disabled).toBeTrue();
-    host.disabled = true;
+    host.disabled.set(true);
     fixture.detectChanges();
     expect(control().disabled).toBeTrue();
   });
 
   it('associates and announces an accessible error', () => {
-    host.error = 'Select a page size.';
+    host.error.set('Select a page size.');
     fixture.detectChanges();
     expect(control().getAttribute('aria-invalid')).toBe('true');
     expect(control().getAttribute('aria-errormessage')).toBe('page-size-error');
@@ -75,5 +86,6 @@ describe('SelectComponent', () => {
     expect(fixture.debugElement.query(By.css('[role="alert"]')).nativeElement.textContent).toContain(
       'Select a page size.',
     );
+    expect(fixture.debugElement.query(By.css('[role="alert"]')).attributes['aria-atomic']).toBe('true');
   });
 });

@@ -23,8 +23,8 @@ Traceability: DS-003, DS-007, DS-008, DS-009.
 - `resize`: `none | vertical | both`, defaulting to `vertical` so users can expand long responses without destabilizing horizontal layouts.
 - `rows` defaults to five; `wrap` supports native `soft` or `hard` wrapping.
 - `required`, `disabled`, and `readonly` map to native properties.
-- `description` uses `aria-describedby`. `error` sets `aria-invalid` and `aria-errormessage`, extends the description association, and renders an alert.
+- `description` uses `aria-describedby`. `error` sets `aria-invalid` and `aria-errormessage`, extends the description association, and renders an atomic assertive Field Message without interpreting or mutating caller validation state.
 
-Native `<textarea>` behavior owns cursor movement, selection, newlines, clipboard operations, scrolling, and keyboard focus. The shared interaction foundation supplies visible focus, disabled, readonly, invalid, and forced-color behavior. Semantic surface, text, border, and danger tokens resolve in both appearances.
+Native `<textarea>` behavior owns cursor movement, selection, newlines, clipboard operations, scrolling, and keyboard focus. Readonly remains focusable and selectable; disabled is removed from the tab order and suppresses editing. The shared interaction foundation supplies visible focus, disabled, readonly, invalid, and forced-color behavior. Semantic surface, text, border, and danger tokens resolve in both appearances. Placeholder text supplements rather than replaces the required visible label.
 
 No starter implementation was adapted because the retained starter snapshot contains no reusable textarea primitive.

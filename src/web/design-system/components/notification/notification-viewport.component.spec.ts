@@ -26,7 +26,7 @@ describe('NotificationViewportComponent', () => {
   });
 
   it('invokes a typed action and dismisses by default', () => {
-    const action = jasmine.createSpy('action');
+    const action = vi.fn();
     service.notify({ title: 'Draft ready', message: 'Review it.', action: { label: 'Review', invoke: action } });
     fixture.detectChanges();
     fixture.debugElement.query(By.css('.lsd-notification__action')).nativeElement.click(); fixture.detectChanges();

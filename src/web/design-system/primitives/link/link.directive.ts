@@ -17,6 +17,7 @@ export class LinkDirective {
   readonly shape = input<LinkShape>('rounded');
   readonly size = input<LinkSize>('medium');
   readonly tone = input<LinkTone>('primary');
+  readonly fullWidth = input(false);
 
   protected readonly classes = computed(() =>
     [
@@ -24,7 +25,8 @@ export class LinkDirective {
       this.sizeClasses[this.size()],
       this.shapeClasses[this.shape()],
       this.impactClasses[this.tone()][this.impact()],
-    ].join(' '),
+      this.fullWidth() ? 'w-full' : '',
+    ].filter(Boolean).join(' '),
   );
 
   private readonly sizeClasses: Record<LinkSize, string> = {

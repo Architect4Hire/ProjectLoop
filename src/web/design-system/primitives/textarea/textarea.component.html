@@ -8,7 +8,7 @@
   </label>
 
   @if (description()) {
-    <p class="m-0 text-sm text-text-muted" [id]="descriptionId()">{{ description() }}</p>
+    <lsd-field-message [id]="descriptionId()">{{ description() }}</lsd-field-message>
   }
 
   <textarea
@@ -28,8 +28,6 @@
     (input)="updateValue($event)"></textarea>
 
   @if (error()) {
-    <p class="m-0 text-sm font-medium text-status-danger" [id]="errorId()" role="alert">
-      {{ error() }}
-    </p>
+    <lsd-field-message [id]="errorId()" kind="error">{{ error() }}</lsd-field-message>
   }
 </div>

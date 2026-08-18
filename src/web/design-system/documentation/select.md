@@ -27,7 +27,7 @@ readonly options: readonly SelectOption<number>[] = [
 - `compareWith` defaults to `Object.is` and can identify controlled object values by stable domain identity.
 - `placeholder` defaults to `Select an option`; set it to `undefined` only when `value` is initialized to an available option.
 - `required` and `disabled` forward to native properties.
-- `description` uses `aria-describedby`. `error` sets `aria-invalid` and `aria-errormessage`, extends the help association, and renders an alert.
+- `description` uses `aria-describedby`. `error` sets `aria-invalid` and `aria-errormessage`, extends the help association, and renders an atomic assertive Field Message without owning caller validation.
 
 The native `<select>` retains browser keyboard navigation, focus, option disabling, and narrow-screen picker behavior. Its 44px minimum height supports touch layouts. Shared foundations supply visible focus, disabled, invalid, and forced-color behavior. Semantic surface, text, border, and danger tokens resolve in both appearances.
 

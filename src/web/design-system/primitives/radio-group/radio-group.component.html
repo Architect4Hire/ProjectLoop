@@ -13,12 +13,12 @@
   </legend>
 
   @if (description()) {
-    <p class="m-0 text-sm text-text-muted" [id]="descriptionId()">{{ description() }}</p>
+    <lsd-field-message [id]="descriptionId()">{{ description() }}</lsd-field-message>
   }
 
   <div [class]="optionsClass()">
     @for (option of options(); track $index) {
-      <label class="flex min-h-11 cursor-pointer items-center gap-3 text-sm" [for]="optionId($index)">
+      <label class="lsd-radio-group__target flex min-h-11 cursor-pointer items-center gap-3 text-sm" [for]="optionId($index)">
         <input
           class="h-5 w-5 shrink-0 accent-accent-primary"
           [checked]="isChecked(option)"
@@ -35,8 +35,6 @@
   </div>
 
   @if (error()) {
-    <p class="m-0 text-sm font-medium text-status-danger" [id]="errorId()" role="alert">
-      {{ error() }}
-    </p>
+    <lsd-field-message [id]="errorId()" kind="error">{{ error() }}</lsd-field-message>
   }
 </fieldset>

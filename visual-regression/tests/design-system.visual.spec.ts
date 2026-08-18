@@ -13,6 +13,9 @@ for (const visualCase of portalCompositionVisualMatrix) {
     await page.emulateMedia({ colorScheme: visualCase.appearance, reducedMotion: 'reduce' });
     await page.goto(`/?composition=${visualCase.composition}&appearance=${visualCase.appearance}&state=${visualCase.state}`);
     await expect(page.locator('visual-root')).toBeVisible();
+    if (visualCase.state.includes('focus')) {
+      await page.keyboard.press('Tab');
+    }
     await expect(page).toHaveScreenshot(`${visualCase.name}.png`, { fullPage: true });
   });
 }

@@ -23,7 +23,7 @@ Traceability: DS-003, DS-007, DS-008.
 
 - `id` and `label` are required; `checked` and `indeterminate` are boolean model signals.
 - Native user change clears `indeterminate` and updates `checked`. Mixed state is also exposed as `aria-checked="mixed"`.
-- `description`, `error`, `required`, `disabled`, and `name` follow the shared form contract. Errors use `aria-invalid`, `aria-errormessage`, description association, and an alert.
+- `description`, `error`, `required`, `disabled`, and `name` follow the shared form contract. Errors use `aria-invalid`, `aria-errormessage`, description association, and an atomic assertive Field Message without owning caller validation.
 
 ## Radio-group contract
 
@@ -31,7 +31,7 @@ Traceability: DS-003, DS-007, DS-008.
 - `value` is a `T | null` model signal. DOM indices remain private; consumers receive the original typed value.
 - `compareWith` defaults to `Object.is` and supports controlled object values.
 - `orientation` is `vertical` or wrapping `horizontal`. It changes layout, not reading or keyboard order.
-- Native `<fieldset>` and `<legend>` provide grouped labeling. Description and errors are associated with the fieldset; group and individual disabled states remain native.
+- Native `<fieldset>` and `<legend>` provide grouped labeling. Description and atomic assertive Field Message errors are associated with the fieldset; group and individual disabled states remain native.
 
 Both controls use 44px label targets while retaining browser-native inputs and focus behavior. Semantic accent, text, muted, and danger tokens resolve in both appearances; forced-color and invalid behavior come from shared foundations. Neither primitive adds custom keyboard handlers.
 
