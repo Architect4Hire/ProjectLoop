@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.Azure.Storage.Blobs" Version="13.4.6" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="../ProjectLoop.ServiceDefaults/ProjectLoop.ServiceDefaults.csproj" />
   <ProjectReference Include="../ProjectLoop.Documents.Core/ProjectLoop.Documents.Core.csproj" />
   </ItemGroup>
