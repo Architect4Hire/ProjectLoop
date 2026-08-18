@@ -73,21 +73,25 @@ The shell does not read router or authentication state. It does not decide which
 
 Loading, empty, recoverable-error, and terminal state belongs to each region independently. Do not merge those states into one dashboard-wide loading flag.
 
+For an integrated dashboard, compose `MetricGridComponent`/`MetricCardComponent`, `ProjectHealthComponent`, `MilestoneListComponent`, `UpcomingMeetingsComponent`, `RecentDecisionsComponent`, `PendingApprovalsListComponent`, and `StateFeedbackComponent` in the matching dashboard slots. Empty, loading, error, partial, and populated examples must use caller-supplied display models and independent region state. When a child recipe creates its own named region, provide a distinct child label such as “Milestone records” so it does not duplicate the enclosing dashboard landmark name.
+
 ## Documents ownership
 
 Compose collection controls, results, and paging as siblings in the route's main content. `DocumentFiltersComponent` emits filter intent; `DocumentListComponent` selects row/card presentation responsively; `PaginationComponent` emits page intent. None of them fetches or authorizes data.
 
 Keep the exact version supplied by the feature attached to every document and action. The feature decides which authorized representation to provide, performs upload/download operations, and maps API responses into display-ready public view models. The design system presents those values without resolving the current version, creating storage URLs, or inferring permissions.
 
+The deterministic collection composition combines Document Filters, Document List row/card switching, Pagination, and State Feedback for empty, one-item, many-item, loading, and error states. The detail composition combines Version Chip, Document Version History, Document Download Action, and Document Upload. Keep approved `v3` and current `v4` as separate caller-supplied records through every upload/download state; a new current upload does not mutate or transfer the approved qualifier.
+
 ## Approval ownership
 
-The approval queue navigates to a review route; it does not approve inline. On the review route, `VersionBoundApprovalComponent` keeps the exact review target beside the actions. A current `v4` context must not change an approved `v3` qualifier. `ApprovalHistoryComponent` presents caller-supplied append-only evidence separately.
+The approval queue navigates to a review route; it does not approve inline. On the review route, compose the approval banner, actions, comment field, and confirmation dialog through `VersionBoundApprovalComponent` so every decision surface names the exact target version. A current `v4` context must not change an approved `v3` qualifier. Processing disables duplicate confirmation without claiming persistence success, and closing the dialog restores focus to its caller-owned trigger. `ApprovalHistoryComponent` presents caller-supplied append-only evidence separately, including pending, approved, rejected, and changes-requested outcomes.
 
 The feature owns authorization, transition eligibility, persistence, validation policy, and conflict handling. Treat emitted approve/reject/request-change values as intent only. Refresh caller state after persistence; never optimistically relabel another version as approved.
 
 ## Audit ownership
 
-`AuditTimelineComponent` owns append-oriented presentation, event disclosure, and paging intent. The feature supplies already-redacted display data in authoritative order and performs filtering, loading, correlation copying, and access checks. Do not pass raw logs, secrets, tokens, document bodies, or unreviewed structured payloads through audit detail slots.
+`AuditTimelineComponent` composes `AuditEventComponent` disclosure with `PaginationComponent` or load-more intent. It preserves caller-supplied order and identifiers; it does not sort, rewrite, or append records. The feature supplies already-redacted display data in authoritative order, provides the missing-actor fallback, and performs filtering, loading, correlation copying, and access checks. Do not pass raw logs, secrets, tokens, document bodies, or unreviewed structured payloads through audit detail slots.
 
 ## Responsibility boundary
 

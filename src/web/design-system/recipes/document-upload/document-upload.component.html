@@ -26,9 +26,7 @@
       [value]="visibility()" (valueChange)="visibility.set($event)" />
   </div>
   @if (state() === 'completed') {
-    <div role="status" aria-live="polite" aria-atomic="true">
-      <lsd-field-message [id]="id() + '-completed'" kind="success">{{ completedMessage() }}</lsd-field-message>
-    </div>
+    <lsd-field-message [id]="id() + '-completed'" kind="success">{{ completedMessage() }}</lsd-field-message>
   }
   <div class="lsd-document-upload__actions" role="group" aria-label="Upload actions">
     @if (state() === 'uploading') {

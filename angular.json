@@ -68,6 +68,7 @@
               "src/web/design-system/primitives/textarea/textarea.component.spec.ts",
               "src/web/design-system/primitives/tooltip/tooltip.component.spec.ts",
               "src/web/design-system/recipes/approval-comment-field/approval-comment-field.component.spec.ts",
+              "src/web/design-system/recipes/approval-actions/approval-actions.component.spec.ts",
               "src/web/design-system/recipes/ai-generation-drawer/ai-generation-drawer.component.spec.ts",
               "src/web/design-system/recipes/approval-request-banner/approval-request-banner.component.spec.ts",
               "src/web/design-system/recipes/audit-event/audit-event.component.spec.ts",

@@ -14,7 +14,7 @@ import { PortalShellComponent } from './portal-shell.component';
       [navigationLinks]="navigationLinks">
       <div lsdPortalHeader>Account header</div>
       <section lsdPortalMain>Routed page outlet</section>
-      <aside lsdPortalNotifications aria-label="Notifications">Notification viewport</aside>
+      <div lsdPortalNotifications>Notification viewport</div>
     </lsd-portal-shell>
   `,
 })
@@ -61,5 +61,6 @@ describe('PortalShellComponent', () => {
   it('projects main outlet and notification viewport content into separate slots', () => {
     expect(fixture.debugElement.query(By.css('.lsd-portal-shell__main')).nativeElement.textContent).toContain('Routed page outlet');
     expect(fixture.debugElement.query(By.css('.lsd-portal-shell__notifications')).nativeElement.textContent).toContain('Notification viewport');
+    expect(fixture.debugElement.query(By.css('aside.lsd-portal-shell__notifications')).attributes['aria-label']).toBe('Notifications');
   });
 });

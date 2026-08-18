@@ -1,5 +1,6 @@
 :host { display: block; min-block-size: 100dvh; background: var(--lsd-color-surface-page); color: var(--lsd-color-text-primary); }
-.fixture-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.5rem; }
+.fixture-header, .fixture-header > div { display: flex; align-items: center; justify-content: space-between; min-inline-size: 0; gap: 1rem; }
+.fixture-header { padding: 1rem 1.5rem; }
 .fixture-main, .fixture-page { max-inline-size: 90rem; margin-inline: auto; }
 .fixture-page { padding: 2rem; }
 .fixture-page-header { margin-block-end: 1.5rem; }
@@ -12,6 +13,9 @@
 .fixture-metrics strong { display: block; margin-block-start: 0.5rem; font-size: 2rem; }
 .fixture-notification { position: fixed; right: 1rem; bottom: 1rem; padding: 0.75rem 1rem; border-radius: 0.5rem; background: var(--lsd-color-surface-raised); box-shadow: 0 0.5rem 1.5rem rgb(0 0 0 / 0.18); }
 .fixture-feedback { display: grid; gap: 1rem; }
+.fixture-documents, .fixture-document-detail { display: grid; gap: 1.5rem; }
+.fixture-approval-screen { display: grid; gap: 1.5rem; }
+.fixture-document-detail > header, .fixture-version-pair { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; }
 .fixture-controls, .fixture-control-row, .fixture-control-full-width { display: grid; gap: 1rem; }
 .fixture-control-row { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: center; }
 .fixture-control-full-width { max-inline-size: 42rem; }

@@ -56,7 +56,7 @@ describe('ApprovalCommentFieldComponent', () => {
     textarea().dispatchEvent(new Event('input'));
     fixture.detectChanges();
     expect(host.value).toBe('Looks good');
-    expect(fixture.debugElement.query(By.css('lsd-field-message')).nativeElement.textContent).toContain(
+    expect(fixture.debugElement.query(By.css('#decision-comment-count')).nativeElement.textContent).toContain(
       '10 of 20 characters',
     );
   });

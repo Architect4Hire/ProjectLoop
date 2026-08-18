@@ -22,7 +22,7 @@
     </main>
   </div>
 
-  <div class="lsd-portal-shell__notifications">
+  <aside class="lsd-portal-shell__notifications" [attr.aria-label]="notificationsLabel()">
     <ng-content select="[lsdPortalNotifications]" />
-  </div>
+  </aside>
 </div>

@@ -19,4 +19,5 @@ export class PortalShellComponent {
   readonly navigationLabel = input('Primary navigation');
   readonly navigationCompact = input(false);
   readonly mainLabel = input('Main content');
+  readonly notificationsLabel = input('Notifications');
 }

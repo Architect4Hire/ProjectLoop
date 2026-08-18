@@ -11,12 +11,14 @@ import {
   DrawerComponent,
   DrawerInitialFocusDirective,
   InputComponent,
+  PageHeaderComponent,
   PortalShellComponent,
   RadioGroupComponent,
   SelectComponent,
   StateFeedbackComponent,
   SurfaceComponent,
   TextareaComponent,
+  UserMenuComponent,
   VersionBoundApprovalComponent,
   type AppNavigationLink,
   type ApprovalRequestDocumentTarget,
@@ -26,6 +28,7 @@ import {
   type DrawerCloseReason,
   type RadioOption,
   type SelectOption,
+  type UserMenuAction,
   type VersionBoundApprovalIntent,
 } from '@lsd/design-system';
 
@@ -45,19 +48,29 @@ type FixtureChoice = Readonly<{ id: 'alpha' | 'beta'; label: string }>;
     DrawerComponent,
     DrawerInitialFocusDirective,
     InputComponent,
+    PageHeaderComponent,
     PortalShellComponent,
     RadioGroupComponent,
     SelectComponent,
     StateFeedbackComponent,
     SurfaceComponent,
     TextareaComponent,
+    UserMenuComponent,
     VersionBoundApprovalComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <lsd-portal-shell [navigationLinks]="navigation">
-      <div lsdPortalHeader>Fixture header</div>
-      <main lsdPortalMain>
+      <header lsdPortalHeader>
+        <strong>Neutral workspace</strong>
+        <lsd-user-menu id="fixture-account" displayName="Jordan Lee" identityDetail="jordan@example.test"
+          [actions]="accountActions" (actionRequested)="acceptAccountAction($event)" />
+      </header>
+      <div lsdPortalMain>
+        <lsd-page-header title="Authorized workspace overview"
+          description="Caller-supplied content for the selected route."
+          [breadcrumbs]="breadcrumbs"
+          [metadata]="[{ label: 'Workspace', value: 'Neutral fixture' }]" />
         <lsd-surface [accessibility]="{ role: 'region', label: 'Compile fixture' }">
           <lsd-button (activated)="acceptActivation()">Continue</lsd-button>
           <lsd-input id="fixture-name" label="Name" [(value)]="name" />
@@ -121,8 +134,8 @@ type FixtureChoice = Readonly<{ id: 'alpha' | 'beta'; label: string }>;
             (loadMoreRequested)="acceptActivation()"
             (correlationCopyRequested)="acceptCorrelation($event)" />
         </lsd-surface>
-      </main>
-      <aside lsdPortalNotifications aria-label="Notifications"></aside>
+      </div>
+      <div lsdPortalNotifications></div>
     </lsd-portal-shell>
   `,
 })
@@ -141,7 +154,15 @@ export class PublicApiConsumerFixtureComponent {
   ];
   protected readonly radioChoices: readonly RadioOption<FixtureChoice>[] = this.choices;
   protected readonly navigation: readonly AppNavigationLink[] = [
-    { label: 'Overview', href: '#fixture', icon: 'menu', active: true },
+    { label: 'Authorized workspace overview with a deliberately long label', href: '#fixture', icon: 'menu', active: true, count: 3 },
+  ];
+  protected readonly breadcrumbs = [
+    { label: 'Workspaces', href: '#workspaces' },
+    { label: 'Authorized workspace overview', href: '#fixture' },
+  ] as const;
+  protected readonly accountActions: readonly UserMenuAction<'profile' | 'sign-out'>[] = [
+    { id: 'profile', label: 'Profile' },
+    { id: 'sign-out', label: 'Sign out' },
   ];
   protected readonly documents: readonly DocumentCardViewModel[] = [
     {
@@ -183,4 +204,5 @@ export class PublicApiConsumerFixtureComponent {
   protected acceptDrawerClose(_reason: DrawerCloseReason): void {}
   protected acceptDecision(_intent: VersionBoundApprovalIntent): void {}
   protected acceptCorrelation(_correlationId: string): void {}
+  protected acceptAccountAction(_action: 'profile' | 'sign-out'): void {}
 }

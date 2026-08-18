@@ -1,10 +1,17 @@
 @if (composition === 'shell') {
   <lsd-portal-shell [navigationLinks]="navigation" [navigationCompact]="state.includes('compact')">
-    <div lsdPortalHeader class="fixture-header"><strong>Project Loop</strong><span>Verification workspace</span></div>
+    <div lsdPortalHeader class="fixture-header">
+      <div><strong>Project Loop</strong><span>Verification workspace</span></div>
+      <lsd-user-menu id="shell-account"
+        displayName="Alexandria Catherine Montgomery-Worthington"
+        identityDetail="alexandria.montgomery-worthington@example-enterprise.test"
+        [actions]="accountActions" />
+    </div>
     <div lsdPortalMain class="fixture-main">
-      <p class="fixture-kicker">Workspace overview</p>
-      <h1>Delivery confidence and evidence</h1>
-      <p>{{ longContent ? 'A deliberately long summary demonstrating how the authenticated shell responds when caller-owned content extends across several readable lines without clipping navigation, landmarks, or projected notification regions.' : 'A stable overview of delivery activity.' }}</p>
+      <lsd-page-header title="Delivery confidence and evidence"
+        [description]="longContent ? 'A deliberately long summary demonstrating how the authenticated shell responds when caller-owned content extends across several readable lines without clipping navigation, landmarks, or projected notification regions.' : 'A stable overview of delivery activity.'"
+        [breadcrumbs]="shellBreadcrumbs"
+        [metadata]="[{ label: 'Engagement', value: 'Transformation program' }]" />
       <div class="fixture-panel"><h2>Today</h2><p>Three reviews are ready and twelve documents are available.</p></div>
     </div>
     <div lsdPortalNotifications class="fixture-notification">Changes saved at 14:32 UTC</div>
@@ -100,16 +107,64 @@
         </div>
       </section>
     } @else if (composition === 'dashboard') {
-      <lsd-project-dashboard id="project">
-        <div lsdProjectDashboardHealth class="fixture-panel fixture-health"><strong>Healthy</strong><p>All monitored indicators are within agreed thresholds.</p></div>
-        <div lsdProjectDashboardMetrics class="fixture-metrics"><div class="fixture-panel"><small>Completion</small><strong>87%</strong></div><div class="fixture-panel"><small>Open decisions</small><strong>4</strong></div><div class="fixture-panel"><small>Contributors</small><strong>28</strong></div></div>
-        <div lsdProjectDashboardMilestones class="fixture-panel"><ol><li>Accessibility review — complete</li><li>Operational readiness review with an intentionally long milestone title — due 21 August</li></ol></div>
-        <div lsdProjectDashboardMeetings class="fixture-panel"><p>Design review · 16 August, 16:00 UTC</p></div>
-        <div lsdProjectDashboardDecisions class="fixture-panel"><p>Regional failover policy · Approved</p></div>
-        <div lsdProjectDashboardDeliverables class="fixture-panel"><p>{{ state.includes('feedback') ? 'Loading latest authorized deliverables…' : 'Release evidence package · Ready' }}</p></div>
+      <lsd-project-dashboard id="project" deliverablesHeading="Pending approvals">
+        <div lsdProjectDashboardHealth>
+          @if (state === 'loading') { <lsd-state-feedback id="dashboard-health-loading" kind="loading" title="Loading project health" /> }
+          @else if (state === 'error') { <lsd-state-feedback id="dashboard-health-error" kind="terminal-error" title="Project health unavailable" description="Contact support with the displayed request reference." /> }
+          @else { <lsd-project-health id="dashboard-health" label="Project health detail" [status]="state === 'empty' ? 'unknown' : state === 'partial' ? 'attention' : 'healthy'" [description]="state === 'empty' ? 'No authorized health indicators are available.' : state === 'partial' ? 'Some caller-supplied indicators are unavailable.' : 'All caller-supplied indicators are within agreed thresholds.'" [lastUpdated]="{ label: '18 August 2026 at 14:32 UTC', dateTime: '2026-08-18T14:32:00Z' }" [indicators]="state === 'empty' ? [] : [{ id: 'completion', label: 'Delivery completion', value: 87, valueText: '87 percent complete' }]" /> }
+        </div>
+        <div lsdProjectDashboardMetrics><lsd-metric-grid>
+          <lsd-metric-card label="Completion" value="87%" [loading]="state === 'loading'" [context]="state === 'empty' ? 'No authorized value' : 'Caller formatted'" />
+          <lsd-metric-card label="Open decisions" [value]="state === 'empty' ? '—' : '4'" [loading]="state === 'loading'" />
+          <lsd-metric-card label="Contributors" [value]="state === 'empty' || state === 'partial' ? '—' : '28'" [loading]="state === 'loading'" />
+        </lsd-metric-grid></div>
+        <div lsdProjectDashboardMilestones>
+          @if (state === 'loading') { <lsd-state-feedback id="dashboard-milestones-loading" kind="skeleton" title="Loading milestones" /> }
+          @else if (state === 'error') { <lsd-state-feedback id="dashboard-milestones-error" kind="recoverable-error" title="Milestones could not be loaded"><lsd-button lsdStateActions>Retry milestones</lsd-button></lsd-state-feedback> }
+          @else { <lsd-milestone-list label="Milestone records" [milestones]="state === 'empty' ? [] : state === 'partial' ? dashboardMilestones.slice(0, 1) : dashboardMilestones" /> }
+        </div>
+        <div lsdProjectDashboardMeetings>
+          @if (state === 'loading') { <lsd-state-feedback id="dashboard-meetings-loading" kind="loading" title="Loading meetings" /> }
+          @else if (state === 'error' || state === 'partial') { <lsd-state-feedback id="dashboard-meetings-error" kind="recoverable-error" title="Meetings unavailable" description="Other dashboard regions remain available." /> }
+          @else { <lsd-upcoming-meetings label="Meeting records" [meetings]="state === 'empty' ? [] : dashboardMeetings" /> }
+        </div>
+        <div lsdProjectDashboardDecisions>
+          @if (state === 'loading') { <lsd-state-feedback id="dashboard-decisions-loading" kind="skeleton" title="Loading decisions" /> }
+          @else if (state === 'error') { <lsd-state-feedback id="dashboard-decisions-error" kind="recoverable-error" title="Decisions could not be loaded" /> }
+          @else { <lsd-recent-decisions label="Decision records" [decisions]="state === 'empty' ? [] : dashboardDecisions" /> }
+        </div>
+        <div lsdProjectDashboardDeliverables>
+          @if (state === 'loading') { <lsd-state-feedback id="dashboard-approvals-loading" kind="loading" title="Loading pending approvals" /> }
+          @else if (state === 'error') { <lsd-state-feedback id="dashboard-approvals-error" kind="terminal-error" title="Pending approvals unavailable" /> }
+          @else { <lsd-pending-approvals-list label="Approval request records" [items]="state === 'empty' || state === 'partial' ? [] : dashboardApprovals" /> }
+        </div>
       </lsd-project-dashboard>
     } @else if (composition === 'documents') {
-      <lsd-document-list id="documents" [documents]="state.includes('empty') ? [] : documents" emptyDescription="Authorized documents will appear when available." />
+      <section class="fixture-documents" aria-label="Document collection screen">
+        <h2>Authorized documents</h2>
+        <lsd-document-filters id="document-filters" [projectOptions]="projectFilterOptions" [categoryOptions]="categoryOptions"
+          [statusOptions]="statusFilterOptions" [visibilityOptions]="visibilityOptions" />
+        @if (state === 'loading') {
+          <lsd-state-feedback id="documents-loading" kind="skeleton" title="Loading authorized documents" />
+        } @else if (state === 'error') {
+          <lsd-state-feedback id="documents-error" kind="recoverable-error" title="Documents could not be loaded" description="Try the authorized request again."><lsd-button lsdStateActions>Retry documents</lsd-button></lsd-state-feedback>
+        } @else {
+          <lsd-document-list id="documents" [documents]="state === 'empty' ? [] : state === 'one' ? documents.slice(0, 1) : documents" emptyDescription="Authorized documents will appear when available." />
+          <lsd-pagination [currentPage]="state === 'many' ? 2 : 1" [totalPages]="state === 'many' ? 4 : 1" accessibleName="Document pages" />
+        }
+      </section>
+    } @else if (composition === 'document-detail') {
+      <section class="fixture-document-detail" aria-label="Document detail screen">
+        <header><h2>Continuity plan</h2><div class="fixture-version-pair" aria-label="Exact version qualifiers"><lsd-version-chip versionLabel="v3" qualifier="approved" qualifierLabel="Approved" /><lsd-version-chip versionLabel="v4" qualifier="current" qualifierLabel="Current" /></div></header>
+        <lsd-document-version-history id="document-history" accessibleName="Continuity plan version history" [versions]="documentVersions" />
+        <lsd-document-download-action id="document-download" documentLabel="Continuity plan v3 approved"
+          [state]="state === 'download-preparing' ? 'preparing' : state === 'download-downloading' ? 'downloading' : state === 'download-failed' ? 'failed' : state === 'download-unavailable' ? 'unavailable' : 'ready'"
+          [progressValue]="state === 'download-downloading' ? 55 : undefined" failureMessage="The approved v3 download could not be prepared." />
+        <lsd-document-upload id="detail-upload" [categoryOptions]="categoryOptions" [visibilityOptions]="visibilityOptions"
+          accept=".pdf,application/pdf" [maxFileSizeBytes]="5242880" filePolicyDescription="PDF files up to 5 MB."
+          [state]="state === 'uploading' ? 'uploading' : state === 'upload-failed' ? 'failed' : state === 'upload-completed' ? 'completed' : 'idle'"
+          [progressValue]="state === 'uploading' ? 42 : undefined" failureMessage="Upload interrupted; approved v3 remains unchanged." completedMessage="New v4 upload completed; approval remains bound to v3." />
+      </section>
     } @else if (composition === 'upload') {
       <lsd-document-upload id="upload" [categoryOptions]="categoryOptions" [visibilityOptions]="visibilityOptions"
         accept=".pdf,application/pdf" [maxFileSizeBytes]="5242880"
@@ -118,9 +173,18 @@
         [progressValue]="state.includes('uploading') ? 42 : undefined" progressText="42 percent uploaded"
         failureMessage="Upload interrupted. The selected file and metadata are retained for retry." />
     } @else if (composition === 'approval') {
-      <lsd-version-bound-approval id="approval" [target]="approvalTarget" [requestStatus]="requested" requester="Alex Rivera" [requestedTime]="{ label: 'Requested 15 August 2026 at 13:05 UTC', dateTime: '2026-08-15T13:05:00Z' }" provenance="human-authored" [currentVersion]="{ label: 'v4', qualifierLabel: 'Current version' }" [comment]="longContent ? 'The approved evidence remains bound to v3 while v4 is current. This deterministic long comment verifies wrapping beside the decision controls.' : ''" [processing]="state.includes('processing') ? 'approve' : null" />
+      <section class="fixture-approval-screen" aria-label="Approval review screen">
+        <lsd-version-bound-approval id="approval" [target]="approvalTarget" [requestStatus]="requested" requester="Alex Rivera" [requestedTime]="{ label: 'Requested 15 August 2026 at 13:05 UTC', dateTime: '2026-08-15T13:05:00Z' }" provenance="human-authored" [currentVersion]="{ label: 'v4', qualifierLabel: 'Current version' }"
+          [reviewStatus]="state === 'approved' ? 'approved' : state === 'rejected' ? 'rejected' : state === 'changes-requested' ? 'changes-requested' : 'pending'"
+          [comment]="'Decision applies to Cross-region continuity plan v3 only.'" [processing]="state === 'processing' ? 'approve' : null" />
+        <button type="button" (click)="confirmationOpen.set(true)">Open approval confirmation</button>
+        <lsd-confirmation-dialog id="approval-confirmation" title="Approve Cross-region continuity plan v3" consequenceText="Approval is recorded against v3 and does not approve current v4." actionLabel="Approve v3" actionTone="primary"
+          [open]="confirmationOpen()" [processing]="state === 'processing'" processingLabel="Approving v3" (cancelled)="confirmationOpen.set(false)" />
+        <lsd-approval-history id="fixture-approval-history" [entries]="approvalHistory" />
+      </section>
     } @else {
-      <lsd-audit-timeline id="audit" [events]="state.includes('empty') ? [] : auditEvents" [paging]="{ mode: 'load-more', hasMore: true, loading: state.includes('loading') }" />
+      <h2>Audit activity</h2>
+      <lsd-audit-timeline id="audit" [events]="state.includes('empty') ? [] : auditEvents" [paging]="state === 'pages' ? { mode: 'pages', currentPage: 2, totalPages: 5 } : { mode: 'load-more', hasMore: true, loading: state.includes('loading') }" />
     }
   </main>
 }

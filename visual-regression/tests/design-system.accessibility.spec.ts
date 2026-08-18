@@ -28,6 +28,12 @@ for (const [viewportName, viewport] of Object.entries(widths)) {
       await expect(page.getByRole('banner')).toBeVisible();
       await expect(page.getByRole('navigation', { name: 'Primary navigation' })).toBeVisible();
       await expect(page.getByRole('main', { name: 'Main content' })).toBeVisible();
+      await expect(page.getByRole('navigation', { name: 'Breadcrumb' })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Delivery confidence and evidence', level: 1 })).toBeVisible();
+      await expect(page.getByRole('button', { name: 'Account menu for Alexandria Catherine Montgomery-Worthington' })).toBeVisible();
+      await expect(page.getByRole('link', { name: /Engagement overview with delivery confidence and evidence/ })).toHaveAttribute('aria-current', 'page');
+      await expect(page.getByLabel('Documents: 12')).toBeVisible();
+      await expect(page.locator('.lsd-app-navigation')).toHaveAttribute('data-compact', viewportName === 'mobile' ? 'true' : 'false');
 
       await page.keyboard.press('Tab');
       const skipLink = page.getByRole('link', { name: 'Skip to main content' });
@@ -79,6 +85,32 @@ for (const [viewportName, viewport] of Object.entries(widths)) {
       await expectNoAxeViolations(page);
     });
 
+    test('approval states preserve exact versions, confirmation lockout, history, and focus restoration', async ({ page }) => {
+      for (const state of ['pending', 'processing', 'approved', 'rejected', 'changes-requested'] as const) {
+        await openFixture(page, 'approval', state);
+        const review = page.getByRole('region', { name: 'Review Cross-region continuity plan v3' });
+        await expect(review).toContainText('v3');
+        await expect(review).toContainText('v4');
+        await expect(review).not.toContainText('v4 · Approved');
+        await expect(page.getByRole('region', { name: 'Approval history' })).toContainText('Approved Document Cross-region continuity plan v3');
+        if (state === 'pending' || state === 'processing') {
+          const opener = page.getByRole('button', { name: 'Open approval confirmation' });
+          await opener.focus();
+          await page.keyboard.press('Enter');
+          const dialog = page.getByRole('dialog', { name: 'Approve Cross-region continuity plan v3' });
+          if (state === 'processing') {
+            await expect(page.getByRole('button', { name: 'Approve v3' })).toBeDisabled();
+            await page.keyboard.press('Escape');
+            await expect(dialog).toBeVisible();
+          } else {
+            await page.keyboard.press('Escape');
+            await expect(dialog).toBeHidden();
+          }
+        }
+        await expectNoAxeViolations(page);
+      }
+    });
+
     test('audit timeline has a named region and restores focus when details collapse', async ({ page }) => {
       await openFixture(page, 'audit', 'long');
 
@@ -92,6 +124,97 @@ for (const [viewportName, viewport] of Object.entries(widths)) {
       await expect(summary).toBeFocused();
       await expect(page.getByRole('button', { name: 'Load more' })).toHaveAccessibleName('Load more');
       await expectNoAxeViolations(page);
+    });
+
+    test('audit preserves caller order, long identifiers, missing actors, and pagination', async ({ page }) => {
+      await openFixture(page, 'audit', 'pages');
+      const events = page.locator('.lsd-activity-stream__item');
+      await expect(events).toHaveCount(2);
+      await expect(events.nth(0)).toContainText('Morgan Chen');
+      await expect(events.nth(1)).toContainText('Actor unavailable');
+      await events.nth(1).getByText('Show audit event').click();
+      await expect(events.nth(1)).toContainText('corr_01J5B40Y1SM8FQZK9GAD6W03XE_really_long_deterministic_identifier');
+      await expect(page.getByRole('navigation', { name: 'Audit timeline pages' })).toContainText('Page 2 of 5');
+      await expectNoAxeViolations(page);
+    });
+
+    test('document collection composes filters, empty/one/many feedback, pagination, and responsive presentations', async ({ page }) => {
+      for (const state of ['empty', 'one', 'many', 'loading', 'error'] as const) {
+        await openFixture(page, 'documents', state);
+        await expect(page.getByRole('region', { name: 'Document filters' })).toBeVisible();
+        if (state === 'empty') {
+          await expect(page.getByRole('status', { name: 'No documents' })).toBeVisible();
+        } else if (state === 'loading') {
+          await expect(page.getByRole('status', { name: 'Loading authorized documents' })).toHaveAttribute('aria-busy', 'true');
+        } else if (state === 'error') {
+          await expect(page.getByRole('alert', { name: 'Documents could not be loaded' })).toHaveAttribute('aria-live', 'polite');
+          await expect(page.getByRole('button', { name: 'Retry documents' })).toBeEnabled();
+        } else {
+          const expected = state === 'one' ? 1 : 2;
+          await expect(page.locator('[data-presentation="rows"] tbody tr')).toHaveCount(expected);
+          await expect(page.locator('[data-presentation="cards"] > li')).toHaveCount(expected);
+          await expect(page.getByRole('navigation', { name: 'Document pages' })).toContainText(state === 'many' ? 'Page 2 of 4' : 'Page 1 of 1');
+          const rowsVisible = await page.locator('[data-presentation="rows"]').isVisible();
+          const cardsVisible = await page.locator('[data-presentation="cards"]').isVisible();
+          expect(rowsVisible).toBe(viewportName === 'desktop');
+          expect(cardsVisible).toBe(viewportName === 'mobile');
+        }
+        await expectNoAxeViolations(page);
+      }
+    });
+
+    test('document detail preserves v3 approval, v4 current identity, and caller-owned transfer states', async ({ page }) => {
+      for (const state of ['ready', 'download-preparing', 'download-downloading', 'download-failed', 'download-unavailable', 'uploading', 'upload-failed', 'upload-completed'] as const) {
+        await openFixture(page, 'document-detail', state);
+        const qualifierText = await page.locator('.fixture-version-pair lsd-version-chip').allTextContents();
+        expect(qualifierText.join(' ')).toContain('v3');
+        expect(qualifierText.join(' ')).toContain('Approved');
+        expect(qualifierText.join(' ')).toContain('v4');
+        expect(qualifierText.join(' ')).toContain('Current');
+        expect(qualifierText.join(' ')).not.toContain('v4 Approved');
+        await expect(page.getByRole('region', { name: 'Continuity plan version history' })).toContainText('v3');
+        await expect(page.getByRole('region', { name: 'Continuity plan version history' })).toContainText('v4');
+        expect(await page.locator('a[href^="blob:"]').count()).toBe(0);
+        if (state === 'download-downloading') await expect(page.getByRole('progressbar', { name: 'Downloading Continuity plan v3 approved' })).toHaveAttribute('aria-valuetext', '55%');
+        if (state === 'download-failed') await expect(page.getByRole('button', { name: 'Retry download of Continuity plan v3 approved' })).toBeEnabled();
+        if (state === 'uploading') await expect(page.getByRole('button', { name: 'Cancel upload' })).toBeEnabled();
+        if (state === 'upload-failed') await expect(page.getByRole('button', { name: 'Retry upload' })).toBeEnabled();
+        if (state === 'upload-completed') await expect(page.locator('#detail-upload-completed')).toContainText('approval remains bound to v3');
+        await expectNoAxeViolations(page);
+      }
+    });
+
+    test('dashboard composes deterministic empty, loading, error, partial, and populated regions', async ({ page }) => {
+      for (const state of ['empty', 'loading', 'error', 'partial', 'populated'] as const) {
+        await openFixture(page, 'dashboard', state);
+        for (const heading of ['Project health', 'Summary metrics', 'Milestones', 'Upcoming meetings', 'Recent decisions', 'Pending approvals']) {
+          await expect(page.getByRole('heading', { name: heading, level: 2, exact: true })).toBeVisible();
+        }
+
+        if (state === 'empty') {
+          await expect(page.getByText('No milestones to show.')).toBeVisible();
+          await expect(page.getByText('No upcoming meetings.')).toBeVisible();
+          await expect(page.getByText('No pending approval requests.')).toBeVisible();
+        } else if (state === 'loading') {
+          await expect(page.getByRole('status', { name: 'Loading project health' })).toHaveAttribute('aria-busy', 'true');
+          expect(await page.locator('[aria-busy="true"]').count()).toBeGreaterThanOrEqual(6);
+        } else if (state === 'error') {
+          await expect(page.getByRole('alert', { name: 'Project health unavailable' })).toHaveAttribute('aria-live', 'assertive');
+          await expect(page.getByRole('button', { name: 'Retry milestones' })).toBeEnabled();
+        } else if (state === 'partial') {
+          await expect(page.getByText('Operational readiness review with stakeholders')).toBeVisible();
+          await expect(page.getByRole('alert', { name: 'Meetings unavailable' })).toHaveAttribute('aria-live', 'polite');
+          await expect(page.getByText('No pending approval requests.')).toBeVisible();
+        } else {
+          await expect(page.getByRole('region', { name: 'Project health detail' })).toContainText('Healthy');
+          await expect(page.getByRole('link', { name: 'Review Continuity plan v4' })).toBeVisible();
+        }
+
+        const dashboard = page.locator('lsd-project-dashboard');
+        const box = await dashboard.boundingBox();
+        expect(box?.width ?? Number.POSITIVE_INFINITY).toBeLessThanOrEqual(viewport.width);
+        await expectNoAxeViolations(page);
+      }
     });
 
     test('feedback states expose visible status, priority, progress, intent, and reduced-motion contracts', async ({ page }) => {

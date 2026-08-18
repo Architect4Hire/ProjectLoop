@@ -7,7 +7,7 @@ Use `PortalShellComponent` as the semantic frame for an authenticated portal. It
 ## API and states
 
 - Required `navigationLinks`: caller-authorized `AppNavigationLink` models, including caller-owned active state.
-- Optional `navigationLabel`, `navigationCompact`, and `mainLabel`.
+- Optional `navigationLabel`, `navigationCompact`, `mainLabel`, and `notificationsLabel`.
 - Project header content with `lsdPortalHeader`, the application's router outlet or page content with `lsdPortalMain`, and a public `NotificationViewportComponent` with `lsdPortalNotifications`.
 - The layout has no outputs and does not read Router, authentication, profile, tenant, or permission state.
 
@@ -21,7 +21,7 @@ Use `PortalShellComponent` as the semantic frame for an authenticated portal. It
 
 ## Accessibility and landmarks
 
-The projected header sits in the page `header` banner. `AppNavigationComponent` supplies the labeled `nav`. The projected outlet sits in a labeled `main` with the stable ID `main-content` and `tabindex="-1"`; the composed Skip Link targets that element. The caller-projected Notification viewport retains its labeled complementary landmark and live-region behavior. Only one portal shell should exist in a document.
+The projected header sits in the page `header` banner. `AppNavigationComponent` supplies the labeled `nav`. The projected outlet sits in a labeled `main` with the stable ID `main-content` and `tabindex="-1"`; the composed Skip Link targets that element. The shell owns a labeled complementary landmark around caller-projected notification content; callers should not add a second `aside` around that content. Only one portal shell should exist in a document.
 
 ## Responsive behavior
 
