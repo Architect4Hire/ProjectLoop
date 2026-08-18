@@ -16,6 +16,8 @@ public sealed class IdentityDbContext : IdentityDbContext<ProjectLoopUser>
 
     public DbSet<ClientInvitation> ClientInvitations => Set<ClientInvitation>();
 
+    public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -25,6 +27,7 @@ public sealed class IdentityDbContext : IdentityDbContext<ProjectLoopUser>
         builder.ApplyConfiguration(new TenantConfiguration());
         builder.ApplyConfiguration(new TenantMembershipConfiguration());
         builder.ApplyConfiguration(new ClientInvitationConfiguration());
+        builder.ApplyConfiguration(new OutboxMessageConfiguration());
 
         builder.Entity<ProjectLoopUser>(user =>
         {

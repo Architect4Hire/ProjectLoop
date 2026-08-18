@@ -6,6 +6,7 @@
   <Projects>
     <Project Path="ProjectLoop.AppHost/ProjectLoop.AppHost.csproj" />
     <Project Path="ProjectLoop.ServiceDefaults/ProjectLoop.ServiceDefaults.csproj" />
+    <Project Path="ProjectLoop.Contracts/ProjectLoop.Contracts.csproj" />
     <Project Path="ProjectLoop.Gateway/ProjectLoop.Gateway.csproj" />
     <Project Path="ProjectLoop.Identity/ProjectLoop.Identity.csproj" />
     <Project Path="ProjectLoop.Identity.Core/ProjectLoop.Identity.Core.csproj" />

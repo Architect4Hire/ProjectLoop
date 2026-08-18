@@ -6,11 +6,42 @@ namespace ProjectLoop.Identity.Core.Tests;
 
 public class CrossTenantDenialIntegrationTests
 {
+    private const string ConnectionStringEnvironmentVariable = "IDENTITY_SQLSERVER_TEST_CONNECTION_STRING";
+
+    /// <summary>
+    /// LocalDB only exists on Windows, so it can never be reached from other
+    /// platforms regardless of migration state. On Windows with no override
+    /// this keeps using LocalDB exactly as before; elsewhere (or when an
+    /// override is set, e.g. an Aspire/Docker SQL Server on macOS/Linux) it
+    /// uses <see cref="ConnectionStringEnvironmentVariable"/> instead, and
+    /// skips entirely when neither is available.
+    /// </summary>
+    private static bool TryGetConnectionString(string databaseName, out string connectionString)
+    {
+        var overridden = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
+        if (!string.IsNullOrEmpty(overridden))
+        {
+            connectionString = overridden;
+            return true;
+        }
+
+        if (!OperatingSystem.IsWindows())
+        {
+            connectionString = string.Empty;
+            return false;
+        }
+
+        connectionString = $"Server=(localdb)\\MSSQLLocalDB;Database={databaseName};Trusted_Connection=True;TrustServerCertificate=True;";
+        return true;
+    }
+
     [Fact]
     public async Task User_Authorized_For_Tenant_A_Cannot_Establish_Tenant_B_Context()
     {
-        var connectionString =
-            $"Server=(localdb)\\MSSQLLocalDB;Database=ProjectLoopIdentity_CrossTenantTest_{Guid.NewGuid():N};Trusted_Connection=True;TrustServerCertificate=True;";
+        if (!TryGetConnectionString($"ProjectLoopIdentity_CrossTenantTest_{Guid.NewGuid():N}", out var connectionString))
+        {
+            return;
+        }
 
         var options = new DbContextOptionsBuilder<IdentityDbContext>()
             .UseSqlServer(connectionString)

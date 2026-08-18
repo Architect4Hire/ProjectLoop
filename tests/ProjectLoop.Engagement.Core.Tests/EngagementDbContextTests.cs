@@ -74,4 +74,31 @@ public class EngagementDbContextTests
 
         Assert.NotNull(context.Milestones);
     }
+
+    [Fact]
+    public void Model_Includes_OutboxMessage()
+    {
+        var options = new DbContextOptionsBuilder<EngagementDbContext>()
+            .UseSqlServer("Server=(local);Database=ProjectLoopEngagement;Trusted_Connection=True;")
+            .Options;
+
+        using var context = new EngagementDbContext(options);
+
+        var entity = context.Model.FindEntityType(typeof(OutboxMessage));
+
+        Assert.NotNull(entity);
+        Assert.Equal("OutboxMessages", entity.GetTableName());
+    }
+
+    [Fact]
+    public void OutboxMessages_DbSet_Is_Queryable()
+    {
+        var options = new DbContextOptionsBuilder<EngagementDbContext>()
+            .UseSqlServer("Server=(local);Database=ProjectLoopEngagement;Trusted_Connection=True;")
+            .Options;
+
+        using var context = new EngagementDbContext(options);
+
+        Assert.NotNull(context.OutboxMessages);
+    }
 }

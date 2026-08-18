@@ -63,4 +63,23 @@ public class DocumentsDbContextTests
 
         Assert.NotNull(context.DocumentVersions);
     }
+
+    [Fact]
+    public void Model_Includes_OutboxMessage()
+    {
+        using var context = CreateDbContext();
+
+        var entity = context.Model.FindEntityType(typeof(OutboxMessage));
+
+        Assert.NotNull(entity);
+        Assert.Equal("OutboxMessages", entity.GetTableName());
+    }
+
+    [Fact]
+    public void OutboxMessages_DbSet_Is_Queryable()
+    {
+        using var context = CreateDbContext();
+
+        Assert.NotNull(context.OutboxMessages);
+    }
 }

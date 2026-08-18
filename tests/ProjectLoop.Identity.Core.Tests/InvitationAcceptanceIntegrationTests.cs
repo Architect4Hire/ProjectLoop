@@ -6,10 +6,41 @@ namespace ProjectLoop.Identity.Core.Tests;
 
 public class InvitationAcceptanceIntegrationTests
 {
-    private static async Task<IdentityDbContext> CreateMigratedDbContextAsync()
+    private const string ConnectionStringEnvironmentVariable = "IDENTITY_SQLSERVER_TEST_CONNECTION_STRING";
+
+    /// <summary>
+    /// LocalDB only exists on Windows, so it can never be reached from other
+    /// platforms regardless of migration state. On Windows with no override
+    /// this keeps using LocalDB exactly as before; elsewhere (or when an
+    /// override is set, e.g. an Aspire/Docker SQL Server on macOS/Linux) it
+    /// uses <see cref="ConnectionStringEnvironmentVariable"/> instead, and
+    /// skips entirely when neither is available.
+    /// </summary>
+    private static bool TryGetConnectionString(string databaseName, out string connectionString)
     {
-        var connectionString =
-            $"Server=(localdb)\\MSSQLLocalDB;Database=ProjectLoopIdentity_AcceptanceTest_{Guid.NewGuid():N};Trusted_Connection=True;TrustServerCertificate=True;";
+        var overridden = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
+        if (!string.IsNullOrEmpty(overridden))
+        {
+            connectionString = overridden;
+            return true;
+        }
+
+        if (!OperatingSystem.IsWindows())
+        {
+            connectionString = string.Empty;
+            return false;
+        }
+
+        connectionString = $"Server=(localdb)\\MSSQLLocalDB;Database={databaseName};Trusted_Connection=True;TrustServerCertificate=True;";
+        return true;
+    }
+
+    private static async Task<IdentityDbContext?> CreateMigratedDbContextAsync()
+    {
+        if (!TryGetConnectionString($"ProjectLoopIdentity_AcceptanceTest_{Guid.NewGuid():N}", out var connectionString))
+        {
+            return null;
+        }
 
         var options = new DbContextOptionsBuilder<IdentityDbContext>()
             .UseSqlServer(connectionString)
@@ -52,6 +83,11 @@ public class InvitationAcceptanceIntegrationTests
     public async Task Valid_Invitation_Is_Accepted_And_Creates_Active_Membership()
     {
         await using var dbContext = await CreateMigratedDbContextAsync();
+        if (dbContext is null)
+        {
+            return;
+        }
+
         try
         {
             var (invitation, rawToken) = await SeedInvitationAsync(dbContext);
@@ -76,6 +112,11 @@ public class InvitationAcceptanceIntegrationTests
     public async Task Expired_Invitation_Is_Rejected()
     {
         await using var dbContext = await CreateMigratedDbContextAsync();
+        if (dbContext is null)
+        {
+            return;
+        }
+
         try
         {
             var (_, rawToken) = await SeedInvitationAsync(dbContext, expiresAtUtc: DateTimeOffset.UtcNow.AddDays(-1));
@@ -96,6 +137,11 @@ public class InvitationAcceptanceIntegrationTests
     public async Task Reused_Invitation_Token_Is_Rejected_On_Second_Acceptance()
     {
         await using var dbContext = await CreateMigratedDbContextAsync();
+        if (dbContext is null)
+        {
+            return;
+        }
+
         try
         {
             var (_, rawToken) = await SeedInvitationAsync(dbContext);
@@ -119,6 +165,11 @@ public class InvitationAcceptanceIntegrationTests
     public async Task Wrong_Email_Is_Rejected_And_Does_Not_Create_Membership()
     {
         await using var dbContext = await CreateMigratedDbContextAsync();
+        if (dbContext is null)
+        {
+            return;
+        }
+
         try
         {
             var (invitation, rawToken) = await SeedInvitationAsync(dbContext);

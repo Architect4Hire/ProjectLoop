@@ -13,6 +13,8 @@ public sealed class DocumentsDbContext : DbContext
 
     public DbSet<DocumentVersion> DocumentVersions => Set<DocumentVersion>();
 
+    public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -21,5 +23,6 @@ public sealed class DocumentsDbContext : DbContext
 
         builder.ApplyConfiguration(new DocumentConfiguration());
         builder.ApplyConfiguration(new DocumentVersionConfiguration());
+        builder.ApplyConfiguration(new OutboxMessageConfiguration());
     }
 }

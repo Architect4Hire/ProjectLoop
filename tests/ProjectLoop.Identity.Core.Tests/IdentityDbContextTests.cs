@@ -20,4 +20,31 @@ public class IdentityDbContextTests
         Assert.NotNull(model);
         Assert.Equal("identity", model.GetDefaultSchema());
     }
+
+    [Fact]
+    public void Model_Includes_OutboxMessage()
+    {
+        var options = new DbContextOptionsBuilder<IdentityDbContext>()
+            .UseSqlServer("Server=(local);Database=ProjectLoopIdentity;Trusted_Connection=True;")
+            .Options;
+
+        using var context = new IdentityDbContext(options);
+
+        var entity = context.Model.FindEntityType(typeof(OutboxMessage));
+
+        Assert.NotNull(entity);
+        Assert.Equal("OutboxMessages", entity.GetTableName());
+    }
+
+    [Fact]
+    public void OutboxMessages_DbSet_Is_Queryable()
+    {
+        var options = new DbContextOptionsBuilder<IdentityDbContext>()
+            .UseSqlServer("Server=(local);Database=ProjectLoopIdentity;Trusted_Connection=True;")
+            .Options;
+
+        using var context = new IdentityDbContext(options);
+
+        Assert.NotNull(context.OutboxMessages);
+    }
 }
