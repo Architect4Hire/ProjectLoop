@@ -2,6 +2,8 @@ namespace ProjectLoop.ServiceDefaults;
 
 using Aspire.Hosting;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Scalar.AspNetCore;
 
 public static class Extensions
 {
