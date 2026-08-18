@@ -1,3 +1,4 @@
+using ProjectLoop.Identity;
 using ProjectLoop.Identity.Core;
 using ProjectLoop.ServiceDefaults;
 
@@ -7,10 +8,15 @@ builder.AddServiceDefaults();
 
 builder.AddSqlServerDbContext<IdentityDbContext>("identitydb");
 
+builder.Services.AddScoped<ITenantContextResolver, TenantContextResolver>();
+builder.Services.AddScoped<ICurrentTenantContextAccessor, CurrentTenantContextAccessor>();
+
 var app = builder.Build();
 
 app.MapDefaultHealthChecks();
 
 app.UseHttpsRedirection();
+
+app.UseMiddleware<TenantContextMiddleware>();
 
 await app.RunAsync();

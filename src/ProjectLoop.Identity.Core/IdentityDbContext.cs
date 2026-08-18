@@ -10,11 +10,18 @@ public sealed class IdentityDbContext : IdentityDbContext<ProjectLoopUser>
     {
     }
 
+    public DbSet<Tenant> Tenants => Set<Tenant>();
+
+    public DbSet<TenantMembership> TenantMemberships => Set<TenantMembership>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
         builder.HasDefaultSchema("identity");
+
+        builder.ApplyConfiguration(new TenantConfiguration());
+        builder.ApplyConfiguration(new TenantMembershipConfiguration());
 
         builder.Entity<ProjectLoopUser>(user =>
         {
