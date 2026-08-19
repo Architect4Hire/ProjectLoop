@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectLoop.Engagement.Core;
 
@@ -11,9 +12,11 @@ using ProjectLoop.Engagement.Core;
 namespace ProjectLoop.Engagement.Core.Migrations
 {
     [DbContext(typeof(EngagementDbContext))]
-    partial class EngagementDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260819081721_AddEngagementInboxMessage")]
+    partial class AddEngagementInboxMessage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

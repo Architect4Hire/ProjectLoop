@@ -15,4 +15,8 @@
     <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.19.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="../ProjectLoop.Contracts/ProjectLoop.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

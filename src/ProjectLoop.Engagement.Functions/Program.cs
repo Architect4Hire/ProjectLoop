@@ -21,6 +21,12 @@ var host = new HostBuilder()
         services.AddScoped<IOutboxMessageRepository, OutboxMessageRepository>();
         services.AddScoped<IOutboxMessagePublisher, ServiceBusOutboxMessagePublisher>();
         services.AddScoped<IOutboxRelay, OutboxRelay>();
+
+        services.AddScoped<IApprovalGrantedMilestoneConsumerTransaction, ApprovalGrantedMilestoneConsumerTransaction>();
+        services.AddScoped<IApprovalGrantedMilestoneConsumer, ApprovalGrantedMilestoneConsumer>();
+
+        services.AddScoped<IApprovalRejectedMilestoneConsumerTransaction, ApprovalRejectedMilestoneConsumerTransaction>();
+        services.AddScoped<IApprovalRejectedMilestoneConsumer, ApprovalRejectedMilestoneConsumer>();
     })
     .Build();
 

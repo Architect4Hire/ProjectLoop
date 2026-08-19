@@ -15,6 +15,8 @@ public sealed class EngagementDbContext : DbContext
 
     public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
 
+    public DbSet<InboxMessage> InboxMessages => Set<InboxMessage>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -24,5 +26,6 @@ public sealed class EngagementDbContext : DbContext
         builder.ApplyConfiguration(new ProjectConfiguration());
         builder.ApplyConfiguration(new MilestoneConfiguration());
         builder.ApplyConfiguration(new OutboxMessageConfiguration());
+        builder.ApplyConfiguration(new InboxMessageConfiguration());
     }
 }
